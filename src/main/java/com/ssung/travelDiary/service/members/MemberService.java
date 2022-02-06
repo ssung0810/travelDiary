@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -24,6 +25,10 @@ public class MemberService {
     public Member findOne(Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다."));
+    }
+
+    public List<Member> findAll() {
+        return memberRepository.findAll();
     }
 
     public Member update(Long memberId, MemberUpdateRequestDto requestDto) {

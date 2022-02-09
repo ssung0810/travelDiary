@@ -13,25 +13,8 @@
 <body>
 
 <div class="container">
-    <form action="" method="post">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" class="form-controller">
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" class="form-controller">
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me">
-                " Remember me "
-            </label>
-        </div>
-        <a href="/sign" class="btn btn-primary">회원가입</a>
-    </form>
+    <a href="/sign" class="btn btn-primary">로그인</a>
+    <div th:insert="layout/footer :: copy"></div>
 </div>
-
-<div th:insert="layout/footer :: copy"></div>
 </body>
 </html>

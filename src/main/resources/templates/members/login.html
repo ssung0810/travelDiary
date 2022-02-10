@@ -13,7 +13,7 @@
 <body>
 
 <div class="container">
-    <form action="" method="post">
+    <form action="/api/login" method="post">
         <div class="form-group">
             <label for="username"></label>
             <input type="text" name="username" id="username" class="form-controller" placeholder="별명 몇 이메일">
@@ -24,14 +24,15 @@
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" value="remember-me">
-                " Remember me "
+                <input type="checkbox" value="remember-me"><span>이후에 자동으로 로그인</span>
             </label>
         </div>
+        <button class="btn btn-default">로그인</button>
         <a href="/sign" class="btn btn-primary">회원가입</a>
     </form>
-</div>
 
-<div th:insert="layout/footer :: copy"></div>
+    <!--footer-->
+    <div th:insert="layout/footer :: copy"></div>
+</div>
 </body>
 </html>

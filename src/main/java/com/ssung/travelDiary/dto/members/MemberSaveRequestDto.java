@@ -1,6 +1,7 @@
 package com.ssung.travelDiary.dto.members;
 
 import com.ssung.travelDiary.domain.members.Role;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
@@ -15,6 +16,7 @@ public class MemberSaveRequestDto {
     private String picture;
     private Role role;
 
+    @Builder
     public MemberSaveRequestDto(String nickname, String password, String email, String picture, Role role) {
         this.nickname = nickname;
         this.password = password;

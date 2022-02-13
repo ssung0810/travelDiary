@@ -58,7 +58,7 @@ public class MemberService {
 
     public String loginCheck(String nickname, String password) {
         String findPassword = memberRepository.findByNickname(nickname)
-                .orElseThrow(() -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다"));
+                .orElseThrow(() -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다."));
 
         if(!password.equals(findPassword)) return "비밀번호가 잘못되었습니다.";
 

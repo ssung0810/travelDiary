@@ -115,9 +115,23 @@ class MemberServiceTest {
     @Test
     public void 로그인_실패_아이디_오류() throws Exception {
         // given
+        MemberSaveRequestDto memberSaveRequestDto = MemberSaveRequestDto.builder()
+                .nickname("nickname")
+                .password("password")
+                .email("email")
+                .picture("picture")
+                .role(Role.GUEST)
+                .build();
+
+        Long findId = memberService.sign(memberSaveRequestDto);
+
+        String nickname = "nickname2";
+        String password = "password2";
 
         // when
+        assertThrows(IllegalArgumentException.class, () -> memberService.loginCheck(nickname, password));
 
         // then
+//        fail();
     }
 }

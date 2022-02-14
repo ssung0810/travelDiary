@@ -44,8 +44,8 @@ public class MemberController {
     }
 
     @PostMapping("/api/login")
-    public String loginOk(@RequestParam("nickname") String nickname,
-                          @RequestParam("password") String password,
+    public String loginOk(@RequestParam String nickname,
+                          @RequestParam String password,
                           HttpSession httpSession,
                           Model model) {
 

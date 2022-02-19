@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    @Query("SELECT m.password FROM Member m WHERE nickname=:nickname")
-    Optional<String> findByNickname(@Param("nickname") String nickname);
+    @Query("SELECT m.password FROM Member m WHERE username=:username")
+    Optional<String> findByUsername(@Param("username") String nickname);
 }

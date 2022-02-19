@@ -6,6 +6,7 @@ import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.dto.members.MemberSaveRequestDto;
 import com.ssung.travelDiary.service.members.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class MemberController {
 
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
 
     // 회원가입 화면
     @GetMapping("/sign")
@@ -38,24 +39,26 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/")
     public String login() {
         return "members/login";
     }
 
-    @PostMapping("/api/login")
-    public String loginOk(@RequestParam String nickname,
+
+    @PostMapping("/login")
+    public String loginOk(@RequestParam String username,
                           @RequestParam String password,
                           HttpSession httpSession,
                           Model model) {
 
-        String loginCheck = memberService.loginCheck(nickname, password);
+        log.info("===1==== username = {}, password = {}", username, password);
+        String loginCheck = memberService.memberLogin(username, password);
 
         if(!password.equals(loginCheck)) {
             model.addAttribute("error", loginCheck);
             return "members/login";
         }
 
-        return "redirect:/";
+        return "/board/privateBoard";
     }
 }

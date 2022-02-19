@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>메인화면</title>
+    <title>로그인</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <!--부트스트랩-->
@@ -12,8 +12,11 @@
 </head>
 <body>
 
+<!--header-->
+<div th:insert="layout/header :: header"></div>
+
 <div class="container">
-    <form action="/api/login" method="post">
+    <form action="/login" method="post">
         <div class="form-group">
             <label for="username"></label>
             <input type="text" name="username" id="username" class="form-controller" placeholder="별명 몇 이메일">
@@ -32,7 +35,7 @@
     </form>
 
     <!--footer-->
-    <div th:insert="layout/footer :: copy"></div>
+    <div th:insert="layout/footer :: footer"></div>
 </div>
 </body>
 </html>

@@ -10,15 +10,15 @@ import javax.validation.constraints.NotEmpty;
 public class MemberSaveRequestDto {
 
     @NotEmpty(message = "별명을 입력해주세요")
-    private String nickname;
+    private String username;
     private String password;
     private String email;
     private String picture;
     private Role role;
 
     @Builder
-    public MemberSaveRequestDto(String nickname, String password, String email, String picture, Role role) {
-        this.nickname = nickname;
+    public MemberSaveRequestDto(String username, String password, String email, String picture, Role role) {
+        this.username = username;
         this.password = password;
         this.email = email;
         this.picture = picture;

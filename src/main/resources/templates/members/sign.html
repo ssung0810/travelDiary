@@ -15,8 +15,8 @@
 <div class="container">
     <form action="/member/save" method="post">
         <div class="form-group">
-            <label for="nickname">별명</label>
-            <input type="text" name="nickname" id="nickname" class="form-controller">
+            <label for="username">별명</label>
+            <input type="text" name="username" id="username" class="form-controller">
         </div>
         <div class="form-group">
             <label for="password">비밀번호</label>
@@ -39,7 +39,7 @@
     </form>
 
     <!--footer-->
-    <div th:insert="layout/footer :: copy"></div>
+    <div th:insert="layout/footer :: footer"></div>
 </div>
 </body>
 </html>

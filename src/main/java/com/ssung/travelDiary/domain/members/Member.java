@@ -16,7 +16,7 @@ public class Member {
     private Long id;
 
     @Column(nullable = false)
-    private String nickname;
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -30,8 +30,8 @@ public class Member {
     private Role role;
 
     @Builder
-    public Member(String nickname, String password, String email, String picture, Role role) {
-        this.nickname = nickname;
+    public Member(String username, String password, String email, String picture, Role role) {
+        this.username = username;
         this.password = password;
         this.email = email;
         this.picture = picture;
@@ -39,7 +39,7 @@ public class Member {
     }
 
     public Member update(MemberUpdateRequestDto entity) {
-        this.nickname = entity.getNickname();
+        this.username = entity.getUsername();
         this.password = entity.getPassword();
         this.email = entity.getEmail();
         this.picture = entity.getPicture();
@@ -51,7 +51,7 @@ public class Member {
     public String toString() {
         return "Member{" +
                 "id=" + id +
-                ", nickname='" + nickname + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", picture='" + picture + '\'' +

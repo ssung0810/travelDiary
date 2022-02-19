@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
     <!--부트스트랩-->
-    <link rel="stylesheet" th:href="@{bootstrap/css/bootstrap.min.css}" />
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+
+    <!--일반 css-->
+    <link th:href="@{/css/index.css}" rel="stylesheet" />
 </head>
 <body>
-<div th:fragment="copy">
+<div th:fragment="header">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img alt="Brand" src="...">
+                </a>
+            </div>
+        </div>
+    </nav>
 </div>
 </body>
 </html>

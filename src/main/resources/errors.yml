@@ -1,0 +1,4 @@
+login:
+  loginDto:
+    username: 아이디 및 이메일을 입력해주세요.
+    password: 비밀번호를 입력해주세요.

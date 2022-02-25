@@ -16,15 +16,25 @@
 <div th:insert="layout/header :: header"></div>
 
 <div class="container">
-    <form action="/login" method="post">
+    <form action="/login" th:object="${loginDto}" method="post">
         <div class="form-group">
             <label for="username"></label>
-            <input type="text" name="username" id="username" class="form-controller" placeholder="별명 몇 이메일">
+            <input type="text" name="username" id="username" th:field="*{username}"
+                   th:errorclass="field-error" class="form-controller" placeholder="별명 몇 이메일">
+
+<!--            <div class="field-error" th:if="${errors?.containsKey('username')}" th:text="${errors['username']}">-->
+<!--                로그인 오류-->
+<!--            </div>-->
+            <div class="field-error" th:errors="*{username}">아이디 오류</div>
         </div>
         <div class="form-group">
             <label for="password"></label>
-            <input type="password" name="password" id="password" class="form-controller" placeholder="비밀번호">
+            <input type="password" name="password" id="password" th:field="*{password}"
+                   th:errorclass="field-error" class="form-controller" placeholder="비밀번호">
+
+            <div class="field-error" th:errors="*{password}">비밀번호 오류</div>
         </div>
+
         <div class="checkbox">
             <label>
                 <input type="checkbox" value="remember-me"><span>이후에 자동으로 로그인</span>

@@ -46,32 +46,39 @@ public class MemberController {
 
     @GetMapping("/")
     public String login(Model model) {
-        model.addAttribute("loginDto", new MemberLoginRequestDto());
+        model.addAttribute("login", new MemberLoginRequestDto());
 
         return "members/login";
     }
 
 
     @PostMapping("/login")
-    public String loginOk(@ModelAttribute MemberLoginRequestDto loginDto,
+    public String loginOk(@ModelAttribute("login") MemberLoginRequestDto login,
                           BindingResult bindingResult,
                           HttpSession httpSession,
                           Model model) {
 
+
+
         // 검증 로직
-        if (!StringUtils.hasText(loginDto.getUsername())) {
-//            bindingResult.rejectValue("username", "login");
-            bindingResult.addError(new FieldError("loginDto", "username", "아이디를 입력하세요."));
+        if (!StringUtils.hasText(login.getUsername())) {
+            bindingResult.addError(new FieldError("login", "username", "아이디를 입력하세요."));
+//            bindingResult.addError(new FieldError("login", "username", login.getUsername(), false, null, null, "아이디를 입력하세요."));
         }
-        if (!StringUtils.hasText(loginDto.getPassword())) {
-            bindingResult.addError(new FieldError("loginDto", "password", "비밀번호를 입력하세요."));
-//            bindingResult.rejectValue("password", "login");
+        if (!StringUtils.hasText(login.getPassword())) {
+            bindingResult.addError(new FieldError("login", "password", "비밀번호를 입력하세요."));
+//            bindingResult.addError(new FieldError("login", "password", login.getPassword(), false, null, null, "비밀번호를 입력하세요."));
         }
+
+        log.info("loginObject = {}", login);
 
         if(bindingResult.hasErrors()) {
             log.info("bindingResult = {}", bindingResult);
-            return "redirect:/";
+            return "members/login";
         }
+
+//        return "redirect:/";
+//        return "members/login";
 
 //        String loginCheck = memberService.memberLogin(loginDto.getUsername(), loginDto.getPassword());
 
@@ -80,6 +87,8 @@ public class MemberController {
 //            return "members/login";
 //        }
 
-        return "/board/privateBoard";
+        return "redirect:/board/privateBoard";
     }
+
+
 }

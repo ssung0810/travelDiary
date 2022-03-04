@@ -1,6 +1,6 @@
 package com.ssung.travelDiary.domain.members;
 
-import com.ssung.travelDiary.dto.members.MemberUpdateRequestDto;
+import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,18 +23,18 @@ public class Member {
 
     @Column(nullable = false)
     private String email;
-    private String picture;
+    private String image;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder
-    public Member(String username, String password, String email, String picture, Role role) {
+    public Member(String username, String password, String email, String image, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.picture = picture;
+        this.image = image;
         this.role = role;
     }
 
@@ -42,7 +42,7 @@ public class Member {
         this.username = entity.getUsername();
         this.password = entity.getPassword();
         this.email = entity.getEmail();
-        this.picture = entity.getPicture();
+        this.image = entity.getImage();
 
         return this;
     }
@@ -54,7 +54,7 @@ public class Member {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", picture='" + picture + '\'' +
+                ", image='" + image + '\'' +
                 ", role=" + role +
                 '}';
     }

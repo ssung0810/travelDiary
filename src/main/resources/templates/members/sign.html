@@ -1,45 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="layout/header :: common_head(~{::title}, ~{::link})">
+<!--<head>-->
     <title>회원가입</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    <!--부트스트랩-->
-    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
-
-    <!--일반 css-->
-    <link th:href="@{/css/index.css}" rel="stylesheet" />
+    <link />
 </head>
 <body>
 
+<!--header-->
+<div th:replace="layout/header :: header"></div>
+
 <div class="container">
-    <form action="/member/save" method="post">
+    <form action="/member/sign" th:object="${sign}" method="post">
         <div class="form-group">
             <label for="username">별명</label>
-            <input type="text" name="username" id="username" class="form-controller">
+            <input type="text" id="username" th:field="*{username}" th:errorclass="field-error" class="form-controller">
+            <div th:errors="*{username}" class="field-error">별명 입력 에러</div>
         </div>
+
         <div class="form-group">
             <label for="password">비밀번호</label>
-            <input type="password" name="password" id="password" class="form-controller">
+            <input type="password" id="password" th:field="*{password}" th:errorclass="field-error" class="form-controller">
+            <div th:errors="*{password}" class="field-error">패스워드 입력 에러</div>
         </div>
+
         <div class="form-group">
             <label for="password_check">비밀번호 확인</label>
             <input type="password" name="password_check" id="password_check" class="form-controller">
         </div>
+
         <div class="form-group">
             <label for="email">이메일</label>
-            <input type="text" name="email" id="email" class="form-controller">
+            <input type="text" id="email" th:field="*{email}" th:errorclass="field-error" class="form-controller">
+            <div th:errors="*{email}" class="field-error">이메일 입력 에러</div>
         </div>
+
         <div class="form-group">
             <label for="image">이미지</label>
-            <input type="image" name="image" id="image" class="form-controller">
+            <input type="image" id="image" th:field="*{image}" class="form-controller">
         </div>
+
         <button class="btn btn-primary" type="submit">가입하기</button>
         <a href="/" class="btn btn-warning">취소</a>
     </form>
 
-    <!--footer-->
-    <div th:insert="layout/footer :: footer"></div>
+
 </div>
+
+<!--footer-->
+<div th:replace="layout/footer :: footer"></div>
+
 </body>
 </html>

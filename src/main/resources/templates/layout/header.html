@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:fragment="common_head(title, links)">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
+    <title th:replace="${title}">공통 헤더</title>
+
+    <!-------공용-------->
     <!--부트스트랩-->
     <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
 
     <!--일반 css-->
     <link th:href="@{/css/index.css}" rel="stylesheet" />
+
+    <!-------추가-------->
+    <th:block th:replace="${links}" />
 </head>
 <body>
-<div th:fragment="header">
+
+<header th:fragment="header">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -20,6 +27,7 @@
             </div>
         </div>
     </nav>
-</div>
+</header>
+
 </body>
 </html>

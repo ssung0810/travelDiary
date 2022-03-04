@@ -3,8 +3,8 @@ package com.ssung.travelDiary.service.members;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
-import com.ssung.travelDiary.dto.members.MemberSaveRequestDto;
-import com.ssung.travelDiary.dto.members.MemberUpdateRequestDto;
+import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
+import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,14 +24,7 @@ public class MemberService {
     /**
      * 회원가입
      */
-    public Long sign(@Valid MemberSaveRequestDto dto) {
-        Member member = Member.builder()
-                .username(dto.getUsername())
-                .password(dto.getPassword())
-                .email(dto.getEmail())
-                .picture(dto.getPicture())
-                .role(Role.GUEST)
-                .build();
+    public Long sign(Member member) {
 
         memberRepository.save(member);
         return member.getId();

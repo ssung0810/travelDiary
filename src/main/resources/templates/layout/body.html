@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body>
+<body th:fragment="common_body(content)">
 
 <!--헤더-->
 <div th:replace="layout/header :: header"></div>
 
 <!--내용-->
-<div th:insert="${content}"></div>
+<div th:replace="${content}"></div>
 
 <!--푸터-->
 <div th:replace="layout/footer :: footer"></div>

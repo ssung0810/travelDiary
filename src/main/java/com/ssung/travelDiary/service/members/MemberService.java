@@ -66,15 +66,12 @@ public class MemberService {
     }
 
     /**
-     * 로그인
+     * 아이디 및 비밀번호 체크
      */
-    public String memberLogin(String username, String password) {
-        log.info("====2===== username = {}, password = {}", username, password);
-        String findPassword = memberRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다."));
+    public Member memberLogin(String username, String password) {
 
-        if(!password.equals(findPassword)) return "비밀번호가 잘못되었습니다.";
-
-        return findPassword;
+        return memberRepository.findByUsername(username)
+                .filter(m -> m.getPassword().equals(password))
+                .orElse(null);
     }
 }

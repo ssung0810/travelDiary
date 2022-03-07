@@ -5,10 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
+import javax.validation.constraints.NotBlank;
+
+@Getter @Setter
 public class MemberLoginRequestDto {
 
+    @NotBlank
     private String username;
+
+    @NotBlank
     private String password;
 
     public MemberLoginRequestDto() {

@@ -2,7 +2,6 @@ package com.ssung.travelDiary.service.travel;
 
 import com.ssung.travelDiary.domain.travel.Travel;
 import com.ssung.travelDiary.domain.travel.TravelRepository;
-import com.ssung.travelDiary.dto.TravelResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +26,10 @@ public class TravelService {
         return travelRepository.findAll();
     }
 
-    public TravelResponseDto findOne(Long travelId) {
-        Travel travel = travelRepository.findById(travelId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
-
-        return new TravelResponseDto(travel);
-    }
+//    public TravelResponseDto findOne(Long travelId) {
+//        Travel travel = travelRepository.findById(travelId)
+//                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+//
+//        return new TravelResponseDto(travel);
+//    }
 }

@@ -36,8 +36,6 @@ public class MemberController {
     public String sign(@Valid @ModelAttribute("sign") MemberSaveRequestDto dto,
                        BindingResult bindingResult) {
 
-        log.info("dto = {}", dto);
-
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
             return "members/sign";

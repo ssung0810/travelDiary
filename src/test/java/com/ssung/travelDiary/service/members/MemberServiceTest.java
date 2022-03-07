@@ -4,6 +4,7 @@ import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ class MemberServiceTest {
 
     @Autowired
     private MemberService memberService;
+
+    @BeforeEach
+    void clean() {
+
+    }
 
     @Test
     public void 회원가입() throws Exception {
@@ -82,10 +88,10 @@ class MemberServiceTest {
         String password = "password";
 
         // when
-        String loginCheck = memberService.memberLogin(username, password);
+        Member findMember = memberService.memberLogin(username, password);
 
         // then
-        assertThat(password).isEqualTo(loginCheck);
+        assertThat(member).isEqualTo(findMember);
     }
 
     @Test
@@ -105,10 +111,10 @@ class MemberServiceTest {
         String password = "password2";
 
         // when
-        String loginCheck = memberService.memberLogin(username, password);
+        Member findMember = memberService.memberLogin(username, password);
 
         // then
-        assertThat(loginCheck).isEqualTo("비밀번호가 잘못되었습니다.");
+        assertThat(findMember).isEqualTo(null);
     }
 
     @Test
@@ -125,12 +131,14 @@ class MemberServiceTest {
         Long findId = memberService.sign(member);
 
         String username = "nickname2";
-        String password = "password2";
+        String password = "password";
 
         // when
-        assertThrows(IllegalArgumentException.class, () -> memberService.memberLogin(username, password));
+        Member findMember = memberService.memberLogin(username, password);
+//        assertThrows(IllegalArgumentException.class, () -> memberService.memberLogin(username, password));
 
         // then
+        assertThat(findMember).isEqualTo(null);
 //        fail();
     }
 }

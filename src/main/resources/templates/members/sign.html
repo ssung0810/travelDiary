@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/header :: common_head(~{::title}, ~{::link})">
-<!--<head>-->
     <title>회원가입</title>
 
     <link />
 </head>
 <body th:replace="layout/body :: common_body(~{::section})">
 
-<section>
-    <div class="container">
+<section class="container">
+    <div>
         <form action="/member/sign" th:object="${sign}" method="post">
             <div class="form-group">
                 <label for="username">별명</label>

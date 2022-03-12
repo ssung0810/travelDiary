@@ -7,8 +7,8 @@
 </head>
 <body th:replace="layout/body :: common_body(~{::section})">
 
-<section>
-    <div class="container">
+<section class="container">
+    <div>
         <form action="/login" th:object="${login}" method="post">
             <div class="form-group">
                 <label for="username"></label>

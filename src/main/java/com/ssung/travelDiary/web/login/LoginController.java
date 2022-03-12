@@ -51,7 +51,7 @@ public class LoginController {
 
         return "redirect:/board/privateBoard";
     }
-    
+
     @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
         if (httpSession != null) {

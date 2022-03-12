@@ -1,21 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>메인화면</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head th:replace="layout/header :: common_head(~{::title}, ~{::link})">
+    <title>개인 일지</title>
 
-    <!--부트스트랩-->
-    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
-
-    <!--일반 css-->
-    <link th:href="@{/css/index.css}" rel="stylesheet" />
+    <link />
 </head>
-<body>
+<body th:replace="layout/body :: common_body(~{::section})">
 
-<!--header-->
-<div th:insert="layout/header :: header"></div>
-
-<!--<div class="container">-->
+<section class="container">
     <div class="row">
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
@@ -28,10 +20,7 @@
             </div>
         </div>
     </div>
-<!--</div>-->
-
-<!--footer-->
-<div th:insert="layout/footer :: footer"></div>
+</section>
 
 </body>
 </html>

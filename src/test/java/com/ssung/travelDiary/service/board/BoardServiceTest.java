@@ -42,6 +42,16 @@ class BoardServiceTest {
     @Test
     public void 여행일지_수정() throws Exception {
         // given
+        Board board = Board.builder()
+                .username("username")
+                .title("title")
+                .content("content")
+                .location("location")
+                .image("image")
+                .date(LocalDateTime.now())
+                .build();
+
+        boardService.save(board);
 
         // when
 

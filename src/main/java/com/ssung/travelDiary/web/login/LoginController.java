@@ -49,7 +49,7 @@ public class LoginController {
 
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, member.getId());
 
-        return "redirect:/board/privateBoard";
+        return "redirect:/board/privateBoardList";
     }
 
     @GetMapping("/logout")

@@ -7,7 +7,10 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Getter @Setter
-public class BoardUpdateRequestDto {
+public class BoardSaveRequestDto {
+
+    @NotBlank
+    private String username;
 
     @NotBlank
     private String title;
@@ -17,16 +20,9 @@ public class BoardUpdateRequestDto {
 
     @NotBlank
     private String location;
+
     private String image;
 
     @NotBlank
     private LocalDateTime date;
-
-    public BoardUpdateRequestDto(String title, String content, String location, String image, LocalDateTime date) {
-        this.title = title;
-        this.content = content;
-        this.location = location;
-        this.image = image;
-        this.date = date;
-    }
 }

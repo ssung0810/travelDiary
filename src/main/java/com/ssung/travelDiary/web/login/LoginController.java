@@ -48,6 +48,7 @@ public class LoginController {
         }
 
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, member.getId());
+        httpSession.setAttribute("username", member.getUsername());
 
         return "redirect:/board/privateBoardList";
     }

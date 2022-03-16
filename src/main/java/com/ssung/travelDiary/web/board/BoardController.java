@@ -5,13 +5,20 @@ import com.ssung.travelDiary.domain.board.BoardRepository;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
+import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/board")
@@ -40,16 +47,25 @@ public class BoardController {
     }
 
     @GetMapping("/save")
-    public String saveForm() {
+    public String saveForm(Model model) {
+
+        model.addAttribute("board", new MemberSaveRequestDto());
+
         return "board/boardSaveForm";
     }
 
     @PostMapping("/save")
-    public String boardSave(@ModelAttribute BoardSaveRequestDto dto) {
+    public String boardSave(@Valid @ModelAttribute("board") BoardSaveRequestDto dto,
+                            BindingResult bindingResult,
+                            HttpSession session) {
+
+        if (bindingResult.hasErrors()) {
+            return "board/boardSaveForm";
+        }
 
         Board board = Board.builder()
                 .date(dto.getDate())
-                .username(dto.getUsername())
+                .username((String) session.getAttribute("username"))
                 .title(dto.getTitle())
                 .location(dto.getLocation())
                 .image(dto.getImage())

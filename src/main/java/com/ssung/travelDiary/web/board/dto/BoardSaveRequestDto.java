@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
 
 @Getter @Setter
 public class BoardSaveRequestDto {
@@ -24,5 +23,8 @@ public class BoardSaveRequestDto {
     private String image;
 
     @NotBlank
-    private LocalDateTime date;
+    private String date;
+
+    public BoardSaveRequestDto() {
+    }
 }

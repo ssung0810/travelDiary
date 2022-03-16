@@ -27,14 +27,14 @@ public class Board {
     private String location;
     private String image;
 
-    private LocalDateTime date;
+    private String date;
 
 //    @Column(nullable = false)
 //    @Enumerated(EnumType.STRING)
 //    private TravelCategory category;
 
     @Builder
-    public Board(String username, String title, String content, String location, String image, LocalDateTime date) {
+    public Board(String username, String title, String content, String location, String image, String date) {
         this.username = username;
         this.title = title;
         this.content = content;
@@ -43,7 +43,7 @@ public class Board {
         this.date = date;
     }
 
-    public Board update(String title, String content, String location, String image, LocalDateTime date) {
+    public Board update(String title, String content, String location, String image, String date) {
         this.title = title;
         this.content = content;
         this.location = location;

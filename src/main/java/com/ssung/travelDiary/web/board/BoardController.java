@@ -49,7 +49,7 @@ public class BoardController {
     @GetMapping("/save")
     public String saveForm(Model model) {
 
-        model.addAttribute("board", new MemberSaveRequestDto());
+        model.addAttribute("board", new BoardSaveRequestDto());
 
         return "board/boardSaveForm";
     }

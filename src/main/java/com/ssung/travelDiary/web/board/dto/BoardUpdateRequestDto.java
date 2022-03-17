@@ -20,9 +20,9 @@ public class BoardUpdateRequestDto {
     private String image;
 
     @NotBlank
-    private LocalDateTime date;
+    private String date;
 
-    public BoardUpdateRequestDto(String title, String content, String location, String image, LocalDateTime date) {
+    public BoardUpdateRequestDto(String title, String content, String location, String image, String date) {
         this.title = title;
         this.content = content;
         this.location = location;

@@ -8,8 +8,40 @@
 <body th:replace="layout/body :: common_body(~{::section})">
 
 <section class="container">
-    <div class="row">
-        일지 수정
+    <div>
+        <form action="/board/save" method="post" th:object="${board}">
+            <div class="form-group">
+                <label for="date">날짜</label>
+                <input type="date" id="date" th:errorclass="field-error" class="form-control" th:field="*{date}">
+
+                <div class="field-error" th:errors="*{date}">날짜오류</div>
+            </div>
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" id="title" th:field="*{title}"
+                       th:errorclass="field-error" class="form-control" placeholder="제목을 입력하세요">
+
+                <div class="field-error" th:errors="*{title}">날짜오류</div>
+            </div>
+            <div class="form-group">
+                <label for="location">지역</label>
+                <input type="text" th:errorclass="field-error" class="form-control" id="location" th:field="*{location}" placeholder="지역을 입력하세요">
+
+                <div class="field-error" th:errors="*{location}">날짜오류</div>
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea th:errorclass="field-error" class="form-control" id="content" th:field="*{content}" placeholder="내용을 입력하세요"></textarea>
+
+                <div class="field-error" th:errors="*{content}">날짜오류</div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputFile">파일 업로드</label>
+                <input type="file" name="date" id="exampleInputFile">
+            </div>
+
+            <button type="submit" class="btn btn-default">저장</button>
+        </form>
     </div>
 </section>
 

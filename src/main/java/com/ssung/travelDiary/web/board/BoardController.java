@@ -60,6 +60,7 @@ public class BoardController {
                             HttpSession session) {
 
         if (bindingResult.hasErrors()) {
+            log.info("bindingResult = {}", bindingResult);
             return "board/boardSaveForm";
         }
 
@@ -89,5 +90,12 @@ public class BoardController {
         Long updateId = boardService.update(boardId, dto);
 
         return "redirect:/board/"+boardId;
+    }
+
+    @DeleteMapping("/{boardId}/delete")
+    public String delete(@PathVariable Long boardId) {
+        boardService.delete(boardId);
+
+        return "redirect:/board/privateBoardList";
     }
 }

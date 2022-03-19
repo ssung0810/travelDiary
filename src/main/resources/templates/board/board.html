@@ -9,6 +9,7 @@
 
 <section class="container">
     <div th:object="${board}">
+        <input type="hidden" th:field="*{id}">
         <div class="form-group">
             <label for="date">날짜</label>
             <input type="text" id="date" class="form-control" th:field="*{date}" readonly>
@@ -28,7 +29,7 @@
 
         <a href="/board/privateBoardList.html" th:href="@{/board/privateBoardList}" class="btn btn-default">목록</a>
         <a href="/board/privateBoardList.html" th:href="@{/board/{boardId}/update(boardId=${board.id})}" class="btn btn-primary">수정</a>
-        <a href="/board/privateBoardList.html" th:href="@{/board/{boardId}/delete(boardId=${board.id})}" class="btn btn-danger">삭제</a>
+        <button type="button" class="btn btn-danger" id="btn-board-delete">삭제</button>
     </div>
 </section>
 

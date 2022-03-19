@@ -79,13 +79,23 @@ public class BoardController {
     }
 
     @GetMapping("/{boardId}/update")
-    public String updateForm() {
-        return "board/updateBoardForm";
+    public String updateForm(@PathVariable Long boardId,
+                             Model model) {
+
+        Board board = boardService.findOne(boardId);
+        model.addAttribute("board", board);
+
+        return "board/boardUpdateForm";
     }
 
     @PatchMapping("/{boardId}/update")
     public String updateBoard(@PathVariable Long boardId,
-                              BoardUpdateRequestDto dto) {
+                              @Valid @ModelAttribute("board") BoardUpdateRequestDto dto,
+                              BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "board/boardUpdateForm";
+        }
 
         Long updateId = boardService.update(boardId, dto);
 

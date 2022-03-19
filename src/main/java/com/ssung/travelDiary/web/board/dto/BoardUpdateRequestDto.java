@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
 
 @Getter @Setter
 public class BoardUpdateRequestDto {
@@ -22,11 +21,4 @@ public class BoardUpdateRequestDto {
     @NotBlank
     private String date;
 
-    public BoardUpdateRequestDto(String title, String content, String location, String image, String date) {
-        this.title = title;
-        this.content = content;
-        this.location = location;
-        this.image = image;
-        this.date = date;
-    }
 }

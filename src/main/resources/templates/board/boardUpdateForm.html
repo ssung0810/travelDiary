@@ -9,7 +9,7 @@
 
 <section class="container">
     <div>
-        <form action="/board/save" method="post" th:object="${board}">
+        <form action="board.html" th:action="/board/{boardId}/update(boardId=${board.id})" method="patch" th:object="${board}">
             <div class="form-group">
                 <label for="date">날짜</label>
                 <input type="date" id="date" th:errorclass="field-error" class="form-control" th:field="*{date}">

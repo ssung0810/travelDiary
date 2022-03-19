@@ -1,7 +1,9 @@
 package com.ssung.travelDiary;
 
+import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.Role;
+import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import javax.annotation.PostConstruct;
 public class TestDataInit {
 
     private final MemberService memberService;
+    private final BoardService boardService;
 
     /**
      * 테스트용 데이터 추가
@@ -29,5 +32,16 @@ public class TestDataInit {
                 .build();
 
         memberService.sign(member);
+
+        Board board = Board.builder()
+                .username("test")
+                .title("qq")
+                .location("ww")
+                .content("ee")
+                .date("2022-03-06")
+                .image("")
+                .build();
+
+        boardService.save(board);
     }
 }

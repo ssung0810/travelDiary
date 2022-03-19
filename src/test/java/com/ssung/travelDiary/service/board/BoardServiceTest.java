@@ -2,7 +2,9 @@ package com.ssung.travelDiary.service.board;
 
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.board.TravelCategory;
+import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
 import org.assertj.core.api.Assertions;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
+
+import static org.assertj.core.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -27,7 +31,7 @@ class BoardServiceTest {
                 .content("content")
                 .location("location")
                 .image("image")
-                .date(LocalDateTime.now())
+                .date("2022-03-09")
                 .build();
 
         boardService.save(board);
@@ -36,7 +40,7 @@ class BoardServiceTest {
         Board findTravel = boardService.findAll().get(0);
 
         // then
-        Assertions.assertThat(findTravel.getContent()).isEqualTo("content");
+        assertThat(findTravel.getContent()).isEqualTo("content");
     }
 
     @Test
@@ -48,13 +52,16 @@ class BoardServiceTest {
                 .content("content")
                 .location("location")
                 .image("image")
-                .date(LocalDateTime.now())
+                .date("2022-03-09")
                 .build();
 
-        boardService.save(board);
+        Long boardId = boardService.save(board);
+        BoardUpdateRequestDto dto = new BoardUpdateRequestDto("title2", "content2", "location2", "", "2022-03-10");
 
         // when
+        Board updateBoard = boardService.update(boardId, dto);
 
         // then
+        assertThat(updateBoard.getTitle()).isEqualTo("title2");
     }
 }

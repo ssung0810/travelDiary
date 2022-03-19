@@ -21,4 +21,22 @@ public class BoardUpdateRequestDto {
     @NotBlank
     private String date;
 
+    public BoardUpdateRequestDto(String title, String content, String location, String image, String date) {
+        this.title = title;
+        this.content = content;
+        this.location = location;
+        this.image = image;
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "BoardUpdateRequestDto{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", location='" + location + '\'' +
+                ", image='" + image + '\'' +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }

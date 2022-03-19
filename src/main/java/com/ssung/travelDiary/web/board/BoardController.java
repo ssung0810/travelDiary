@@ -65,7 +65,7 @@ public class BoardController {
         }
 
         Board board = Board.builder()
-                .date(dto.getDate())
+                .date(dto.getDate().substring(0, 12))
                 .username((String) session.getAttribute("username"))
                 .title(dto.getTitle())
                 .location(dto.getLocation())
@@ -82,24 +82,28 @@ public class BoardController {
     public String updateForm(@PathVariable Long boardId,
                              Model model) {
 
+        log.info("여기는 GET update");
         Board board = boardService.findOne(boardId);
         model.addAttribute("board", board);
 
         return "board/boardUpdateForm";
     }
 
-    @PatchMapping("/{boardId}/update")
+    @PostMapping("/{boardId}/update")
     public String updateBoard(@PathVariable Long boardId,
                               @Valid @ModelAttribute("board") BoardUpdateRequestDto dto,
                               BindingResult bindingResult) {
 
+        log.info("여기는 PATCH update, dto = {}", dto);
+
         if (bindingResult.hasErrors()) {
+            log.info("bindingResult(update) = {}", bindingResult);
             return "board/boardUpdateForm";
         }
 
-        Long updateId = boardService.update(boardId, dto);
+        Board board = boardService.update(boardId, dto);
 
-        return "redirect:/board/"+boardId;
+        return "redirect:/board/"+board.getId();
     }
 
     @DeleteMapping("/{boardId}/delete")

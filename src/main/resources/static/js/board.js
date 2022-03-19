@@ -11,7 +11,7 @@ var main = {
         var id = $("#id").val();
 
         $.ajax({
-            type: "DELETE",
+            type: 'DELETE',
             url: "/board/"+id+"/delete",
             dataType: "json",
             contentType: "application/json; charset=UTF-8",

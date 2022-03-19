@@ -44,13 +44,12 @@ public class BoardService {
     /**
      * 게시글 수정
      */
-    public Long update(Long boardId, BoardUpdateRequestDto dto) {
+    @Transactional
+    public Board update(Long boardId, BoardUpdateRequestDto dto) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
-        Board updateBoard = board.update(dto.getTitle(), dto.getContent(), dto.getLocation(), dto.getImage(), dto.getDate());
-
-        return updateBoard.getId();
+        return board.update(dto.getTitle(), dto.getContent(), dto.getLocation(), dto.getImage(), dto.getDate().substring(0, 10));
     }
 
     /**

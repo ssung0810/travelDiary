@@ -5,10 +5,10 @@
 
     <link />
 </head>
-<body th:replace="layout/body :: common_body(~{::section})">
+<body>
 
-<section class="container">
-    <div>
+<!--<section class="container">-->
+    <div class="loginBox">
         <form action="/login" th:object="${login}" method="post">
             <div class="form-group">
                 <label for="username"></label>
@@ -40,8 +40,11 @@
             <button class="btn btn-default" type="submit">로그인</button>
             <a href="/member/sign" class="btn btn-primary">회원가입</a>
         </form>
-</div>
-</section>
+    </div>
+<!--</section>-->
+
+<!--푸터-->
+<div th:replace="layout/footer :: footer"></div>
 
 </body>
 </html>

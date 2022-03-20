@@ -5,44 +5,46 @@
 
     <link />
 </head>
-<body th:replace="layout/body :: common_body(~{::section})">
+<body>
 
-<section class="container">
-    <div>
+<!--<section class="container">-->
+    <div class="loginBox">
         <form action="/member/sign" th:object="${sign}" method="post">
             <div class="form-group">
                 <label for="username">별명</label>
-                <input type="text" id="username" th:field="*{username}" th:errorclass="field-error" class="form-controller">
+                <input type="text" id="username" th:field="*{username}" th:errorclass="field-error" class="form-control">
+
                 <div th:errors="*{username}" class="field-error">별명 입력 에러</div>
             </div>
 
             <div class="form-group">
                 <label for="password">비밀번호</label>
-                <input type="password" id="password" th:field="*{password}" th:errorclass="field-error" class="form-controller">
+                <input type="password" id="password" th:field="*{password}" th:errorclass="field-error" class="form-control">
+
                 <div th:errors="*{password}" class="field-error">패스워드 입력 에러</div>
             </div>
 
             <div class="form-group">
                 <label for="password_check">비밀번호 확인</label>
-                <input type="password" name="password_check" id="password_check" class="form-controller">
+                <input type="password" name="password_check" id="password_check" class="form-control">
             </div>
 
             <div class="form-group">
                 <label for="email">이메일</label>
-                <input type="text" id="email" th:field="*{email}" th:errorclass="field-error" class="form-controller">
+                <input type="text" id="email" th:field="*{email}" th:errorclass="field-error" class="form-control">
                 <div th:errors="*{email}" class="field-error">이메일 입력 에러</div>
             </div>
 
             <div class="form-group">
-                <label for="image">이미지</label>
-                <input type="image" id="image" th:field="*{image}" class="form-controller">
+                <label for="image">프로필 이미지</label>
+                <input type="image" id="image" th:field="*{image}" class="form-control">
             </div>
 
-            <button class="btn btn-primary" type="submit">가입하기</button>
-            <a href="/" class="btn btn-warning">취소</a>
+            <button class="btn btn-primary" type="submit" id="sign">가입하기</button>
+            <a href="/" class="btn btn-default">취소</a>
         </form>
     </div>
-</section>
+<!--</section>-->
 
 </body>
 </html>

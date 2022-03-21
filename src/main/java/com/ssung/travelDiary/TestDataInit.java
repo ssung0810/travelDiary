@@ -27,7 +27,6 @@ public class TestDataInit {
                 .username("test")
                 .password("test!")
                 .email("qqq@www.com")
-                .image("")
                 .role(Role.USER)
                 .build();
 
@@ -39,7 +38,6 @@ public class TestDataInit {
                 .location("ww")
                 .content("ee")
                 .date("2022-03-06")
-                .image("")
                 .build();
 
         boardService.save(board);

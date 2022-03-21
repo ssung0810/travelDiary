@@ -35,7 +35,6 @@ class MemberServiceTest {
                 .username("username")
                 .password("password")
                 .email("email")
-                .image("image")
                 .role(Role.GUEST)
                 .build();
 
@@ -54,15 +53,14 @@ class MemberServiceTest {
                 .username("username")
                 .password("password")
                 .email("email")
-                .image("image")
                 .role(Role.GUEST)
                 .build();
 
         Long memberId = memberService.sign(member);
         Member findMember = memberService.findOne(memberId);
 
-        MemberUpdateRequestDto requestDto = new MemberUpdateRequestDto("nickname2", "password2", "email2", "picture2");
-        String updateNickname = "nickname2";
+        MemberUpdateRequestDto requestDto = new MemberUpdateRequestDto();
+        requestDto.setEmail("email2");
 
         // when
         Member updateMember = memberService.update(memberId, requestDto);
@@ -78,7 +76,6 @@ class MemberServiceTest {
                 .username("username")
                 .password("password")
                 .email("email")
-                .image("image")
                 .role(Role.GUEST)
                 .build();
 
@@ -101,7 +98,6 @@ class MemberServiceTest {
                 .username("username")
                 .password("password")
                 .email("email")
-                .image("picture")
                 .role(Role.GUEST)
                 .build();
 
@@ -124,7 +120,6 @@ class MemberServiceTest {
                 .username("username")
                 .password("password")
                 .email("email")
-                .image("image")
                 .role(Role.GUEST)
                 .build();
 

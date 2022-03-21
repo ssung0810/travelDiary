@@ -9,7 +9,7 @@
 
 <!--<section class="container">-->
     <div class="loginBox">
-        <form action="/member/sign" th:object="${sign}" method="post">
+        <form action="/member/sign" th:object="${sign}" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="username">별명</label>
                 <input type="text" id="username" th:field="*{username}" th:errorclass="field-error" class="form-control">
@@ -36,8 +36,8 @@
             </div>
 
             <div class="form-group">
-                <label for="image">프로필 이미지</label>
-                <input type="image" id="image" th:field="*{image}" class="form-control">
+<!--                <label for="image">프로필 이미지</label>-->
+                <input type="file" id="image" th:field="*{image}" class="form-control">
             </div>
 
             <button class="btn btn-primary" type="submit" id="sign">가입하기</button>

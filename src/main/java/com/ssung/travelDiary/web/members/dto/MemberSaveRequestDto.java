@@ -4,6 +4,7 @@ import com.ssung.travelDiary.domain.members.Role;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -22,18 +23,16 @@ public class MemberSaveRequestDto {
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$")
     private String email;
 
-    private String image;
-    private Role role;
+    private MultipartFile image;
 
     public MemberSaveRequestDto() {
     }
 
-    public MemberSaveRequestDto(String username, String password, String email, String image, Role role) {
+    public MemberSaveRequestDto(String username, String password, String email, MultipartFile image) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.image = image;
-        this.role = role;
     }
 
     @Override
@@ -43,7 +42,6 @@ public class MemberSaveRequestDto {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", image='" + image + '\'' +
-                ", role=" + role +
                 '}';
     }
 }

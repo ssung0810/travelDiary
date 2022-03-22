@@ -4,9 +4,8 @@ spring:
     username: sa
     passwored:
     driver-class-name: org.h2.Driver
-  config:
-    messages:
-      basename: errors
+  messages:
+    basename: errors
 
   jpa:
     hibernate:

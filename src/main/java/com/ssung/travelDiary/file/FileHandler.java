@@ -52,9 +52,9 @@ public class FileHandler {
                 if (ObjectUtils.isEmpty(contentType)) {
                     break;
                 } else {
-                    if (contentType.contains("jpeg") || contentType.contains("jpg")) {
+                    if (contentType.contains("image/jpeg") || contentType.contains("image/jpg")) {
                         originFileExtension = ".jpg";
-                    } else if (contentType.contains("png")) {
+                    } else if (contentType.contains("image/png")) {
                         originFileExtension = ".png";
                     } else {
                         break;

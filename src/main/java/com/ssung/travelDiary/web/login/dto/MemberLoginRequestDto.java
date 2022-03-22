@@ -1,8 +1,6 @@
 package com.ssung.travelDiary.web.login.dto;
 
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
@@ -23,13 +21,5 @@ public class MemberLoginRequestDto {
     public MemberLoginRequestDto(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "MemberLoginRequestDto{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

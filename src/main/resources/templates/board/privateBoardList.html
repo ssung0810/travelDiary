@@ -11,15 +11,15 @@
 
     <div class="row" th:object="${board}">
         <div class="col-sm-6 col-md-4" th:each="board : ${boards}">
-            <div class="thumbnail wp240 hp200">
-<!--                <img src="..." alt="...">-->
+            <div class="thumbnail wp240 hp250">
                 <div class="caption">
-                    <h3><a href="board.html" th:href="@{/board/{boardId}(boardId=${board.id})}" th:text="${board.title}">Thumbnail label</a></h3>
-                    <p>...</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">Button</a>
-                        <a href="#" class="btn btn-default" role="button">Button</a>
-                    </p>
+                    <p th:text="${board.date}">날짜</p>
+                    <h3><a href="board.html" th:href="@{/board/{boardId}(boardId=${board.id})}" th:text="${board.title}">제목</a></h3>
+                    <div class="imgBox">
+                        <img src="/images/ico_user.jpg" th:src=@{"/board/image/"}>
+                    </div>
+                    <p th:text="${board.content}">내용</p>
+                    <p class="listLocation" th:text="${board.location}">위치</p>
                 </div>
             </div>
         </div>

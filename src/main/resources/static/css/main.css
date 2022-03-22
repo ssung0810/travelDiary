@@ -1,3 +1,5 @@
+#profile {width: 50px; height: 50px; padding: 5px; border-radius: 35px;}
+
 #footer {text-align: center}
 
 .loginBox {width: 200px; margin: 100px auto;}
@@ -7,5 +9,17 @@
     color: #dc3545
 }
 
+/* common */
 .wp240 {width:240px}
 .hp200 {height:200px}
+.hp250 {height:250px}
+
+/* 부트스트랩 */
+@media screen and (min-width:992px) {
+    .col-md-4 {width: 25%;}
+}
+
+/* board */
+.thumbnail {position: relative;}
+.imgBox img {width:50px; height:50px;}
+.listLocation {position: absolute; bottom: 0;}

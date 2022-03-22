@@ -34,6 +34,13 @@ public class BoardService {
     }
 
     /**
+     * 게시글 개인 조회
+     */
+    public List<Board> findByUsername(String username) {
+        return boardRepository.findByUsername(username);
+    }
+
+    /**
      * 게시글 단일 조회
      */
     public Board findOne(Long boardId) {

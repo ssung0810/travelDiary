@@ -39,6 +39,14 @@ public class MemberService {
     }
 
     /**
+     * 유저 별명 검색
+     */
+    public Member findByUsername(String username) {
+        return memberRepository.findByUsername(username)
+                .orElse(null);
+    }
+
+    /**
      * 전체 유저 검색
      */
     public List<Member> findAll() {

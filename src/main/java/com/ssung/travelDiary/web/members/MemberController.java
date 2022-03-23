@@ -82,7 +82,13 @@ public class MemberController {
             return "members/sign";
         }
 
-        FileDto image = fileHandler.parseFileInfo(mRequest).get(0);
+        List<FileDto> fileDto = fileHandler.parseFileInfo(mRequest);
+        FileDto image;
+        if(fileDto.isEmpty()) {
+            image = new FileDto("", "", 0L);
+        } else {
+            image = fileHandler.parseFileInfo(mRequest).get(0);
+        }
 
         Member member = Member.builder()
                 .username(dto.getUsername())

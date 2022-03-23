@@ -15,15 +15,16 @@ var main = {
         var id = $("#id").val();
 
         $.ajax({
-            type: 'DELETE',
+            type: 'POST',
             url: "/board/"+id+"/delete",
             dataType: "json",
             contentType: "application/json; charset=UTF-8",
         }).done(function() {
             alert("글이 삭제되었습니다.");
+            window.location.href = '/board/privateBoardList';
         }).fail(function(error) {
             alert("삭제에 실패했습니다.");
-//            alert(JSON.stringify(error));
+            alert(JSON.stringify(error));
         })
     }
 };

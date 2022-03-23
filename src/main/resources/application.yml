@@ -6,6 +6,10 @@ spring:
     driver-class-name: org.h2.Driver
   messages:
     basename: errors
+#  sevlet:
+#    multipart:
+#      max-file-size: 1MB
+#      max-request-size: 10MB
 
   jpa:
     hibernate:

@@ -115,7 +115,9 @@ public class BoardController {
         return "redirect:/board/"+board.getId();
     }
 
-    @DeleteMapping("/{boardId}/delete")
+//    @ResponseBody
+//    @DeleteMapping("/{boardId}/delete")
+    @PostMapping("/{boardId}/delete")
     public String delete(@PathVariable Long boardId) {
         boardService.delete(boardId);
 

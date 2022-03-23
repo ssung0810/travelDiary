@@ -42,8 +42,12 @@ public class MemberService {
      * 유저 별명 검색
      */
     public Member findByUsername(String username) {
-        return memberRepository.findByUsername(username)
+        log.info("service username = {}", username);
+        Member member = memberRepository.findByUsername(username)
+//                .orElseThrow(() -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다."));
                 .orElse(null);
+        log.info("service member = {}", member);
+        return member;
     }
 
     /**

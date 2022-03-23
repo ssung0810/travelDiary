@@ -62,6 +62,7 @@ public class BoardService {
     /**
      * 게시글 삭제
      */
+    @Transactional
     public void delete(Long boardId) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));

@@ -35,7 +35,7 @@ class MemberServiceTest {
                 .username("username")
                 .password("password")
                 .email("email")
-                .role(Role.GUEST)
+                .role(Role.USER)
                 .build();
 
         // when
@@ -53,7 +53,7 @@ class MemberServiceTest {
                 .username("username")
                 .password("password")
                 .email("email")
-                .role(Role.GUEST)
+                .role(Role.USER)
                 .build();
 
         Long memberId = memberService.sign(member);
@@ -76,7 +76,7 @@ class MemberServiceTest {
                 .username("username")
                 .password("password")
                 .email("email")
-                .role(Role.GUEST)
+                .role(Role.USER)
                 .build();
 
         Long findId = memberService.sign(member);
@@ -98,7 +98,7 @@ class MemberServiceTest {
                 .username("username")
                 .password("password")
                 .email("email")
-                .role(Role.GUEST)
+                .role(Role.USER)
                 .build();
 
         Long findId = memberService.sign(member);
@@ -120,7 +120,7 @@ class MemberServiceTest {
                 .username("username")
                 .password("password")
                 .email("email")
-                .role(Role.GUEST)
+                .role(Role.USER)
                 .build();
 
         Long findId = memberService.sign(member);

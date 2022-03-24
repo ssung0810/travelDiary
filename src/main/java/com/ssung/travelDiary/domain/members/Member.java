@@ -47,20 +47,7 @@ public class Member {
         this.username = entity.getUsername();
         this.password = entity.getPassword();
         this.email = entity.getEmail();
-//        this.image = entity.getImage();
 
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-//                ", image='" + image + '\'' +
-                ", role=" + role +
-                '}';
     }
 }

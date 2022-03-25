@@ -1,10 +1,10 @@
 package com.ssung.travelDiary.domain.members;
 
+import com.ssung.travelDiary.file.FileDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 
@@ -24,22 +24,20 @@ public class Member {
 
     @Column(nullable = false, unique = true)
     private String email;
-    private String original_file_name;
-    private String stored_file_path;
-    private Long file_size;
+
+    @Embedded
+    private FileDto imageFile;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder
-    public Member(String username, String password, String email, String original_file_name, String stored_file_path, Long file_size, Role role) {
+    public Member(String username, String password, String email, FileDto imageFile, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.original_file_name = original_file_name;
-        this.stored_file_path = stored_file_path;
-        this.file_size = file_size;
+        this.imageFile = imageFile;
         this.role = role;
     }
 

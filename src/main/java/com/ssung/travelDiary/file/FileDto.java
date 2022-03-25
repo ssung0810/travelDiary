@@ -1,9 +1,11 @@
 package com.ssung.travelDiary.file;
 
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter @Setter
+import javax.persistence.Embeddable;
+
+@Getter
+@Embeddable
 public class FileDto {
 
     private String original_file_name;
@@ -14,14 +16,5 @@ public class FileDto {
         this.original_file_name = original_file_name;
         this.stored_file_path = stored_file_path;
         this.file_size = file_size;
-    }
-
-    @Override
-    public String toString() {
-        return "FileDto{" +
-                "original_file_name='" + original_file_name + '\'' +
-                ", stored_file_path='" + stored_file_path + '\'' +
-                ", file_size=" + file_size +
-                '}';
     }
 }

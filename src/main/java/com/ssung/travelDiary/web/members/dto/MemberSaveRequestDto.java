@@ -1,14 +1,13 @@
 package com.ssung.travelDiary.web.members.dto;
 
 import com.ssung.travelDiary.domain.members.Role;
+import com.ssung.travelDiary.file.FileDto;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 @Getter @Setter
 public class MemberSaveRequestDto {
@@ -22,6 +21,8 @@ public class MemberSaveRequestDto {
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$")
     private String email;
 
+    private MultipartFile multipartFile;
+
     private Role role;
 
     public MemberSaveRequestDto() {
@@ -32,15 +33,5 @@ public class MemberSaveRequestDto {
         this.password = password;
         this.email = email;
         this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return "MemberSaveRequestDto{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", role=" + role +
-                '}';
     }
 }

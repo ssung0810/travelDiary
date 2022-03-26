@@ -86,7 +86,6 @@ public class MemberController {
         }
 
         Member member = createMember(dto);
-        httpSession.setAttribute("imageName", member.getImageFile().getStored_file_path());
 
         memberService.sign(member);
 

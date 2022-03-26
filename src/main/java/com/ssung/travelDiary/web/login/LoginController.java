@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -50,6 +51,7 @@ public class LoginController {
 
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, member.getId());
         httpSession.setAttribute("username", member.getUsername());
+        httpSession.setAttribute("imageName", member.getImageFile().getStored_file_path());
 
         return "redirect:/board/privateBoardList";
     }

@@ -24,14 +24,12 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final FileHandler fileHandler;
     private final PasswordEncoder passwordEncoder;
 
     /**
      * 회원가입
      */
     public Long sign(Member member) throws IOException {
-
         memberRepository.save(member);
         return member.getId();
     }

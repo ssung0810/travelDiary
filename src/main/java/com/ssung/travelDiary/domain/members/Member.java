@@ -48,4 +48,16 @@ public class Member {
 
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", imageFile=" + imageFile +
+                ", role=" + role +
+                '}';
+    }
 }

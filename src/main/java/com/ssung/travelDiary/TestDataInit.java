@@ -8,9 +8,11 @@ import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Component
@@ -19,6 +21,7 @@ public class TestDataInit {
 
     private final MemberService memberService;
     private final BoardService boardService;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 테스트용 데이터 추가
@@ -26,11 +29,11 @@ public class TestDataInit {
     @PostConstruct
     public void init() throws IOException {
 
-        FileDto fileDto = new FileDto("01. 왕이신하나님.png", "images/20220322/1013784853220000.png", 201848L);
+        FileDto fileDto = new FileDto("01. 왕이신하나님.png", "1013784853220000.png", 201848L);
 
         Member member = Member.builder()
                 .username("test")
-                .password("test!")
+                .password(passwordEncoder.encode("test!"))
                 .email("qqq@www.com")
                 .imageFile(fileDto)
                 .role(Role.USER)

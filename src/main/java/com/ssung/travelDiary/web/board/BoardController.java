@@ -1,20 +1,13 @@
 package com.ssung.travelDiary.web.board;
 
 import com.ssung.travelDiary.domain.board.Board;
-import com.ssung.travelDiary.domain.board.BoardRepository;
-import com.ssung.travelDiary.domain.members.Member;
+import com.ssung.travelDiary.file.FileDto;
+import com.ssung.travelDiary.file.FileHandler;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
-import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.Banner;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,10 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -35,6 +26,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+    private final FileHandler fileHandler;
 
     @GetMapping("/privateBoardList")
     public String privateBoardList(Model model,
@@ -69,21 +61,14 @@ public class BoardController {
     @PostMapping("/save")
     public String boardSave(@Valid @ModelAttribute("board") BoardSaveRequestDto dto,
                             BindingResult bindingResult,
-                            HttpSession session) {
+                            @SessionAttribute String username) throws IOException {
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult = {}", bindingResult);
             return "board/boardSaveForm";
         }
 
-        Board board = Board.builder()
-                .date(dto.getDate().substring(0, 10))
-                .username((String) session.getAttribute("username"))
-                .title(dto.getTitle())
-                .location(dto.getLocation())
-                .image(dto.getImage())
-                .content(dto.getContent())
-                .build();
+        Board board = createBoard(dto, username);
 
         Long saveId = boardService.save(board);
 
@@ -103,7 +88,7 @@ public class BoardController {
     @PostMapping("/{boardId}/update")
     public String updateBoard(@PathVariable Long boardId,
                               @Valid @ModelAttribute("board") BoardUpdateRequestDto dto,
-                              BindingResult bindingResult) {
+                              BindingResult bindingResult) throws IOException {
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult(update) = {}", bindingResult);
@@ -124,30 +109,16 @@ public class BoardController {
         return "redirect:/board/privateBoardList";
     }
 
-//    @ResponseBody
-//    @GetMapping("/image/{boardId}")
-//    public ResponseEntity<Resource> image(@PathVariable Long boardId,
-//                                          HttpSession httpSession) {
-//
-//        Member member = memberRepository.findByUsername(username)
-//                .orElseThrow(() -> new IllegalArgumentException("없는 별명"));
-//
-//        Board board = boardService.findOne(boardId);
-//
-//        String path = new File("").getAbsolutePath() + "\\";
-//        String storedPath = member.getStored_file_path();
-//
-//        Resource resource = new FileSystemResource(path+storedPath);
-//
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//
-//        try {
-//            Path filePath = Paths.get(path + storedPath);
-//            httpHeaders.add("Content-Type", Files.probeContentType(filePath));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return new ResponseEntity<Resource>(resource, httpHeaders, HttpStatus.OK);
-//    }
+    private Board createBoard(BoardSaveRequestDto dto, String username) throws IOException {
+        List<FileDto> images = fileHandler.storeFiles(dto.getImages());
+
+        return Board.builder()
+                .date(dto.getDate().substring(0, 10))
+                .username(username)
+                .title(dto.getTitle())
+                .location(dto.getLocation())
+                .images(images)
+                .content(dto.getContent())
+                .build();
+    }
 }

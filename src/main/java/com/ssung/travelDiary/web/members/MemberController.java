@@ -93,7 +93,7 @@ public class MemberController {
     }
 
     private Member createMember(MemberSaveRequestDto dto) throws IOException {
-        FileDto image = fileHandler.storeFile(dto.getMultipartFile());
+        FileDto image = fileHandler.storeFile(dto.getImage());
 
         return Member.builder()
                 .username(dto.getUsername())

@@ -9,7 +9,7 @@
 
 <section class="container">
     <div>
-        <form action="board.html" th:action="@{|/board/${board.id}/update|}" method="post" th:object="${board}">
+        <form action="board.html" th:action="@{|/board/${board.id}/update|}" method="post" th:object="${board}" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="date">날짜</label>
                 <input type="date" id="date" th:errorclass="field-error" class="form-control" th:field="*{date}">
@@ -36,8 +36,8 @@
                 <div class="field-error" th:errors="*{content}">내용오류</div>
             </div>
             <div class="form-group">
-                <label for="exampleInputFile">파일 업로드</label>
-                <input type="file" name="date" id="exampleInputFile">
+                <label for="updateImages">파일 업로드</label>
+                <input type="file" multiple="multiple" name="images" id="updateImages">
             </div>
 
             <button type="submit" class="btn btn-primary">저장</button>

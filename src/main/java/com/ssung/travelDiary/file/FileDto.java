@@ -8,16 +8,16 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class FileDto {
 
-    private String original_file_name;
-    private String stored_file_path;
+    private String originalFileName;
+    private String storedFileName;
     private Long file_size;
 
     public FileDto() {
     }
 
-    public FileDto(String original_file_name, String stored_file_path, Long file_size) {
-        this.original_file_name = original_file_name;
-        this.stored_file_path = stored_file_path;
+    public FileDto(String originalFileName, String storedFileName, Long file_size) {
+        this.originalFileName = originalFileName;
+        this.storedFileName = storedFileName;
         this.file_size = file_size;
     }
 }

@@ -26,7 +26,8 @@ public class FileHandler {
 
         for (MultipartFile multipartFile : multipartFiles) {
             if (!multipartFile.isEmpty()) {
-                resultDto.add(storeFile(multipartFile));
+                FileDto fileDto = storeFile(multipartFile);
+                if(fileDto != null) resultDto.add(fileDto);
             }
         }
 

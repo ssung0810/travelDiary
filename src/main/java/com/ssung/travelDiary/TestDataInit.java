@@ -1,6 +1,7 @@
 package com.ssung.travelDiary;
 
 import com.ssung.travelDiary.domain.board.Board;
+import com.ssung.travelDiary.domain.image.Image;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.file.FileDto;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -41,7 +44,7 @@ public class TestDataInit {
 
         memberService.sign(member);
 
-        for(int i=0; i<10; i++) {
+        for(int i=0; i<3; i++) {
             Board board = Board.builder()
                     .username("test")
                     .title("qq")
@@ -50,7 +53,7 @@ public class TestDataInit {
                     .date("2022-03-06")
                     .build();
 
-            boardService.save(board);
+            boardService.save(board, new ArrayList<Image>());
         }
     }
 }

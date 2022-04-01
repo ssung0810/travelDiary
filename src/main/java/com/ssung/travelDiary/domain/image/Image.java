@@ -2,13 +2,13 @@ package com.ssung.travelDiary.domain.image;
 
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.file.FileDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -16,6 +16,10 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor
 @Entity
 public class Image {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "image_id")
+    private Long id;
 
     @Embedded
     private FileDto images;
@@ -25,4 +29,13 @@ public class Image {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
+
+    public void addBoard(Board board) {
+        this.board = board;
+    }
+
+    @Builder
+    public Image(FileDto images) {
+        this.images = images;
+    }
 }

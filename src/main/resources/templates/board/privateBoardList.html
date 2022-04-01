@@ -17,7 +17,7 @@
                     <h3><a href="board.html" th:href="@{/board/{boardId}(boardId=${board.id})}" th:text="${board.title}">제목</a></h3>
                     <div class="imgBox">
                         <img th:each="image : ${board.images}"
-                             src="/images/ico_user.jpg" th:src=@{"|/image/${image.storedFilePath()}|"}>
+                             th:src="|/image/${image.storedFileName()}|"}>
                     </div>
                     <p th:text="${board.content}">내용</p>
                     <p class="listLocation" th:text="${board.location}">위치</p>

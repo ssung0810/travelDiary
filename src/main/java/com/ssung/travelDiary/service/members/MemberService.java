@@ -66,8 +66,6 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다."));
 
-
-
         Member updateMember = member.update(requestDto);
 
         return updateMember;
@@ -90,7 +88,7 @@ public class MemberService {
 //                .filter(m -> validationPassword(password, m.getPassword()))
                 .orElse(null);
 
-        log.info("member = {}", member);
+//        log.info("member = {}", member);
 
         boolean validation = validationPassword(password, member.getPassword());
 

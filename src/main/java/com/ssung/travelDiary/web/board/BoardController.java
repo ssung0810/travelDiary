@@ -1,6 +1,8 @@
 package com.ssung.travelDiary.web.board;
 
 import com.ssung.travelDiary.domain.board.Board;
+import com.ssung.travelDiary.domain.image.Image;
+import com.ssung.travelDiary.domain.image.ImageRepository;
 import com.ssung.travelDiary.file.FileDto;
 import com.ssung.travelDiary.file.FileHandler;
 import com.ssung.travelDiary.service.board.BoardService;
@@ -13,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,14 +27,16 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+    private final ImageRepository imageRepository;
     private final FileHandler fileHandler;
 
     @GetMapping("/privateBoardList")
     public String privateBoardList(Model model,
-                                   HttpSession httpSession) {
+                                   @SessionAttribute String username) {
 
-        String username = (String) httpSession.getAttribute("username");
         List<Board> board = boardService.findByUsername(username);
+//        List<Image> images = imageRepository.findByBoard_id(board.stream().filter(board -> ));
+//        List<Image> images = board.stream().filter(b -> imageRepository.findByBoard_id(b.getId()));
         model.addAttribute("boards", board);
 
         return "board/privateBoardList";
@@ -68,9 +71,18 @@ public class BoardController {
             return "board/boardSaveForm";
         }
 
+        List<Image> images = createImage(fileHandler.storeFiles(dto.getImages()));
+//        for (Image image : images) {
+//            log.info("imageName = {}", image.getImages().getOriginalFileName());
+//        }
         Board board = createBoard(dto, username);
 
-        Long saveId = boardService.save(board);
+//        Image image = Image.builder()
+//                .images(fileHandler.storeFiles(dto.getImages()))
+//                .board(board)
+//                .build();
+
+        Long saveId = boardService.save(board, images);
 
         return "redirect:/board/privateBoardList";
     }
@@ -109,16 +121,23 @@ public class BoardController {
         return "redirect:/board/privateBoardList";
     }
 
-    private Board createBoard(BoardSaveRequestDto dto, String username) throws IOException {
-        List<FileDto> images = fileHandler.storeFiles(dto.getImages());
-
+    private Board createBoard(BoardSaveRequestDto dto, String username) {
         return Board.builder()
                 .date(dto.getDate().substring(0, 10))
                 .username(username)
                 .title(dto.getTitle())
                 .location(dto.getLocation())
-                .images(images)
                 .content(dto.getContent())
                 .build();
+    }
+
+    private List<Image> createImage(List<FileDto> dtos) {
+        List<Image> images = new ArrayList<>();
+
+        for (FileDto fileDto : dtos) {
+            images.add(Image.builder().images(fileDto).build());
+        }
+
+        return images;
     }
 }

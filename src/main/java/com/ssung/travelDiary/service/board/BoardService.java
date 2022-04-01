@@ -2,6 +2,8 @@ package com.ssung.travelDiary.service.board;
 
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.board.BoardRepository;
+import com.ssung.travelDiary.domain.image.Image;
+import com.ssung.travelDiary.domain.image.ImageRepository;
 import com.ssung.travelDiary.file.FileDto;
 import com.ssung.travelDiary.file.FileHandler;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
@@ -20,18 +22,21 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final ImageRepository imageRepository;
     private final FileHandler fileHandler;
 
     /**
      * 게시글 저장
      */
     @Transactional
-    public Long save(Board board) {
+    public Long save(Board board, List<Image> images) {
         boardRepository.save(board);
 
-//        if(board.getImages() != null) {
-//            log.info("images.size = {} / images.stordName = {}", board.getImages().size(), board.getImages().get(0).getStoredFilePath());
-//        }
+        if(!images.isEmpty()) {
+            for (Image image : images) {
+                board.addImage(imageRepository.save(image));
+            }
+        }
 
         return board.getId();
     }
@@ -68,7 +73,7 @@ public class BoardService {
 
         List<FileDto> images = fileHandler.storeFiles(dto.getImages());
 
-        return board.update(dto.getTitle(), dto.getContent(), dto.getLocation(), images, dto.getDate().substring(0, 10));
+        return board.update(dto.getTitle(), dto.getContent(), dto.getLocation(), dto.getDate().substring(0, 10));
     }
 
     /**

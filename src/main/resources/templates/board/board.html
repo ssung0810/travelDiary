@@ -27,10 +27,14 @@
             <textarea class="form-control" id="content" th:field="*{content}" placeholder="내용을 입력하세요" readonly></textarea>
         </div>
 
+        <br>
+
         <div class="boardImg">
-            <img th:each="image : ${image}"
-                 th:src="|/image/${image.images.storedFileName()}|">
+            <img th:each="image : ${images}"
+                 th:src="|/image/${image.images.storedFileName}|">
         </div>
+
+        <br>
 
         <a href="/board/privateBoardList.html" th:href="@{/board/privateBoardList}" class="btn btn-default">목록</a>
         <a href="/board/privateBoardList.html" th:href="@{/board/{boardId}/update(boardId=${board.id})}" class="btn btn-primary">수정</a>

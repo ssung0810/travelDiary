@@ -15,11 +15,13 @@
                 <div class="caption">
                     <p th:text="${board.date}">날짜</p>
                     <h3><a href="board.html" th:href="@{/board/{boardId}(boardId=${board.id})}" th:text="${board.title}">제목</a></h3>
-<!--                    <div class="imgBox">-->
-<!--                        <img th:each="image : ${board.images}"-->
-<!--                             th:src="|/image/${image.storedFileName()}|"}>-->
-<!--                    </div>-->
-                    <p th:text="${board.content}">내용</p>
+                    <div class="imgBox">
+                        <th:block th:each="imageList : ${board.images}">
+                            <img th:each="image : ${imageList}"
+                                 th:src="|/image/${image.images.storedFileName}|">
+                        </th:block>
+                    </div>
+                    <p class="boardListContent" th:text="${board.content}">내용</p>
                     <p class="listLocation" th:text="${board.location}">위치</p>
                 </div>
             </div>

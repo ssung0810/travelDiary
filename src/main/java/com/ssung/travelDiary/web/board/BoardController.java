@@ -48,13 +48,11 @@ public class BoardController {
                               Model model) {
         Board board = boardService.findOne(boardId);
 
-        List<Image> images = imageRepository.findByBoard_id(board.getId());
+//        List<Image> images = imageRepository.findByBoard_id(board.getId());
 
 //        model.addAttribute("boardId", boardId);
         model.addAttribute("board", board);
-        model.addAttribute("image", images);
-
-        log.info("imageName = {}", images.get(0).getImages().getStoredFileName());
+        model.addAttribute("images", board.getImages());
 
         return "board/board";
     }
@@ -78,15 +76,7 @@ public class BoardController {
         }
 
         List<Image> images = createImage(fileHandler.storeFiles(dto.getImages()));
-//        for (Image image : images) {
-//            log.info("imageName = {}", image.getImages().getOriginalFileName());
-//        }
         Board board = createBoard(dto, username);
-
-//        Image image = Image.builder()
-//                .images(fileHandler.storeFiles(dto.getImages()))
-//                .board(board)
-//                .build();
 
         Long saveId = boardService.save(board, images);
 

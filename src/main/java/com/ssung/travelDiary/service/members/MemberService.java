@@ -2,10 +2,6 @@ package com.ssung.travelDiary.service.members;
 
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
-import com.ssung.travelDiary.domain.members.Role;
-import com.ssung.travelDiary.file.FileDto;
-import com.ssung.travelDiary.file.FileHandler;
-import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -85,8 +80,9 @@ public class MemberService {
     public Member memberLogin(String username, String password) {
 
         Member member = memberRepository.findByUsername(username)
-//                .filter(m -> validationPassword(password, m.getPassword()))
                 .orElse(null);
+
+        if(member == null) return null;
 
 //        log.info("member = {}", member);
 

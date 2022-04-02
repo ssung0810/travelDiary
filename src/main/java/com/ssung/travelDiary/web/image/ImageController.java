@@ -1,4 +1,4 @@
-package com.ssung.travelDiary.web;
+package com.ssung.travelDiary.web.image;
 
 import com.ssung.travelDiary.file.FileHandler;
 import lombok.RequiredArgsConstructor;

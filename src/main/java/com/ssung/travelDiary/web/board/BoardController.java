@@ -35,9 +35,10 @@ public class BoardController {
                                    @SessionAttribute String username) {
 
         List<Board> board = boardService.findByUsername(username);
+        model.addAttribute("boards", board);
 //        List<Image> images = imageRepository.findByBoard_id(board.stream().filter(board -> ));
 //        List<Image> images = board.stream().filter(b -> imageRepository.findByBoard_id(b.getId()));
-        model.addAttribute("boards", board);
+
 
         return "board/privateBoardList";
     }
@@ -47,8 +48,13 @@ public class BoardController {
                               Model model) {
         Board board = boardService.findOne(boardId);
 
-        model.addAttribute("boardId", boardId);
+        List<Image> images = imageRepository.findByBoard_id(board.getId());
+
+//        model.addAttribute("boardId", boardId);
         model.addAttribute("board", board);
+        model.addAttribute("image", images);
+
+        log.info("imageName = {}", images.get(0).getImages().getStoredFileName());
 
         return "board/board";
     }

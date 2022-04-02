@@ -2,6 +2,7 @@ package com.ssung.travelDiary.service.image;
 
 import com.ssung.travelDiary.domain.image.Image;
 import com.ssung.travelDiary.domain.image.ImageRepository;
+import com.ssung.travelDiary.file.FileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,5 +18,10 @@ public class ImageService {
 
     public List<Image> findByBoardId(Long boardId) {
         return imageRepository.findByBoard_id(boardId);
+//        List<FileDto>
+//
+//        for (Image image : images) {
+//
+//        }
     }
 }

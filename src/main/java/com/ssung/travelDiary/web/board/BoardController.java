@@ -1,5 +1,6 @@
 package com.ssung.travelDiary.web.board;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.image.Image;
 import com.ssung.travelDiary.domain.image.ImageRepository;
@@ -108,13 +109,14 @@ public class BoardController {
         return "redirect:/board/"+board.getId();
     }
 
-//    @ResponseBody
-//    @DeleteMapping("/{boardId}/delete")
-    @PostMapping("/{boardId}/delete")
-    public String delete(@PathVariable Long boardId) {
-        boardService.delete(boardId);
+    @ResponseBody
+    @DeleteMapping("/{boardId}")
+    public Long delete(@PathVariable Long boardId) {
+        return boardService.delete(boardId);
+//        boardService.delete(boardId);
 
-        return "redirect:/board/privateBoardList";
+
+//        return "board/privateBoardList";
     }
 
     private Board createBoard(BoardSaveRequestDto dto, String username) {

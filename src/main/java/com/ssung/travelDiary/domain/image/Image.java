@@ -31,11 +31,14 @@ public class Image {
     private Board board;
 
     public void addBoard(Board board) {
-        this.board = board;
+        board.getImages().add(this);
     }
 
     @Builder
-    public Image(FileDto images) {
+    public Image(FileDto images, Board board) {
         this.images = images;
+        this.board = board;
+
+        addBoard(board);
     }
 }

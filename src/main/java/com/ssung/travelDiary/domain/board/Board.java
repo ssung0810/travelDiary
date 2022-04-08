@@ -4,7 +4,6 @@ import com.ssung.travelDiary.domain.image.Image;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 @Entity
 public class Board {
@@ -34,19 +33,8 @@ public class Board {
 
     @OneToMany(mappedBy = "board")
     private List<Image> images = new ArrayList<>();
-//    private List<FileDto> images;
 
     private String date;
-
-//    @Column(nullable = false)
-//    @Enumerated(EnumType.STRING)
-//    private TravelCategory category;
-
-    public void addImage(Image image) {
-        this.images.add(image);
-
-        image.addBoard(this);
-    }
 
     @Builder
     public Board(String username, String title, String content, String location, String date) {

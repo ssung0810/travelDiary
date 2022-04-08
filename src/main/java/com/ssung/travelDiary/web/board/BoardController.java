@@ -1,12 +1,11 @@
 package com.ssung.travelDiary.web.board;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.image.Image;
-import com.ssung.travelDiary.domain.image.ImageRepository;
 import com.ssung.travelDiary.file.FileDto;
 import com.ssung.travelDiary.file.FileHandler;
 import com.ssung.travelDiary.service.board.BoardService;
+import com.ssung.travelDiary.service.image.ImageService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-    private final ImageRepository imageRepository;
+    private final ImageService imageService;
     private final FileHandler fileHandler;
 
     @GetMapping("/privateBoardList")
@@ -49,9 +48,6 @@ public class BoardController {
                               Model model) {
         Board board = boardService.findOne(boardId);
 
-//        List<Image> images = imageRepository.findByBoard_id(board.getId());
-
-//        model.addAttribute("boardId", boardId);
         model.addAttribute("board", board);
         model.addAttribute("images", board.getImages());
 
@@ -76,10 +72,10 @@ public class BoardController {
             return "board/boardSaveForm";
         }
 
-        List<Image> images = createImage(fileHandler.storeFiles(dto.getImages()));
         Board board = createBoard(dto, username);
 
-        Long saveId = boardService.save(board, images);
+        Long saveId = boardService.save(board);
+        imageService.saveBoard(fileHandler.storeFiles(dto.getImages()), board);
 
         return "redirect:/board/privateBoardList";
     }
@@ -129,7 +125,7 @@ public class BoardController {
                 .build();
     }
 
-    private List<Image> createImage(List<FileDto> dtos) {
+    private List<Image> createImage(List<FileDto> dtos, Board board) {
         List<Image> images = new ArrayList<>();
 
         for (FileDto fileDto : dtos) {

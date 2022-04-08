@@ -44,16 +44,16 @@ public class TestDataInit {
 
         memberService.sign(member);
 
-        for(int i=0; i<3; i++) {
-            Board board = Board.builder()
-                    .username("test")
-                    .title("qq")
-                    .location("ww")
-                    .content("ee")
-                    .date("2022-03-06")
-                    .build();
-
-            boardService.save(board, new ArrayList<Image>());
-        }
+//        for(int i=0; i<3; i++) {
+//            Board board = Board.builder()
+//                    .username("test")
+//                    .title("qq")
+//                    .location("ww")
+//                    .content("ee")
+//                    .date("2022-03-06")
+//                    .build();
+//
+//            boardService.save(board, new ArrayList<Image>());
+//        }
     }
 }

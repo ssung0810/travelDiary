@@ -29,14 +29,8 @@ public class BoardService {
      * 게시글 저장
      */
     @Transactional
-    public Long save(Board board, List<Image> images) {
+    public Long save(Board board) {
         boardRepository.save(board);
-
-        if(!images.isEmpty()) {
-            for (Image image : images) {
-                board.addImage(imageRepository.save(image));
-            }
-        }
 
         return board.getId();
     }

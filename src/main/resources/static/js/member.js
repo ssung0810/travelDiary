@@ -16,15 +16,13 @@ var main = {
             data: username,
             dataType: 'json',
             contentType: "application/json; charset=UTF-8",
-            success: function(data) {
-                alert("사용할 수 있는 별명입니다.");
-                alert(data.result);
-            }
-//        }).done(function(data) {
-//            alert("사용할 수 있는 별명입니다.");
-//        }).fail(function(error) {
-//            alert("이미 존재하는 별명입니다.");
-//            $("#username").val("ddd");
+        }).done(function(data) {
+            alert("사용가능한 별명입니다.");
+            console.log(data);
+        }).fail(function(error) {
+            alert("이미 존재하는 별명입니다.");
+            $("#username").val("안됨");
+            $("validation").val("0");
         })
     }
 };

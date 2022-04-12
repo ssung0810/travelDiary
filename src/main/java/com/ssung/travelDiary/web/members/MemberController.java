@@ -80,6 +80,10 @@ public class MemberController {
                        BindingResult bindingResult,
                        HttpSession httpSession) throws Exception {
 
+        if(passwordValidation(dto.getPassword(), dto.getPassword_check())) {
+            bindingResult.rejectValue("password_check", "passwordValidation", "");
+        }
+
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
             return "members/sign";
@@ -108,13 +112,7 @@ public class MemberController {
         return passwordEncoder.encode(password);
     }
 
-//    private FileDto getImage(MultipartFile multipartFile) throws Exception {
-//        List<FileDto> fileDto = fileHandler.storeFiles(multipartFile);
-//        FileDto image;
-//        if(fileDto.isEmpty()) {
-//            return new FileDto("", "", 0L);
-//        } else {
-//            return fileHandler.parseFileInfo(mRequest).get(0);
-//        }
-//    }
+    private boolean passwordValidation(String password, String password_check) {
+        return !password.equals(password_check);
+    }
 }

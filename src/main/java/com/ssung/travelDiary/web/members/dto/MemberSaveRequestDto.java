@@ -13,6 +13,8 @@ public class MemberSaveRequestDto {
     @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]{2,10}$")
     private String username;
 
+    private int username_validation;
+
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}")
     private String password;
 

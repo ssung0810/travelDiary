@@ -4,6 +4,8 @@ import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.service.members.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,21 +18,11 @@ public class MemberApiController {
     private final MemberService memberService;
 
     @PostMapping("/duplicate")
-    public ModelAndView duplicateUsername(@RequestBody String username) {
-        log.info("username = {}", username);
-
+    public boolean duplicateUsername(@RequestBody String username) {
         Member member = memberService.findByUsername(username);
 
-        log.info("member = {}", member);
+        if (member != null) return false;
 
-        ModelAndView vie = new ModelAndView();
-        vie.setViewName("members/sign");
-        if (member != null) {
-            vie.addObject("result", "no");
-            return vie;
-        }
-
-        vie.addObject("result", "ok");
-        return vie;
+        return true;
     }
 }

@@ -1,36 +1,26 @@
 package com.ssung.travelDiary.web.members;
 
+import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
+import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.file.FileDto;
 import com.ssung.travelDiary.file.FileHandler;
-import com.ssung.travelDiary.domain.members.Member;
-import com.ssung.travelDiary.domain.members.Role;
-import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import com.ssung.travelDiary.service.members.MemberService;
+import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -82,6 +72,9 @@ public class MemberController {
 
         if(passwordValidation(dto.getPassword(), dto.getPassword_check())) {
             bindingResult.rejectValue("password_check", "passwordValidation", "");
+        }
+        if(dto.getUsername_validation() == 0) {
+            bindingResult.reject("usernameValidation", null);
         }
 
         if (bindingResult.hasErrors()) {

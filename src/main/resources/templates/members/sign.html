@@ -10,9 +10,9 @@
 <!--<section class="container">-->
     <div class="loginBox">
         <form action="/member/sign" th:object="${sign}" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <input type="hidden" name="validation" id="validation" value="0">
+            <input type="hidden" name="username_validation" th:field="*{username_validation}" value="0">
 
+            <div class="form-group">
                 <label for="username">별명</label>
                 <input type="text" id="username" th:field="*{username}" th:errorclass="field-error" class="form-control">
                 <button type="button" class="btn btn-default" id="usernameBtn">중복체크</button>
@@ -29,9 +29,9 @@
 
             <div class="form-group">
                 <label for="password_check">비밀번호 확인</label>
-                <input type="password" id="password_check" th:field="*{password_check}" class="form-control">
+                <input type="password" id="password_check" th:field="*{password_check}" th:errorclass="field-error" class="form-control">
 
-                <div th:errors="*{password_check}" class="field-error passwordCk">비밀번호 체크 에러</div>
+                <div th:errors="*{password_check}" id="password_check_error" class="field-error passwordCk">비밀번호 체크 에러</div>
             </div>
 
             <div class="form-group">
@@ -47,6 +47,12 @@
 
             <button class="btn btn-primary" type="submit" id="sign">가입하기</button>
             <a href="/" class="btn btn-default">취소</a>
+
+            <br>
+
+            <div th:if="${#fields.hasGlobalErrors()}">
+                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메세지</p>
+            </div>
         </form>
     </div>
 <!--</section>-->

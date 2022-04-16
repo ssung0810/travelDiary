@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
-    @Query("SELECT b FROM Board b WHERE username=:username")
-    List<Board> findByUsername(@Param("username") String username);
+//    @Query("SELECT b FROM Board b WHERE username=:username")
+    List<Board> findByUsernameAndDate(@Param("username") String username, @Param("date") String date);
 }

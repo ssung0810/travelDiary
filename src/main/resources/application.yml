@@ -23,5 +23,10 @@ logging:
   level:
     org.hibernate.SQL: debug
 
+#decorator:
+#  datasource:
+#    p6spy:
+#      enable-logging: true
+
 file:
   dir: C:\Users\ogd00\Desktop\공부\프로젝트\travelDiaryBox\images/

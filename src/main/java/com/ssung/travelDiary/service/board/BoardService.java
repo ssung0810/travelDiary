@@ -43,8 +43,8 @@ public class BoardService {
     /**
      * 게시글 개인 조회
      */
-    public List<Board> findByUsername(String username) {
-        return boardRepository.findByUsername(username);
+    public List<Board> findPrivateList(String username, String date) {
+        return boardRepository.findByUsernameAndDate(username, date);
     }
 
     /**

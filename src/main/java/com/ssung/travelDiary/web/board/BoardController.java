@@ -40,8 +40,11 @@ public class BoardController {
 
         log.info("searchDate = {}", dateDto.getDate());
 
-        List<Board> board = boardService.findByUsername(username);
+        if(dateDto.getDate() == null || dateDto.getDate().equals("")) dateDto.setDate(LocalDate.now().toString());
+
+        List<Board> board = boardService.findPrivateList(username, dateDto.getDate());
         model.addAttribute("boards", board);
+        model.addAttribute("date", dateDto.getDate());
 
         return "board/privateBoardList";
     }
@@ -80,7 +83,7 @@ public class BoardController {
         Long saveId = boardService.save(board);
         imageService.saveBoard(fileHandler.storeFiles(dto.getImages()), board);
 
-        return "redirect:/board/privateBoardList";
+        return "redirect:/board/privateBoardList?date=" + board.getDate();
     }
 
     @GetMapping("/{boardId}/update")

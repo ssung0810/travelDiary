@@ -12,7 +12,8 @@
         <form action="board.html" th:action="@{|/board/${board.id}/update|}" method="post" th:object="${board}" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="date">날짜</label>
-                <input type="date" id="date" th:errorclass="field-error" class="form-control" th:field="*{date}">
+                <input type="text" id="date" th:errorclass="field-error" class="form-control write" th:field="*{date}"
+                       placeholder="날짜를 선택해주세요" autocomplete="off" readonly>
 
                 <div class="field-error" th:errors="*{date}">날짜오류</div>
             </div>
@@ -45,6 +46,8 @@
         </form>
     </div>
 </section>
+
+<script th:src="@{/js/warning/warning.js}" type="text/javascript"></script>
 
 </body>
 </html>

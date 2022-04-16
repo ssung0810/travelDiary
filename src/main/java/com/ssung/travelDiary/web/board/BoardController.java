@@ -7,6 +7,7 @@ import com.ssung.travelDiary.file.FileHandler;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.image.ImageService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
+import com.ssung.travelDiary.web.board.dto.BoardSearchDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,13 +35,13 @@ public class BoardController {
 
     @GetMapping("/privateBoardList")
     public String privateBoardList(Model model,
-                                   @SessionAttribute String username) {
+                                   @SessionAttribute String username,
+                                   @ModelAttribute BoardSearchDto dateDto) {
+
+        log.info("searchDate = {}", dateDto.getDate());
 
         List<Board> board = boardService.findByUsername(username);
         model.addAttribute("boards", board);
-//        List<Image> images = imageRepository.findByBoard_id(board.stream().filter(board -> ));
-//        List<Image> images = board.stream().filter(b -> imageRepository.findByBoard_id(b.getId()));
-
 
         return "board/privateBoardList";
     }

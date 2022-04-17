@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header :: common_head(~{::title}, ~{::link})">
+    <title>마이페이지</title>
+
+    <link />
+</head>
+<body>
+
+<!--<section class="container">-->
+<div class="loginBox" th:object="${member}">
+    <div class="form-group">
+        <label for="username">별명</label>
+        <input type="text" id="username" th:field="*{username}" class="form-control read" th:value="${username}" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="email">이메일</label>
+        <input type="text" id="email" th:field="*{email}" class="form-control" th:value="${email}" readonly>
+    </div>
+
+<!--    <div class="form-group">-->
+<!--        <label for="image">프로필 이미지</label>-->
+<!--        <input type="file" id="image" name="image" class="form-control">-->
+<!--    </div>-->
+
+    <a href="/member/profileUpdate" class="btn btn-default">수정</a>
+    <a href="/board/privateBoardList" class="btn btn-default">취소</a>
+</div>
+<!--</section>-->
+
+<!--푸터-->
+<div th:replace="layout/footer :: footer"></div>
+
+</body>
+</html>

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +36,6 @@ public class BoardController {
     public String privateBoardList(Model model,
                                    @SessionAttribute String username,
                                    @ModelAttribute BoardSearchDto dateDto) {
-
-        log.info("searchDate = {}", dateDto.getDate());
 
         if(dateDto.getDate() == null || dateDto.getDate().equals("")) dateDto.setDate(LocalDate.now().toString());
 
@@ -115,10 +112,6 @@ public class BoardController {
     @DeleteMapping("/{boardId}")
     public Long delete(@PathVariable Long boardId) {
         return boardService.delete(boardId);
-//        boardService.delete(boardId);
-
-
-//        return "board/privateBoardList";
     }
 
     private Board createBoard(BoardSaveRequestDto dto, String username) {

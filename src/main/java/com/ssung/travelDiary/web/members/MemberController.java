@@ -7,16 +7,14 @@ import com.ssung.travelDiary.file.FileDto;
 import com.ssung.travelDiary.file.FileHandler;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
+import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -88,6 +86,33 @@ public class MemberController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/profile")
+    public String profileForm(@SessionAttribute String username,
+                              Model model) {
+
+        Member member = memberService.findByUsername(username);
+
+        model.addAttribute("member", member);
+
+        return "/members/profileForm";
+    }
+
+    @GetMapping("/profileUpdate")
+    public String profileUpdateForm(@ModelAttribute("profile") MemberUpdateRequestDto dto) {
+        return "/members/profileUpdateForm";
+    }
+
+//    @PatchMapping("/profileUpdate")
+//    public String profileUpdate(@Valid @ModelAttribute("profile") MemberUpdateRequestDto dto,
+//                                BindingResult bindingResult) {
+//
+//        if (bindingResult.hasErrors()) {
+//            return "/members/profileUpdateForm";
+//        }
+//
+//        return "/members/profileForm";
+//    }
 
     private Member createMember(MemberSaveRequestDto dto) throws IOException {
         FileDto image = fileHandler.storeFile(dto.getImage());

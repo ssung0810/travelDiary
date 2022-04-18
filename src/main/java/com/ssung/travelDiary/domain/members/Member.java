@@ -45,6 +45,7 @@ public class Member {
         this.username = entity.getUsername();
         this.password = entity.getPassword();
         this.email = entity.getEmail();
+//        this.imageFile = entity.getImage();
 
         return this;
     }

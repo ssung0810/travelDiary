@@ -31,10 +31,11 @@ public class MemberSaveRequestDto {
     public MemberSaveRequestDto() {
     }
 
-    public MemberSaveRequestDto(String username, String password, String email, Role role) {
+    public MemberSaveRequestDto(String username, String password, String email, MultipartFile image, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.image = image;
         this.role = role;
     }
 }

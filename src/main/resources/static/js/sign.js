@@ -17,7 +17,6 @@ var main = {
             contentType: "application/json; charset=UTF-8",
         }).done(function() {
             alert("글이 삭제되었습니다.");
-//            window.location.href="/board/privateBoardList"
         }).fail(function(error) {
             alert(JSON.stringify(error));
         })

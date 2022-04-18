@@ -6,30 +6,35 @@ var main = {
             _this.duplicate();
         });
 
-//        $('#password, #password_check').change(function() {
-//            console.log("sss");
-//            let password = $("#password").val();
-//            let password_check = $("#password_check").val();
-//
-//            console.log(password);
-//            console.log(password_check);
-//
-//            if(password == password_check) {
-//                $("#password_check_error").val("");
-//            } else {
-//                $("#password_check_error").val("비밀번호가 일치하지 않습니다.222");
-//            }
-//        });
+        $("#image").on("change", function() {
+            const upload_file = document.querySelector("#image");
+            const upload_img = $("#profileUpload");
 
-//        $("#sign").on("click", function() {
-//            let username_validation = $("username_validation").val();
-//
-//            if(username_validation == 0) {
-//                alert("별명 중복체크는 필수입니다.");
+            console.log(upload_file);
+
+//            file.
+
+//            if(upload_file.type.indexOf('image') >= 0) {
+                var reader = new FileReader();
+
+                reader.addEventListener('load', () => {
+                    upload_img.src = reader.result;
+                });
+//                reader.onload = function(event) {
+//                    var img = $("#profileUpdate");
+//                    img.setAttribute("src", event.target.result);
+//                };
+
+                reader.readAsDataURL(upload_file);
 //            } else {
-//                $("#sign").submit();
+//                alert("이미지만 업로드가 가능합니다.");
+//                return;
 //            }
-//        });
+        });
+
+//        function isImage(file) {
+//            return ;
+//        }
     },
 
     duplicate : function() {
@@ -53,6 +58,8 @@ var main = {
             console.log(error);
         })
     }
+
+
 };
 
 main.init();

@@ -3,8 +3,10 @@ package com.ssung.travelDiary;
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.image.Image;
 import com.ssung.travelDiary.domain.members.Member;
+import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.file.FileDto;
+import com.ssung.travelDiary.file.FileHandler;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
@@ -23,8 +25,9 @@ import java.util.List;
 public class TestDataInit {
 
     private final MemberService memberService;
-    private final BoardService boardService;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final FileHandler fileHandler;
 
     /**
      * 테스트용 데이터 추가
@@ -42,7 +45,7 @@ public class TestDataInit {
                 .role(Role.USER)
                 .build();
 
-        memberService.sign(member);
+        memberRepository.save(member);
 
 //        for(int i=0; i<3; i++) {
 //            Board board = Board.builder()

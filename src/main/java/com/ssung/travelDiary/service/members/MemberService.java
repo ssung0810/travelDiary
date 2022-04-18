@@ -2,6 +2,10 @@ package com.ssung.travelDiary.service.members;
 
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
+import com.ssung.travelDiary.domain.members.Role;
+import com.ssung.travelDiary.file.FileDto;
+import com.ssung.travelDiary.file.FileHandler;
+import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +24,14 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final FileHandler fileHandler;
 
     /**
      * 회원가입
      */
-    public Long sign(Member member) throws IOException {
+    public Long sign(MemberSaveRequestDto dto) throws IOException {
+        Member member = createMember(dto);
+
         memberRepository.save(member);
         return member.getId();
     }
@@ -42,7 +49,6 @@ public class MemberService {
      */
     public Member findByUsername(String username) {
         Member member = memberRepository.findByUsername(username)
-//                .orElseThrow(() -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다."));
                 .orElse(null);
         return member;
     }
@@ -67,14 +73,6 @@ public class MemberService {
     }
 
     /**
-     * 유저 삭제
-     */
-    public void delete(Long memberId) {
-        Member member = findOne(memberId);
-        memberRepository.delete(member);
-    }
-
-    /**
      * 아이디 및 비밀번호 체크
      */
     public Member memberLogin(String username, String password) {
@@ -84,8 +82,6 @@ public class MemberService {
 
         if(member == null) return null;
 
-//        log.info("member = {}", member);
-
         boolean validation = validationPassword(password, member.getPassword());
 
         return member;
@@ -93,5 +89,21 @@ public class MemberService {
 
     private boolean validationPassword(String password, String encodedPassword) {
         return passwordEncoder.matches(password, encodedPassword);
+    }
+
+    private Member createMember(MemberSaveRequestDto dto) throws IOException {
+        FileDto image = fileHandler.storeFile(dto.getImage());
+
+        return Member.builder()
+                .username(dto.getUsername())
+                .password(encodePassword(dto.getPassword()))
+                .email(dto.getEmail())
+                .imageFile(image)
+                .role(Role.USER)
+                .build();
+    }
+
+    private String encodePassword(String password) {
+        return passwordEncoder.encode(password);
     }
 }

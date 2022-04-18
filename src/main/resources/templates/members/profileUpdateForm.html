@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header :: common_head(~{::title}, ~{::link})">
+    <title>마이페이지 수정</title>
+
+    <link />
+</head>
+<body>
+
+<!--<section class="container">-->
+<div class="loginBox">
+    <form action="/member/profileUpdate" th:object="${profile}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <a href="javascript:void(0);" onclick="$('#image').trigger('click')">
+                <img th:unless="${session.imageName == null}" id="profileUpload" src="/images/ico_user.jpg" th:src="|/image/${session.imageName}|">
+                <img th:if="${session.imageName == null}" id="profileUpload" src="/images/ico_user.jpg">
+            </a>
+            <input type="file" id="image" name="image" class="form-control profile" style="display: none">
+        </div>
+
+        <div class="form-group">
+            <label for="username">별명</label>
+            <input type="text" id="username" th:field="*{username}" class="form-control read" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" th:field="*{password}" th:errorclass="field-error" class="form-control">
+
+            <div th:errors="*{password}" class="field-error">비밀번호 입력 에러</div>
+        </div>
+
+<!--        <div class="form-group">-->
+<!--            <label for="password_check">비밀번호 확인</label>-->
+<!--            <input type="password" id="password_check" th:field="*{password_check}" th:errorclass="field-error" class="form-control">-->
+
+<!--            <div th:errors="*{password_check}" id="password_check_error" class="field-error passwordCk">비밀번호 체크 에러</div>-->
+<!--        </div>-->
+
+        <div class="form-group">
+            <label for="email">이메일</label>
+            <input type="text" id="email" th:field="*{email}" th:errorclass="field-error" class="form-control">
+            <div th:errors="*{email}" class="field-error">이메일 입력 에러</div>
+        </div>
+
+<!--        <div class="form-group">-->
+<!--            <label for="image">프로필 이미지</label>-->
+<!--        </div>-->
+
+        <button class="btn btn-primary" type="submit" id="update">수정하기</button>
+        <a href="/member/profile" class="btn btn-default">취소</a>
+    </form>
+</div>
+<!--</section>-->
+
+<!--푸터-->
+<div th:replace="layout/footer :: footer"></div>
+
+</body>
+</html>

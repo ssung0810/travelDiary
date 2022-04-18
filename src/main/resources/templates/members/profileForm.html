@@ -8,7 +8,15 @@
 <body>
 
 <!--<section class="container">-->
-<div class="loginBox" th:object="${member}">
+<div class="loginBox" th:object="${profile}">
+    <div class="form-group">
+        <img th:unless="${session.imageName == null}" id="profileUpload" src="/images/ico_user.jpg" th:src="|/image/${session.imageName}|">
+        <img th:if="${session.imageName == null}" id="profileUpload" src="/images/ico_user.jpg">
+    </div>
+
+<!--    <img th:unless="${session.imageName == null}" id="profileUpdate" src="/images/ico_user.jpg" th:src="|/image/${session.imageName}|">-->
+<!--    <img th:if="${session.imageName == null}" id="profileUpdate" src="/images/ico_user.jpg">-->
+
     <div class="form-group">
         <label for="username">별명</label>
         <input type="text" id="username" th:field="*{username}" class="form-control read" th:value="${username}" readonly>

@@ -2,9 +2,6 @@ package com.ssung.travelDiary.web.members;
 
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
-import com.ssung.travelDiary.domain.members.Role;
-import com.ssung.travelDiary.file.FileDto;
-import com.ssung.travelDiary.file.FileHandler;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,7 +23,7 @@ import java.io.IOException;
 public class MemberController {
 
     private final MemberService memberService;
-    private final FileHandler fileHandler;
+
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -80,9 +76,7 @@ public class MemberController {
             return "members/sign";
         }
 
-        Member member = createMember(dto);
-
-        memberService.sign(member);
+        memberService.sign(dto);
 
         return "redirect:/";
     }
@@ -93,41 +87,33 @@ public class MemberController {
 
         Member member = memberService.findByUsername(username);
 
-        model.addAttribute("member", member);
+        model.addAttribute("profile", member);
 
         return "/members/profileForm";
     }
 
     @GetMapping("/profileUpdate")
-    public String profileUpdateForm(@ModelAttribute("profile") MemberUpdateRequestDto dto) {
+    public String profileUpdateForm(@SessionAttribute String username,
+                                    Model model) {
+
+        Member member = memberService.findByUsername(username);
+        model.addAttribute("profile", member);
+
         return "/members/profileUpdateForm";
     }
 
-//    @PatchMapping("/profileUpdate")
-//    public String profileUpdate(@Valid @ModelAttribute("profile") MemberUpdateRequestDto dto,
-//                                BindingResult bindingResult) {
-//
-//        if (bindingResult.hasErrors()) {
-//            return "/members/profileUpdateForm";
-//        }
-//
-//        return "/members/profileForm";
-//    }
+    @PostMapping("/profileUpdate")
+    public String profileUpdate(@Valid @ModelAttribute("profile") MemberUpdateRequestDto dto,
+                                BindingResult bindingResult) {
 
-    private Member createMember(MemberSaveRequestDto dto) throws IOException {
-        FileDto image = fileHandler.storeFile(dto.getImage());
+        if (bindingResult.hasErrors()) {
+            return "/members/profileUpdateForm";
+        }
 
-        return Member.builder()
-                .username(dto.getUsername())
-                .password(encodePassword(dto.getPassword()))
-                .email(dto.getEmail())
-                .imageFile(image)
-                .role(Role.USER)
-                .build();
-    }
+        log.info("success");
+//        memberService.s
 
-    private String encodePassword(String password) {
-        return passwordEncoder.encode(password);
+        return "/members/profileForm";
     }
 
     private boolean passwordValidation(String password, String password_check) {

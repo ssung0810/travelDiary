@@ -8,28 +8,20 @@ var main = {
 
         $("#image").on("change", function() {
             const upload_file = document.querySelector("#image");
-            const upload_img = $("#profileUpload");
+            const upload_img = document.querySelector("#profileUpload");
 
-            console.log(upload_file);
-
-//            file.
-
-//            if(upload_file.type.indexOf('image') >= 0) {
+            if(upload_file.files[0].type.indexOf('image') >= 0) {
                 var reader = new FileReader();
 
                 reader.addEventListener('load', () => {
                     upload_img.src = reader.result;
                 });
-//                reader.onload = function(event) {
-//                    var img = $("#profileUpdate");
-//                    img.setAttribute("src", event.target.result);
-//                };
 
-                reader.readAsDataURL(upload_file);
-//            } else {
-//                alert("이미지만 업로드가 가능합니다.");
-//                return;
-//            }
+                reader.readAsDataURL(upload_file.files[0]);
+            } else {
+                alert("이미지만 업로드가 가능합니다.");
+                return;
+            }
         });
 
 //        function isImage(file) {

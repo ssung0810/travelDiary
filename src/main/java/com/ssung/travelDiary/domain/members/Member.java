@@ -41,13 +41,18 @@ public class Member {
         this.role = role;
     }
 
-    public Member update(MemberUpdateRequestDto entity) {
+    public Member update(MemberUpdateRequestDto entity, FileDto imageFile) {
         this.username = entity.getUsername();
         this.password = entity.getPassword();
         this.email = entity.getEmail();
-//        this.imageFile = entity.getImage();
+
+        if(imageFile != null) updateImage(imageFile);
 
         return this;
+    }
+
+    private void updateImage(FileDto imageFile) {
+        this.imageFile = imageFile;
     }
 
     @Override

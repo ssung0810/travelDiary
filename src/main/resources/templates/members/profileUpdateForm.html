@@ -9,13 +9,13 @@
 
 <!--<section class="container">-->
 <div class="loginBox">
-    <form action="/member/profileUpdate" th:object="${profile}" method="post" enctype="multipart/form-data">
+    <form action="/member/profileUpdate" th:object="${member}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <a href="javascript:void(0);" onclick="$('#image').trigger('click')">
                 <img th:unless="${session.imageName == null}" id="profileUpload" src="/images/ico_user.jpg" th:src="|/image/${session.imageName}|">
                 <img th:if="${session.imageName == null}" id="profileUpload" src="/images/ico_user.jpg">
             </a>
-            <input type="file" id="image" name="image" class="form-control profile" style="display: none">
+            <input type="file" id="image" th:field="*{image}" class="form-control profile" style="display: none">
         </div>
 
         <div class="form-group">
@@ -30,12 +30,12 @@
             <div th:errors="*{password}" class="field-error">비밀번호 입력 에러</div>
         </div>
 
-<!--        <div class="form-group">-->
-<!--            <label for="password_check">비밀번호 확인</label>-->
-<!--            <input type="password" id="password_check" th:field="*{password_check}" th:errorclass="field-error" class="form-control">-->
+        <div class="form-group">
+            <label for="password_check">비밀번호 확인</label>
+            <input type="password" id="password_check" th:field="*{password_check}" th:errorclass="field-error" class="form-control">
 
-<!--            <div th:errors="*{password_check}" id="password_check_error" class="field-error passwordCk">비밀번호 체크 에러</div>-->
-<!--        </div>-->
+            <div th:errors="*{password_check}" id="password_check_error" class="field-error passwordCk">비밀번호 체크 에러</div>
+        </div>
 
         <div class="form-group">
             <label for="email">이메일</label>

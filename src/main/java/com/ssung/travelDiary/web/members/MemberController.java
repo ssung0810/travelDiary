@@ -3,6 +3,7 @@ package com.ssung.travelDiary.web.members;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.service.members.MemberService;
+import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,7 +32,7 @@ public class MemberController {
     // 회원가입 화면
     @GetMapping("/sign")
     public String signForm(Model model) {
-        model.addAttribute("sign", new MemberSaveRequestDto());
+        model.addAttribute("member", new MemberSaveRequestDto());
         return "members/sign";
     }
 
@@ -60,7 +62,7 @@ public class MemberController {
 
     // 회원가입 후 메인화면으로 이동
     @PostMapping("/sign")
-    public String sign(@Valid @ModelAttribute("sign") MemberSaveRequestDto dto,
+    public String sign(@Valid @ModelAttribute("member") MemberSaveRequestDto dto,
                        BindingResult bindingResult,
                        HttpSession httpSession) throws Exception {
 
@@ -72,7 +74,6 @@ public class MemberController {
         }
 
         if (bindingResult.hasErrors()) {
-            log.info("errors = {}", bindingResult);
             return "members/sign";
         }
 
@@ -85,9 +86,9 @@ public class MemberController {
     public String profileForm(@SessionAttribute String username,
                               Model model) {
 
-        Member member = memberService.findByUsername(username);
+        MemberResponseDto member = memberService.findByUsername(username);
 
-        model.addAttribute("profile", member);
+        model.addAttribute("member", member);
 
         return "/members/profileForm";
     }
@@ -96,22 +97,29 @@ public class MemberController {
     public String profileUpdateForm(@SessionAttribute String username,
                                     Model model) {
 
-        Member member = memberService.findByUsername(username);
-        model.addAttribute("profile", member);
+        MemberUpdateRequestDto member = new MemberUpdateRequestDto(memberService.findByUsername(username));
+        model.addAttribute("member", member);
 
         return "/members/profileUpdateForm";
     }
 
     @PostMapping("/profileUpdate")
-    public String profileUpdate(@Valid @ModelAttribute("profile") MemberUpdateRequestDto dto,
-                                BindingResult bindingResult) {
+    public String profileUpdate(@Valid @ModelAttribute("member") MemberUpdateRequestDto dto,
+                                BindingResult bindingResult,
+                                HttpSession httpSession) throws IOException {
+
+        if(passwordValidation(dto.getPassword(), dto.getPassword_check())) {
+            bindingResult.rejectValue("password_check", "passwordValidation", "");
+        }
 
         if (bindingResult.hasErrors()) {
             return "/members/profileUpdateForm";
         }
 
-        log.info("success");
-//        memberService.s
+        Member member = memberService.update(dto);
+
+        if(!dto.getImage().isEmpty())
+            httpSession.setAttribute("imageName", member.getImageFile().getStoredFileName());
 
         return "/members/profileForm";
     }

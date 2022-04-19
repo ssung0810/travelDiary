@@ -5,8 +5,8 @@ import com.ssung.travelDiary.file.FileDto;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
-public class MemberProfileResponseDto {
+@Getter
+public class MemberResponseDto {
 
     private Long id;
     private String password;
@@ -14,7 +14,7 @@ public class MemberProfileResponseDto {
     private String email;
     private FileDto image;
 
-    public MemberProfileResponseDto(Member entity) {
+    public MemberResponseDto(Member entity) {
         this.id = entity.getId();
         this.password = entity.getPassword();
         this.username = entity.getUsername();

@@ -23,10 +23,9 @@ public class MemberUpdateRequestDto {
     public MemberUpdateRequestDto() {
     }
 
-    public MemberUpdateRequestDto(String username, String password, String email, MultipartFile image) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.image = image;
+    public MemberUpdateRequestDto(MemberResponseDto responseDto) {
+        this.username = responseDto.getUsername();
+        this.password = responseDto.getPassword();
+        this.email = responseDto.getEmail();
     }
 }

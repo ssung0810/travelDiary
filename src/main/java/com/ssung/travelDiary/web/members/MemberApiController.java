@@ -2,6 +2,7 @@ package com.ssung.travelDiary.web.members;
 
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.service.members.MemberService;
+import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class MemberApiController {
 
     @PostMapping("/duplicate")
     public boolean duplicateUsername(@RequestBody String username) {
-        Member member = memberService.findByUsername(username);
+        MemberResponseDto member = memberService.findByUsername(username);
 
         if (member != null) return false;
 

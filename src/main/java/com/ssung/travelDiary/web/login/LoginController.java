@@ -55,7 +55,6 @@ public class LoginController {
 
         if(member.getImageFile() == null)
             httpSession.setAttribute("imageName", null);
-
         else
             httpSession.setAttribute("imageName", member.getImageFile().getStoredFileName());
 

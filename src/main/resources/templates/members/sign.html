@@ -13,6 +13,13 @@
             <input type="hidden" name="username_validation" th:field="*{username_validation}" value="0">
 
             <div class="form-group">
+                <a href="javascript:void(0);" onclick="$('#image').trigger('click')">
+                    <img id="profileUpload" src="/images/ico_user.jpg">
+                </a>
+                <input type="file" id="image" th:field="*{image}" class="form-control profile" style="display: none">
+            </div>
+
+            <div class="form-group">
                 <label for="username">별명</label>
                 <input type="text" id="username" th:field="*{username}" th:errorclass="field-error" class="form-control">
                 <button type="button" class="btn btn-default" id="usernameBtn">중복체크</button>
@@ -40,10 +47,10 @@
                 <div th:errors="*{email}" class="field-error">이메일 입력 에러</div>
             </div>
 
-            <div class="form-group">
-                <label for="image">프로필 이미지</label>
-                <input type="file" id="image" name="image" class="form-control">
-            </div>
+<!--            <div class="form-group">-->
+<!--                <label for="image">프로필 이미지</label>-->
+<!--                <input type="file" id="image" name="image" class="form-control">-->
+<!--            </div>-->
 
             <button class="btn btn-primary" type="submit" id="sign">가입하기</button>
             <a href="/" class="btn btn-default">취소</a>

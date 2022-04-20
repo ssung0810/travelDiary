@@ -29,6 +29,10 @@ var main = {
         $("#btn-board-delete").on("click", function() {
             _this.delete();
         });
+
+        $("#shareFolder").on("click", function() {
+
+        })
     },
 
     delete : function() {

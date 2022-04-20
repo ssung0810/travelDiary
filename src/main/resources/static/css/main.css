@@ -33,7 +33,7 @@
 .boardListContent {margin-top:5px;}
 .listLocation {position: absolute; bottom: 0;}
 
-#searchContainer {margin-top:10px;}
+#searchContainer {display: flex; justify-content: space-between; margin-top:10px;}
 .searchBox {display: flex; }
 #searchDate {width: 150px;}
 #searchDate.write {cursor: text; background-color: #fff; opacity: unset;}

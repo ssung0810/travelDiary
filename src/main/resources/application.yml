@@ -1,12 +1,16 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/travelDiary
-    username: sa
-    passwored:
-    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:tcp://localhost/~/travelDiary
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/travel?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: travel1!
+    driver-class-name: com.mysql.cj.jdbc.Driver
   messages:
     basename: errors
-#  sevlet:
+#  servlet:
 #    multipart:
 #      max-file-size: 1MB
 #      max-request-size: 10MB

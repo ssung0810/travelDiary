@@ -75,10 +75,7 @@ public class BoardController {
             return "board/boardSaveForm";
         }
 
-        Board board = createBoard(dto, username);
-
-        Long saveId = boardService.save(board);
-        imageService.saveBoard(fileHandler.storeFiles(dto.getImages()), board);
+        Board board = boardService.save(dto, username);
 
         return "redirect:/board/privateBoardList?date=" + board.getDate();
     }
@@ -112,25 +109,5 @@ public class BoardController {
     @DeleteMapping("/{boardId}")
     public Long delete(@PathVariable Long boardId) {
         return boardService.delete(boardId);
-    }
-
-    private Board createBoard(BoardSaveRequestDto dto, String username) {
-        return Board.builder()
-                .date(dto.getDate().substring(0, 10))
-                .username(username)
-                .title(dto.getTitle())
-                .location(dto.getLocation())
-                .content(dto.getContent())
-                .build();
-    }
-
-    private List<Image> createImage(List<FileDto> dtos, Board board) {
-        List<Image> images = new ArrayList<>();
-
-        for (FileDto fileDto : dtos) {
-            images.add(Image.builder().images(fileDto).build());
-        }
-
-        return images;
     }
 }

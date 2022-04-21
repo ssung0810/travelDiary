@@ -30,7 +30,7 @@ public class Image {
     @JoinColumn(name = "board_id")
     private Board board;
 
-    public void addBoard(Board board) {
+    private void addBoard(Board board) {
         board.getImages().add(this);
     }
 

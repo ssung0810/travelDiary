@@ -33,7 +33,7 @@ class BoardServiceTest {
                 .date("2022-03-09")
                 .build();
 
-        boardService.save(board);
+//        boardService.save(board);
 
         // when
         Board findTravel = boardService.findAll().get(0);

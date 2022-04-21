@@ -5,6 +5,8 @@ import com.ssung.travelDiary.domain.board.BoardRepository;
 import com.ssung.travelDiary.domain.image.ImageRepository;
 import com.ssung.travelDiary.file.FileDto;
 import com.ssung.travelDiary.file.FileHandler;
+import com.ssung.travelDiary.service.image.ImageService;
+import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +23,21 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final ImageService imageService;
     private final FileHandler fileHandler;
 
     /**
      * 게시글 저장
      */
     @Transactional
-    public Long save(Board board) {
+    public Board save(BoardSaveRequestDto dto, String username) throws IOException {
+
+        Board board = createBoard(dto, username);
         boardRepository.save(board);
 
-        return board.getId();
+        imageService.saveBoard(fileHandler.storeFiles(dto.getImages()), board);
+
+        return board;
     }
 
     /**
@@ -79,5 +86,15 @@ public class BoardService {
         boardRepository.delete(board);
 
         return board.getId();
+    }
+
+    private Board createBoard(BoardSaveRequestDto dto, String username) {
+        return Board.builder()
+                .date(dto.getDate().substring(0, 10))
+                .username(username)
+                .title(dto.getTitle())
+                .location(dto.getLocation())
+                .content(dto.getContent())
+                .build();
     }
 }

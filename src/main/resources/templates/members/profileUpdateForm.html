@@ -9,7 +9,7 @@
 
 <!--<section class="container">-->
 <div class="loginBox">
-    <form action="/member/profileUpdate" th:object="${member}" method="post" enctype="multipart/form-data">
+    <form action="/member/profile" th:object="${member}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <a href="javascript:void(0);" onclick="$('#image').trigger('click')">
                 <img th:unless="${session.imageName == null}" id="profileUpload" src="/images/ico_user.jpg" th:src="|/image/${session.imageName}|">

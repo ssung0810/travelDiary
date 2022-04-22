@@ -26,10 +26,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/", "/css/**", "/js/**", "/images/**", "/h2-console/**", "/member", "/login/**").permitAll()
+//                .antMatchers("/board/**", "/member/profile/**").authenticated()
+//                .anyRequest().authenticated()
             .and()
                 .logout()
-                    .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/");
+//            .and()
+//                .oauth2Login()
+//                    .userInfoEndpoint()
+//                        .userService(customOAuth2UserService);
 
     }
 

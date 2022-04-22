@@ -1,5 +1,6 @@
 package com.ssung.travelDiary.domain.members;
 
+import com.ssung.travelDiary.domain.BaseTimeEntity;
 import com.ssung.travelDiary.file.FileDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Member {
+public class Member extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

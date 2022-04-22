@@ -1,5 +1,6 @@
 package com.ssung.travelDiary.domain.board;
 
+import com.ssung.travelDiary.domain.BaseTimeEntity;
 import com.ssung.travelDiary.domain.image.Image;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Board {
+public class Board extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")

@@ -9,6 +9,7 @@ import com.ssung.travelDiary.service.image.ImageService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.board.dto.BoardSearchDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
+import com.ssung.travelDiary.web.board.dto.ShareBoardSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -109,5 +110,24 @@ public class BoardController {
     @DeleteMapping("/{boardId}")
     public Long delete(@PathVariable Long boardId) {
         return boardService.delete(boardId);
+    }
+
+    @GetMapping("/share")
+    public String shareBoardCreateForm(Model model) {
+
+        model.addAttribute("board", new ShareBoardSaveRequestDto());
+
+        return "board/shareBoardCreateForm";
+    }
+
+    @PostMapping("/share")
+    public String shareBoardSave(@Valid @ModelAttribute("board") ShareBoardSaveRequestDto dto,
+                                 BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "board/shareBoardCreateForm";
+        }
+
+        return "redirection:/board/privateBoardList";
     }
 }

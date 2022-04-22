@@ -93,7 +93,7 @@ public class MemberController {
         return "/members/profileForm";
     }
 
-    @GetMapping("/profileUpdate")
+    @GetMapping("/profile/profileUpdate")
     public String profileUpdateForm(@SessionAttribute String username,
                                     Model model) {
 
@@ -103,7 +103,7 @@ public class MemberController {
         return "/members/profileUpdateForm";
     }
 
-    @PostMapping("/profileUpdate")
+    @PostMapping("/profile/profileUpdate")
     public String profileUpdate(@Valid @ModelAttribute("member") MemberUpdateRequestDto dto,
                                 BindingResult bindingResult,
                                 HttpSession httpSession) throws IOException {

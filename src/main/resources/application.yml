@@ -10,10 +10,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   messages:
     basename: errors
-#  servlet:
-#    multipart:
-#      max-file-size: 1MB
-#      max-request-size: 10MB
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 10MB
+  profiles:
+    include: oauth
 
   jpa:
     hibernate:

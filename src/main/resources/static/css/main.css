@@ -21,6 +21,9 @@
     .col-md-4 {width: 25%;}
 }
 
+/* google map */
+#map {width: 200px; height: 200px;}
+
 /* member */
 .passwordCk {display: hidden;}
 

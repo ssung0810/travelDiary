@@ -1,9 +1,8 @@
 package com.ssung.travelDiary.web.members.dto;
 
 import com.ssung.travelDiary.domain.members.Member;
-import com.ssung.travelDiary.file.FileDto;
+import com.ssung.travelDiary.web.file.FileDto;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class MemberResponseDto {
@@ -15,6 +14,8 @@ public class MemberResponseDto {
     private FileDto image;
 
     public MemberResponseDto(Member entity) {
+        if (entity == null) return;
+
         this.id = entity.getId();
         this.password = entity.getPassword();
         this.username = entity.getUsername();

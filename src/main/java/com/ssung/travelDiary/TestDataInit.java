@@ -1,24 +1,17 @@
 package com.ssung.travelDiary;
 
-import com.ssung.travelDiary.domain.board.Board;
-import com.ssung.travelDiary.domain.image.Image;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
-import com.ssung.travelDiary.file.FileDto;
-import com.ssung.travelDiary.file.FileHandler;
-import com.ssung.travelDiary.service.board.BoardService;
+import com.ssung.travelDiary.web.file.FileDto;
+import com.ssung.travelDiary.web.file.FileHandler;
 import com.ssung.travelDiary.service.members.MemberService;
-import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

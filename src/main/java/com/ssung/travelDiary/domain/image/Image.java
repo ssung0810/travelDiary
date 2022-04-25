@@ -1,14 +1,12 @@
 package com.ssung.travelDiary.domain.image;
 
 import com.ssung.travelDiary.domain.board.Board;
-import com.ssung.travelDiary.file.FileDto;
+import com.ssung.travelDiary.web.file.FileDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
-import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 

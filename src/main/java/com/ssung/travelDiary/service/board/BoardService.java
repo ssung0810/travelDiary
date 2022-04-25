@@ -2,9 +2,8 @@ package com.ssung.travelDiary.service.board;
 
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.board.BoardRepository;
-import com.ssung.travelDiary.domain.image.ImageRepository;
-import com.ssung.travelDiary.file.FileDto;
-import com.ssung.travelDiary.file.FileHandler;
+import com.ssung.travelDiary.web.file.FileDto;
+import com.ssung.travelDiary.web.file.FileHandler;
 import com.ssung.travelDiary.service.image.ImageService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;

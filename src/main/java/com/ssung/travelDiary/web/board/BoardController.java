@@ -1,9 +1,7 @@
 package com.ssung.travelDiary.web.board;
 
 import com.ssung.travelDiary.domain.board.Board;
-import com.ssung.travelDiary.domain.image.Image;
-import com.ssung.travelDiary.file.FileDto;
-import com.ssung.travelDiary.file.FileHandler;
+import com.ssung.travelDiary.web.file.FileHandler;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.image.ImageService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j

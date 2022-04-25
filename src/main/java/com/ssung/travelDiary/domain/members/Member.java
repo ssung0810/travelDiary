@@ -1,7 +1,7 @@
 package com.ssung.travelDiary.domain.members;
 
 import com.ssung.travelDiary.domain.BaseTimeEntity;
-import com.ssung.travelDiary.file.FileDto;
+import com.ssung.travelDiary.web.file.FileDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -54,6 +54,10 @@ public class Member extends BaseTimeEntity {
 
     private void updateImage(FileDto imageFile) {
         this.imageFile = imageFile;
+    }
+
+    public String getRoleKey() {
+        return this.role.getKey();
     }
 
     @Override

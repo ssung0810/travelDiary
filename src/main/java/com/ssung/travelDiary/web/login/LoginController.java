@@ -6,7 +6,6 @@ import com.ssung.travelDiary.web.SessionConst;
 import com.ssung.travelDiary.web.login.dto.MemberLoginRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
-import java.time.LocalDate;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -44,7 +41,7 @@ public class LoginController {
             return "members/login";
         }
 
-        Member member = memberService.memberLogin(login.getUsername(), login.getPassword());
+        Member member = memberService.loginValidation(login.getUsername(), login.getPassword());
         if (member == null) {
             bindingResult.reject("loginFail", "* 아이디 및 비밀번호가 잘못되었습니다.");
             return "members/login";

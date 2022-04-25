@@ -2,21 +2,21 @@ package com.ssung.travelDiary.service.members;
 
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.Role;
-import com.ssung.travelDiary.file.FileDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
-import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.FileInputStream;
 
-@RunWith(SpringRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 @Transactional
 class MemberServiceTest {
@@ -24,24 +24,41 @@ class MemberServiceTest {
     @Autowired
     private MemberService memberService;
 
+    @Value("${file.dir}")
+    private String fileDir;
+
     @BeforeEach
     void clean() {
 
     }
 
-//    @Test
-//    public void 회원가입() throws Exception {
-//        // given
-//        MemberSaveRequestDto dto = createSaveDto();
-//        FileDto fileDto = createFileDto();
-//
-//        // when
-//        Long findId = memberService.sign(dto, fileDto);
-//        Member findMember = memberService.findOne(findId);
-//
-//        // then
-//        assertThat(findMember.getId()).isEqualTo(findId);
-//    }
+    @Test
+    void 프로필_이미지없는_회원가입() throws Exception {
+        // given
+        MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
+        MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", null, Role.USER);
+
+        // when
+        Long findId = memberService.sign(dto);
+        Member findMember = memberService.findOne(findId);
+
+        // then
+        assertThat(findMember.getId()).isEqualTo(findId);
+    }
+
+    @Test
+    void 프로필_이미지_저장여부() throws Exception {
+        // given
+        MockMultipartFile multipartFile = new MockMultipartFile("image", "testImage", "image/png", new FileInputStream(fileDir));
+        MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", null, Role.USER);
+
+        // when
+        Long findId = memberService.sign(dto);
+        Member findMember = memberService.findOne(findId);
+
+        // then
+        assertThat(findMember.getImageFile().getOriginalFileName()).isEqualTo(multipartFile.getOriginalFilename());
+    }
 //
 //    @Test
 //    public void 회원정보_변경() throws Exception {

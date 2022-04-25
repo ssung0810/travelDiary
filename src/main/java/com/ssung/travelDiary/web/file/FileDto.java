@@ -1,4 +1,4 @@
-package com.ssung.travelDiary.file;
+package com.ssung.travelDiary.web.file;
 
 import lombok.Getter;
 

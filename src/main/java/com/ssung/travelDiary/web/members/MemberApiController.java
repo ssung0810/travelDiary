@@ -22,7 +22,7 @@ public class MemberApiController {
     public boolean duplicateUsername(@RequestBody String username) {
         MemberResponseDto member = memberService.findByUsername(username);
 
-        if (member != null) return false;
+        if (member.getId() != null) return false;
 
         return true;
     }

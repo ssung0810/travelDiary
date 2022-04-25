@@ -3,8 +3,8 @@ package com.ssung.travelDiary.service.members;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
-import com.ssung.travelDiary.file.FileDto;
-import com.ssung.travelDiary.file.FileHandler;
+import com.ssung.travelDiary.web.file.FileDto;
+import com.ssung.travelDiary.web.file.FileHandler;
 import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
@@ -52,6 +52,7 @@ public class MemberService {
     public MemberResponseDto findByUsername(String username) {
         Member member = memberRepository.findByUsername(username)
                 .orElse(null);
+
         return new MemberResponseDto(member);
     }
 
@@ -78,7 +79,7 @@ public class MemberService {
     /**
      * 아이디 및 비밀번호 체크
      */
-    public Member memberLogin(String username, String password) {
+    public Member loginValidation(String username, String password) {
 
         Member member = memberRepository.findByUsername(username)
                 .orElse(null);

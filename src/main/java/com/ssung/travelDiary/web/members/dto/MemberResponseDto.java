@@ -20,6 +20,7 @@ public class MemberResponseDto {
         this.password = entity.getPassword();
         this.username = entity.getUsername();
         this.email = entity.getEmail();
-        this.image = entity.getImageFile();
+
+        if(entity.getImage() != null) this.image = entity.getImage().getImages();
     }
 }

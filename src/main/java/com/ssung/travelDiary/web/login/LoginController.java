@@ -49,11 +49,12 @@ public class LoginController {
 
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, member.getId());
         httpSession.setAttribute("username", member.getUsername());
+        httpSession.setAttribute("memberId", member.getId());
 
-        if(member.getImageFile() == null)
+        if(member.getImage() == null)
             httpSession.setAttribute("imageName", null);
         else
-            httpSession.setAttribute("imageName", member.getImageFile().getStoredFileName());
+            httpSession.setAttribute("imageName", member.getImage().getImages().getStoredFileName());
 
         return "redirect:/board/privateBoardList";
     }

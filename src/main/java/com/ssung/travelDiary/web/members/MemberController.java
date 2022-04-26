@@ -63,8 +63,7 @@ public class MemberController {
     // 회원가입 후 메인화면으로 이동
     @PostMapping("/sign")
     public String sign(@Valid @ModelAttribute("member") MemberSaveRequestDto dto,
-                       BindingResult bindingResult,
-                       HttpSession httpSession) throws Exception {
+                       BindingResult bindingResult) throws Exception {
 
         if(passwordValidation(dto.getPassword(), dto.getPassword_check())) {
             bindingResult.rejectValue("password_check", "passwordValidation", "");
@@ -78,6 +77,8 @@ public class MemberController {
         }
 
         memberService.sign(dto);
+
+        log.info("4");
 
         return "redirect:/";
     }
@@ -119,7 +120,7 @@ public class MemberController {
         Member member = memberService.update(dto);
 
         if(!dto.getImage().isEmpty())
-            httpSession.setAttribute("imageName", member.getImageFile().getStoredFileName());
+            httpSession.setAttribute("imageName", member.getImage().getImages().getStoredFileName());
 
         return "/members/profileForm";
     }

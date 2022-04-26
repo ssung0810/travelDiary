@@ -1,11 +1,13 @@
 package com.ssung.travelDiary;
 
+import com.ssung.travelDiary.domain.image.Image;
+import com.ssung.travelDiary.domain.image.ImageRepository;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
-import com.ssung.travelDiary.web.file.FileDto;
-import com.ssung.travelDiary.web.file.FileHandler;
+import com.ssung.travelDiary.handler.FileHandler;
 import com.ssung.travelDiary.service.members.MemberService;
+import com.ssung.travelDiary.web.file.FileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,7 @@ public class TestDataInit {
 
     private final MemberService memberService;
     private final MemberRepository memberRepository;
+    private final ImageRepository imageRepository;
     private final PasswordEncoder passwordEncoder;
     private final FileHandler fileHandler;
 
@@ -30,11 +33,12 @@ public class TestDataInit {
 
         FileDto fileDto = new FileDto("01. 왕이신하나님.png", "1013784853220000.png", 201848L);
 
+
         Member member = Member.builder()
                 .username("test")
                 .password(passwordEncoder.encode("test!"))
                 .email("qqq@www.com")
-                .imageFile(fileDto)
+                .image(null)
                 .role(Role.USER)
                 .build();
 

@@ -137,20 +137,29 @@ function initGeocoder() {
   $('#submit').on('click', function(e) {
     e.preventDefault();
 
+    var param = {
+        param : $('#address').val()
+    };
+
+    var result = {};
+
     $.ajax({
         type: "GET",
         url: "/search",
-        data: $('#address').val(),
+        data: param,
         dataType: "json",
         contentType: "application/json; charset=UTF-8"
     }).done(function(data) {
         console.log(data);
+        result = data.items;
+    }).fail(function(error) {
+        console.log(error);
     });
 
     searchAddressToCoordinate($('#address').val());
   });
 
-//  searchAddressToCoordinate('정자동 178-1');
+  searchAddressToCoordinate('정자동 178-1');
 }
 
 naver.maps.onJSContentLoaded = initGeocoder;

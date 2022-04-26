@@ -26,7 +26,6 @@ class BoardServiceTest {
     public void 여행일지_등록() throws Exception {
         // given
         Board board = Board.builder()
-                .username("username")
                 .title("title")
                 .content("content")
                 .location("location")

@@ -1,6 +1,9 @@
 package com.ssung.travelDiary.domain.members;
 
 import com.ssung.travelDiary.domain.BaseTimeEntity;
+import com.ssung.travelDiary.domain.board.Board;
+import com.ssung.travelDiary.domain.image.Image;
+import com.ssung.travelDiary.domain.share.Share;
 import com.ssung.travelDiary.web.file.FileDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
 import lombok.Builder;
@@ -8,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -15,6 +20,7 @@ import javax.persistence.*;
 public class Member extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -26,35 +32,42 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Embedded
-    private FileDto imageFile;
+//    @Embedded
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
+
+    @OneToMany(mappedBy = "member")
+    private List<Board> boards = new ArrayList<>();
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder
-    public Member(String username, String password, String email, FileDto imageFile, Role role) {
+    public Member(String username, String password, String email, Image image, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.imageFile = imageFile;
+        this.image = image;
         this.role = role;
+
+//        image.addMember(this);
     }
 
-    public Member update(MemberUpdateRequestDto entity, FileDto imageFile) {
+    public Member update(MemberUpdateRequestDto entity, Image image) {
         this.username = entity.getUsername();
         this.password = entity.getPassword();
         this.email = entity.getEmail();
 
-        if(imageFile != null) updateImage(imageFile);
+        if(image != null) this.image = image;
 
         return this;
     }
 
-    private void updateImage(FileDto imageFile) {
-        this.imageFile = imageFile;
-    }
+//    private void updateImage(FileDto imageFile) {
+//        this.imageFile = imageFile;
+//    }
 
     public String getRoleKey() {
         return this.role.getKey();
@@ -67,7 +80,7 @@ public class Member extends BaseTimeEntity {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", imageFile=" + imageFile +
+//                ", imageFile=" + imageFile +
                 ", role=" + role +
                 '}';
     }

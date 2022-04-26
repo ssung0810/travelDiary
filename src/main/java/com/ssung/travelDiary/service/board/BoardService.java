@@ -2,8 +2,10 @@ package com.ssung.travelDiary.service.board;
 
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.board.BoardRepository;
+import com.ssung.travelDiary.domain.members.Member;
+import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.web.file.FileDto;
-import com.ssung.travelDiary.web.file.FileHandler;
+import com.ssung.travelDiary.handler.FileHandler;
 import com.ssung.travelDiary.service.image.ImageService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
@@ -22,6 +24,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
     private final ImageService imageService;
     private final FileHandler fileHandler;
 
@@ -29,9 +32,10 @@ public class BoardService {
      * 게시글 저장
      */
     @Transactional
-    public Board save(BoardSaveRequestDto dto, String username) throws IOException {
+    public Board save(BoardSaveRequestDto dto, String memberId) throws IOException {
+        Member member = memberRepository.findById(Long.parseLong(memberId)).orElse(null);
 
-        Board board = createBoard(dto, username);
+        Board board = createBoard(dto, member);
         boardRepository.save(board);
 
         imageService.saveBoard(fileHandler.storeFiles(dto.getImages()), board);
@@ -49,8 +53,8 @@ public class BoardService {
     /**
      * 게시글 개인 조회
      */
-    public List<Board> findPrivateList(String username, String date) {
-        return boardRepository.findByUsernameAndDate(username, date);
+    public List<Board> findList(Long member_id, String date) {
+        return boardRepository.findByMember_idAndDate(member_id, date);
     }
 
     /**
@@ -87,13 +91,13 @@ public class BoardService {
         return board.getId();
     }
 
-    private Board createBoard(BoardSaveRequestDto dto, String username) {
+    private Board createBoard(BoardSaveRequestDto dto, Member member) {
         return Board.builder()
-                .date(dto.getDate().substring(0, 10))
-                .username(username)
+                .date(dto.getDate())
                 .title(dto.getTitle())
                 .location(dto.getLocation())
                 .content(dto.getContent())
+                .member(member)
                 .build();
     }
 }

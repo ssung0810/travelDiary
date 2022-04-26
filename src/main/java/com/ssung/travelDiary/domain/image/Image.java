@@ -1,6 +1,7 @@
 package com.ssung.travelDiary.domain.image;
 
 import com.ssung.travelDiary.domain.board.Board;
+import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.web.file.FileDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class Image {
     @Embedded
     private FileDto images;
 
+//    @OneToOne(mappedBy = "image")
 //    private Member member;
 
     @ManyToOne(fetch = LAZY)
@@ -39,4 +41,18 @@ public class Image {
 
         addBoard(board);
     }
+
+    public static Image createMemberImage(FileDto images) {
+        if(images == null) return null;
+
+        Image image = new Image();
+        image.images = images;
+
+        return image;
+    }
+
+//    public void addMember(Member member) {
+//        this.member = member;
+//    }
 }
+

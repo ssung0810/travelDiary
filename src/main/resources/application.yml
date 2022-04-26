@@ -8,12 +8,15 @@ spring:
     username: root
     password: travel1!
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   messages:
     basename: errors
+
   servlet:
     multipart:
       max-file-size: 1MB
       max-request-size: 10MB
+
   profiles:
     include: oauth
 
@@ -22,17 +25,17 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-        show-sql: true
-#        format-sql: true
+#        show_sql: true
+        format_sql: true
 
 logging:
   level:
     org.hibernate.SQL: debug
 
-#decorator:
-#  datasource:
-#    p6spy:
-#      enable-logging: true
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
 
 file:
   dir: C:\Users\ogd00\Desktop\공부\프로젝트\travelDiaryBox\images/

@@ -1,10 +1,12 @@
 package com.ssung.travelDiary.service.members;
 
+import com.ssung.travelDiary.domain.image.Image;
+import com.ssung.travelDiary.domain.image.ImageRepository;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.web.file.FileDto;
-import com.ssung.travelDiary.web.file.FileHandler;
+import com.ssung.travelDiary.handler.FileHandler;
 import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
@@ -17,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.List;
 
+import static com.ssung.travelDiary.domain.image.Image.createMemberImage;
+
 @Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -24,6 +28,7 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final ImageRepository imageRepository;
     private final PasswordEncoder passwordEncoder;
     private final FileHandler fileHandler;
 
@@ -32,7 +37,10 @@ public class MemberService {
      */
     @Transactional
     public Long sign(MemberSaveRequestDto dto) throws IOException {
-        Member member = createMember(dto);
+        Image image = createMemberImage(fileHandler.storeFile(dto.getImage()));
+
+        imageRepository.save(image);
+        Member member = createMember(dto, image);
 
         memberRepository.save(member);
         return member.getId();
@@ -57,13 +65,6 @@ public class MemberService {
     }
 
     /**
-     * 전체 유저 검색
-     */
-    public List<Member> findAll() {
-        return memberRepository.findAll();
-    }
-
-    /**
      * 프로필 정보 변경
      */
     @Transactional
@@ -71,8 +72,11 @@ public class MemberService {
         Member member = memberRepository.findByUsername(requestDto.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
 
-        FileDto image = fileHandler.storeFile(requestDto.getImage());
+        Image image = createMemberImage(fileHandler.storeFile(requestDto.getImage()));
+        imageRepository.save(image);
+
         requestDto.setPassword(encodePassword(requestDto.getPassword()));
+
         return member.update(requestDto, image);
     }
 
@@ -95,14 +99,12 @@ public class MemberService {
         return passwordEncoder.matches(password, encodedPassword);
     }
 
-    private Member createMember(MemberSaveRequestDto dto) throws IOException {
-        FileDto image = fileHandler.storeFile(dto.getImage());
-
+    private Member createMember(MemberSaveRequestDto dto, Image image) {
         return Member.builder()
                 .username(dto.getUsername())
                 .password(encodePassword(dto.getPassword()))
                 .email(dto.getEmail())
-                .imageFile(image)
+                .image(image)
                 .role(Role.USER)
                 .build();
     }

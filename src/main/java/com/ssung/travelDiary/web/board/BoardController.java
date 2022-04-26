@@ -1,7 +1,7 @@
 package com.ssung.travelDiary.web.board;
 
 import com.ssung.travelDiary.domain.board.Board;
-import com.ssung.travelDiary.web.file.FileHandler;
+import com.ssung.travelDiary.handler.FileHandler;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.image.ImageService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
@@ -32,12 +32,12 @@ public class BoardController {
 
     @GetMapping("/privateBoardList")
     public String privateBoardList(Model model,
-                                   @SessionAttribute String username,
+                                   @SessionAttribute String memberId,
                                    @ModelAttribute BoardSearchDto dateDto) {
 
         if(dateDto.getDate() == null || dateDto.getDate().equals("")) dateDto.setDate(LocalDate.now().toString());
 
-        List<Board> board = boardService.findPrivateList(username, dateDto.getDate());
+        List<Board> board = boardService.findList(Long.parseLong(memberId), dateDto.getDate());
         model.addAttribute("boards", board);
         model.addAttribute("date", dateDto.getDate());
 
@@ -66,14 +66,14 @@ public class BoardController {
     @PostMapping("/save")
     public String boardSave(@Valid @ModelAttribute("board") BoardSaveRequestDto dto,
                             BindingResult bindingResult,
-                            @SessionAttribute String username) throws IOException {
+                            @SessionAttribute String memberId) throws IOException {
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult = {}", bindingResult);
             return "board/boardSaveForm";
         }
 
-        Board board = boardService.save(dto, username);
+        Board board = boardService.save(dto, memberId);
 
         return "redirect:/board/privateBoardList?date=" + board.getDate();
     }

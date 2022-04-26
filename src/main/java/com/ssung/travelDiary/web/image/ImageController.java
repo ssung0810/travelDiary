@@ -1,6 +1,6 @@
 package com.ssung.travelDiary.web.image;
 
-import com.ssung.travelDiary.web.file.FileHandler;
+import com.ssung.travelDiary.handler.FileHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

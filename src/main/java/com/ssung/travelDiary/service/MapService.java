@@ -40,19 +40,18 @@ public class MapService {
         }
 
         String apiURL = "https://openapi.naver.com/v1/search/local.json?query="+keyword+"&display=20&start=1&sort=random";    // json 결과
-        //String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
 
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", "TGpUFYZWB5HLuioyuGwo");
         requestHeaders.put("X-Naver-Client-Secret", "oymMwRb7eo");
         String responseBody = get(apiURL,requestHeaders);
 
-        System.out.println("네이버에서 받은 결과 = " + responseBody);
-        System.out.println("-----------------------------------------");
+//        System.out.println("네이버에서 받은 결과 = " + responseBody);
+//        System.out.println("-----------------------------------------");
 
         MapDto mapDto = objectMapper.readValue(responseBody, MapDto.class);
 
-        log.info("mapDto = {}", mapDto);
+//        log.info("mapDto = {}", mapDto);
 
         return mapDto;
     }

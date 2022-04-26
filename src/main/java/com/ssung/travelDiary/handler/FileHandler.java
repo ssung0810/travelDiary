@@ -1,5 +1,6 @@
-package com.ssung.travelDiary.web.file;
+package com.ssung.travelDiary.handler;
 
+import com.ssung.travelDiary.web.file.FileDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -47,7 +48,8 @@ public class FileHandler {
     }
 
     private String createStoreFileName(String originalName) {
-        return Long.toString(System.nanoTime()) + originalName + "." + extractExt(originalName);
+//        return Long.toString(System.nanoTime()) + originalName + "." + extractExt(originalName);
+        return Long.toString(System.nanoTime()) + originalName;
     }
 
     private String extractExt(String originalName) {

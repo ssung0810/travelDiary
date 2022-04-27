@@ -5,7 +5,6 @@ import com.ssung.travelDiary.domain.image.ImageRepository;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
-import com.ssung.travelDiary.web.file.FileDto;
 import com.ssung.travelDiary.handler.FileHandler;
 import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.List;
 
 import static com.ssung.travelDiary.domain.image.Image.createMemberImage;
 

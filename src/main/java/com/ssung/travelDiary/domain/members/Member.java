@@ -40,6 +40,9 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member")
     private List<Board> boards = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<Share> shareList = new ArrayList<>();
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;

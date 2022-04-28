@@ -13,6 +13,7 @@ public class Share {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String title;
     private String creator;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -57,3 +57,27 @@
 .boardImg img{width: 300px; height: 300px; margin-right:15px;}
 
 #date.write {cursor: text; background-color: #fff; opacity: unset;}
+
+
+
+/*** share ***/
+/* 공유 게시글 추가 */
+/* .modalContainer {display: flex; justify-content: space-between;} */
+
+#totalBox {display: flex; justify-content: space-between;}
+
+#addBox {width: 500px;}
+#searchBox {display: flex;}
+#searchType {width:120px; margin-right: 10px;}
+#addSearch {margin-left: 10px;}
+.addTitle {font-size: 25px; width: 80%;}
+
+#listBox {max-height: 390px; overflow-y: auto;}
+.contentBox {border-bottom: solid #cbcbcb 1px;}
+.contentHeader {display: flex; justify-content: space-between;}
+
+#resultBox {overflow-y: auto;}
+
+#resultBox {width: 500px;}
+
+.shareBtnBox {text-align: center; margin-top: 20px;}

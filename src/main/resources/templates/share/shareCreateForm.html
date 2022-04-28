@@ -9,24 +9,72 @@
 
 <section class="container">
     <div>
-        <form action="/board/share" method="post" th:object="${board}">
+        <form action="/share" method="post" th:object="${share}">
             <div class="form-group">
-                <label for="title">이름</label>
+                <label for="title">폴더 이름</label>
                 <input type="text" id="title" th:field="*{title}"
                        th:errorclass="field-error" class="form-control" placeholder="공유폴더 이름을 입력하세요">
 
                 <div class="field-error" th:errors="*{title}">제목오류</div>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-primary">공유 게시글 추가</button>
+                <label for="boards">공유 게시글</label>
+                <div>
+                    <button type="button" id="boards" class="btn btn-primary">공유 게시글 추가</button>
+                </div>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-primary">공유 대상 추가</button>
+                <label for="members">공유 대상</label>
+                <div>
+                    <button type="button" id="members" class="btn btn-primary">공유 대상 추가</button>
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary">저장</button>
             <button type="button" class="btn btn-default" onclick="history.back()">취소</button>
         </form>
+    </div>
+
+
+    <!--공유 게시글 추가 modal-->
+    <div class="modalContainer">
+        <div id="totalBox">
+            <div id="addBox">
+                <div id="searchBox">
+                    <select id="searchType" class="form-seelct">
+                        <option value="total">전체</option>
+                        <option value="date">날짜</option>
+                        <option value="title">제목</option>
+                    </select>
+                    <input type="text" id="boardSearch" class="form-control" placeholder="조회 내용을 입력하세요">
+                    <button type="button" id="addSearch" class="btn btn-primary">조회</button>
+                </div>
+                <div id="listBox">
+                    <div class="contentBox">
+                        <div class="contentHeader">
+                            <span class="addTitle">제목</span><span class="addDate">2022-04-28</span>
+                        </div>
+                        <div>
+                            <span>내용</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="resultBox">
+                <div class="contentBox">
+                    <div class="contentHeader">
+                        <span class="addTitle">제목</span><span class="addDate">2022-04-28</span>
+                    </div>
+                    <div>
+                        <span>내용</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shareBtnBox">
+            <button class="btn btn-primary">저장</button>
+            <button class="btn btn-default">취소</button>
+        </div>
     </div>
 </section>
 

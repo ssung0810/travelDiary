@@ -51,7 +51,7 @@ public class BoardService {
     }
 
     /**
-     * 게시글 개인 조회
+     * 개인 게시글 조회
      */
     public List<Board> findList(Long member_id, String date) {
 //        return boardRepository.findBoardList(member_id, date);

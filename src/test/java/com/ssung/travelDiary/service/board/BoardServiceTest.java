@@ -1,33 +1,42 @@
 package com.ssung.travelDiary.service.board;
 
 import com.ssung.travelDiary.domain.board.Board;
+import com.ssung.travelDiary.domain.image.Image;
 import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
+import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 class BoardServiceTest {
 
     @Autowired BoardService boardService;
     @Autowired MemberService memberService;
 
+    static Long memberId;
+
     @Test
-    public void 여행일지_등록() throws Exception {
+    public void 여행일지_등록_이미지없음() throws Exception {
         // given
         BoardSaveRequestDto boardSaveRequestDto = new BoardSaveRequestDto(
-                "title", "content", "location", new ArrayList<>(), "2022-04-29"
+                "title", "content", "location", new ArrayList<>(), LocalDate.now().toString()
         );
 
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
@@ -43,24 +52,95 @@ class BoardServiceTest {
         assertThat(findTravel.getContent()).isEqualTo("content");
     }
 
-//    @Test
-//    public void 여행일지_수정() throws Exception {
-//        // given
-//        Board board = Board.builder()
-//                .username("username")
-//                .title("title")
-//                .content("content")
-//                .location("location")
-//                .date("2022-03-09")
-//                .build();
-//
-//        Long boardId = boardService.save(board);
-//        BoardUpdateRequestDto dto = new BoardUpdateRequestDto("title2", "content2", "location2", "2022-03-10");
-//
-//        // when
-//        Board updateBoard = boardService.update(boardId, dto);
-//
-//        // then
-//        assertThat(updateBoard.getTitle()).isEqualTo("title2");
-//    }
+    @Test
+    public void 여행일지_등록_이미지있음() throws Exception {
+        // given
+        List<MultipartFile> images = new ArrayList<>();
+        images.add(new MockMultipartFile("image1", "image.png", MediaType.IMAGE_PNG_VALUE, "image".getBytes()));
+        images.add(new MockMultipartFile("image2", "image.png", MediaType.IMAGE_PNG_VALUE, "image".getBytes()));
+
+        BoardSaveRequestDto boardSaveRequestDto = new BoardSaveRequestDto(
+                "title", "content", "location", images, LocalDate.now().toString()
+        );
+
+        MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
+        MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
+        Long memberId = memberService.sign(dto);
+
+        boardService.save(boardSaveRequestDto, memberId);
+
+        // when
+        Board findBoard = boardService.findAll().get(0);
+        List<Image> findImages = findBoard.getImages();
+
+        // then
+        assertThat(findBoard.getContent()).isEqualTo("content");
+//        assertThat(findBoard.getImages().size()).isEqualTo(2);
+    }
+
+    @Test
+    void 개인_게시글_조회() throws Exception {
+        // given
+        Board board = createBoard();
+        String date = LocalDate.now().toString();
+
+        // when
+        List<Board> boards = boardService.findList(memberId, date);
+
+        // then
+        assertThat(boards.size()).isEqualTo(1);
+        assertThat(boards.get(0).getContent()).isEqualTo("content");
+    }
+
+    @Test
+    void 게시글_단일조회() throws Exception {
+        // given
+        Board board = createBoard();
+
+        // when
+        Board findBoard = boardService.findOne(board.getId());
+
+        // then
+        assertThat(findBoard.getContent()).isEqualTo("content");
+    }
+
+    @Test
+    void 게시글_수정() throws Exception {
+        // given
+        Board board = createBoard();
+        BoardUpdateRequestDto updateRequestDto = new BoardUpdateRequestDto(
+                "title2", "content2", "location2", new ArrayList<>(), LocalDate.now().toString()
+        );
+
+        // when
+        Board updateBoard = boardService.update(board.getId(), updateRequestDto);
+
+        // then
+        assertThat(updateBoard.getTitle()).isEqualTo("title2");
+    }
+
+    @Test
+    void 게시글_삭제() throws Exception {
+        // given
+        Board board = createBoard();
+
+        // when
+        boardService.delete(board.getId());
+
+        // then
+        assertThatThrownBy(() -> boardService.findOne(board.getId())).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private Board createBoard() throws IOException {
+        BoardSaveRequestDto boardSaveRequestDto = new BoardSaveRequestDto(
+                "title", "content", "location", new ArrayList<>(), LocalDate.now().toString()
+        );
+
+        MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
+        MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
+        memberId = memberService.sign(dto);
+
+        return boardService.save(boardSaveRequestDto, memberId);
+    }
+
 }

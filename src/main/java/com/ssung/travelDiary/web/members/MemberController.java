@@ -78,8 +78,6 @@ public class MemberController {
 
         memberService.sign(dto);
 
-        log.info("4");
-
         return "redirect:/";
     }
 
@@ -120,7 +118,7 @@ public class MemberController {
         Member member = memberService.update(dto);
 
         if(!dto.getImage().isEmpty())
-            httpSession.setAttribute("imageName", member.getImage().getImages().getStoredFileName());
+            httpSession.setAttribute("imageName", member.getImage().getStoredFileName());
 
         return "/members/profileForm";
     }

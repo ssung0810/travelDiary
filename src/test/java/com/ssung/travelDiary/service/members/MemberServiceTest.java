@@ -1,6 +1,7 @@
 package com.ssung.travelDiary.service.members;
 
 import com.ssung.travelDiary.domain.members.Member;
+import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
@@ -19,8 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional
 class MemberServiceTest {
 
+    @Autowired private MemberService memberService;
+
     @Autowired
-    private MemberService memberService;
+    MemberRepository memberRepository;
 
     @BeforeEach
     void clean() {
@@ -52,7 +55,7 @@ class MemberServiceTest {
         Member findMember = memberService.findOne(findId);
 
         // then
-        assertThat(findMember.getImage().getImages().getOriginalFileName()).isEqualTo(multipartFile.getOriginalFilename());
+        assertThat(findMember.getImage().getOriginalFileName()).isEqualTo(multipartFile.getOriginalFilename());
     }
 
     @Test
@@ -162,6 +165,6 @@ class MemberServiceTest {
 
         // then
         assertThat(updateMember.getEmail()).isEqualTo("email2");
-        assertThat(updateMember.getImage().getImages().getOriginalFileName()).isEqualTo("test2.png");
+        assertThat(updateMember.getImage().getOriginalFileName()).isEqualTo("test2.png");
     }
 }

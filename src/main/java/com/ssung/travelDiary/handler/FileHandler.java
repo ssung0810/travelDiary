@@ -44,7 +44,7 @@ public class FileHandler {
         String fullPath = getFullPath(storedName);
         multipartFile.transferTo(new File(fullPath));
 
-        return new FileDto(multipartFile.getOriginalFilename(), storedName, multipartFile.getSize());
+        return new FileDto(multipartFile.getOriginalFilename(), storedName);
     }
 
     private String createStoreFileName(String originalName) {

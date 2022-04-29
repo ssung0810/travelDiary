@@ -23,9 +23,6 @@ public class Image {
     @Embedded
     private FileDto images;
 
-//    @OneToOne(mappedBy = "image")
-//    private Member member;
-
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
@@ -49,15 +46,6 @@ public class Image {
         image.images = images;
 
         return image;
-    }
-
-    @Override
-    public String toString() {
-        return "Image{" +
-                "id=" + id +
-                ", images=" + images.getOriginalFileName() +
-                ", board=" + board +
-                '}';
     }
 }
 

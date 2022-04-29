@@ -21,6 +21,6 @@ public class MemberResponseDto {
         this.username = entity.getUsername();
         this.email = entity.getEmail();
 
-        if(entity.getImage() != null) this.image = entity.getImage().getImages();
+        if(entity.getImage() != null) this.image = entity.getImage();
     }
 }

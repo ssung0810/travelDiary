@@ -1,11 +1,10 @@
 package com.ssung.travelDiary.service.members;
 
-import com.ssung.travelDiary.domain.image.Image;
-import com.ssung.travelDiary.domain.image.ImageRepository;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.handler.FileHandler;
+import com.ssung.travelDiary.web.file.FileDto;
 import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
@@ -17,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
-import static com.ssung.travelDiary.domain.image.Image.createMemberImage;
-
 @Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -26,7 +23,6 @@ import static com.ssung.travelDiary.domain.image.Image.createMemberImage;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final ImageRepository imageRepository;
     private final PasswordEncoder passwordEncoder;
     private final FileHandler fileHandler;
 
@@ -35,13 +31,11 @@ public class MemberService {
      */
     @Transactional
     public Long sign(MemberSaveRequestDto dto) throws IOException {
-        Image image = createMemberImage(fileHandler.storeFile(dto.getImage()));
+        FileDto fileDto = fileHandler.storeFile(dto.getImage());
 
-        imageRepository.save(image);
-        log.info("image = {}", image);
-        Member member = createMember(dto, null);
-
+        Member member = createMember(dto, fileDto);
         memberRepository.save(member);
+
         return member.getId();
     }
 
@@ -71,12 +65,11 @@ public class MemberService {
         Member member = memberRepository.findByUsername(requestDto.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
 
-        Image image = createMemberImage(fileHandler.storeFile(requestDto.getImage()));
-        imageRepository.save(image);
+        FileDto fileDto = fileHandler.storeFile(requestDto.getImage());
 
         requestDto.setPassword(encodePassword(requestDto.getPassword()));
 
-        return member.update(requestDto, image);
+        return member.update(requestDto, fileDto);
     }
 
     /**
@@ -98,7 +91,7 @@ public class MemberService {
         return passwordEncoder.matches(password, encodedPassword);
     }
 
-    private Member createMember(MemberSaveRequestDto dto, Image image) {
+    private Member createMember(MemberSaveRequestDto dto, FileDto image) {
         return Member.builder()
                 .username(dto.getUsername())
                 .password(encodePassword(dto.getPassword()))

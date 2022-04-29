@@ -31,7 +31,7 @@ public class TestDataInit {
     @PostConstruct
     public void init() throws IOException {
 
-        FileDto fileDto = new FileDto("01. 왕이신하나님.png", "1013784853220000.png", 201848L);
+        FileDto fileDto = new FileDto("01. 왕이신하나님.png", "1013784853220000.png");
 
 
         Member member = Member.builder()

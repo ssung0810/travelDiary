@@ -54,7 +54,7 @@ public class LoginController {
         if(member.getImage() == null)
             httpSession.setAttribute("imageName", null);
         else
-            httpSession.setAttribute("imageName", member.getImage().getImages().getStoredFileName());
+            httpSession.setAttribute("imageName", member.getImage().getStoredFileName());
 
         return "redirect:/board/privateBoardList";
     }

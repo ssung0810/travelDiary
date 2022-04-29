@@ -32,9 +32,12 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToOne
-    @JoinColumn(name = "image_id")
-    private Image image;
+//    @OneToOne
+//    @JoinColumn(name = "image_id")
+//    private Image image;
+
+    @Embedded
+    private FileDto image;
 
     @OneToMany(mappedBy = "member")
     private List<Board> boards = new ArrayList<>();
@@ -44,7 +47,7 @@ public class Member extends BaseTimeEntity {
     private Role role;
 
     @Builder
-    public Member(String username, String password, String email, Image image, Role role) {
+    public Member(String username, String password, String email, FileDto image, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -54,7 +57,7 @@ public class Member extends BaseTimeEntity {
 //        image.addMember(this);
     }
 
-    public Member update(MemberUpdateRequestDto entity, Image image) {
+    public Member update(MemberUpdateRequestDto entity, FileDto image) {
         this.username = entity.getUsername();
         this.password = entity.getPassword();
         this.email = entity.getEmail();
@@ -64,23 +67,7 @@ public class Member extends BaseTimeEntity {
         return this;
     }
 
-//    private void updateImage(FileDto imageFile) {
-//        this.imageFile = imageFile;
-//    }
-
     public String getRoleKey() {
         return this.role.getKey();
-    }
-
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-//                ", imageFile=" + imageFile +
-                ", role=" + role +
-                '}';
     }
 }

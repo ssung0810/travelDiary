@@ -11,6 +11,10 @@ public class ShareSaveRequestDto {
 
     private String title;
     private String creator;
-    private List<String> member_id = new ArrayList<>();
-    private List<String> board_id = new ArrayList<>();
+    private List<Long> members = new ArrayList<>();
+    private List<Long> boards = new ArrayList<>();
+
+    public ShareSaveRequestDto(String creator) {
+        this.creator = creator;
+    }
 }

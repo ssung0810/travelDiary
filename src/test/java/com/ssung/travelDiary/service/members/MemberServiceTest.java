@@ -46,9 +46,9 @@ class MemberServiceTest {
         // given
         MockMultipartFile multipartFile = new MockMultipartFile("image", "test.png", MediaType.IMAGE_PNG_VALUE, "test".getBytes());
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
+        Long findId = memberService.sign(dto);
 
         // when
-        Long findId = memberService.sign(dto);
         Member findMember = memberService.findOne(findId);
 
         // then

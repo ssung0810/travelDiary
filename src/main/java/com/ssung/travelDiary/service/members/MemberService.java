@@ -38,7 +38,8 @@ public class MemberService {
         Image image = createMemberImage(fileHandler.storeFile(dto.getImage()));
 
         imageRepository.save(image);
-        Member member = createMember(dto, image);
+        log.info("image = {}", image);
+        Member member = createMember(dto, null);
 
         memberRepository.save(member);
         return member.getId();

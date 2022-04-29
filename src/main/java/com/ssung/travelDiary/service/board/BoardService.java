@@ -32,8 +32,8 @@ public class BoardService {
      * 게시글 저장
      */
     @Transactional
-    public Board save(BoardSaveRequestDto dto, String memberId) throws IOException {
-        Member member = memberRepository.findById(Long.parseLong(memberId)).orElse(null);
+    public Board save(BoardSaveRequestDto dto, Long memberId) throws IOException {
+        Member member = memberRepository.findById(memberId).orElse(null);
 
         Board board = createBoard(dto, member);
         boardRepository.save(board);
@@ -54,6 +54,7 @@ public class BoardService {
      * 게시글 개인 조회
      */
     public List<Board> findList(Long member_id, String date) {
+//        return boardRepository.findBoardList(member_id, date);
         return boardRepository.findByMember_idAndDate(member_id, date);
     }
 

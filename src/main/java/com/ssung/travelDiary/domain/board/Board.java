@@ -3,7 +3,6 @@ package com.ssung.travelDiary.domain.board;
 import com.ssung.travelDiary.domain.BaseTimeEntity;
 import com.ssung.travelDiary.domain.image.Image;
 import com.ssung.travelDiary.domain.members.Member;
-import com.ssung.travelDiary.domain.share.Share;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +22,6 @@ public class Board extends BaseTimeEntity {
     @Column(name = "board_id")
     public Long id;
 
-//    @Column(nullable = false)
-//    private String username;
-
     @Column(nullable = false)
     private String title;
 
@@ -41,9 +37,6 @@ public class Board extends BaseTimeEntity {
     @OneToMany(mappedBy = "board")
     private List<Image> images = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "board")
-//    private List<Share> shares = new ArrayList<>();
-
     private String date;
 
     @Builder
@@ -54,11 +47,6 @@ public class Board extends BaseTimeEntity {
         this.date = date;
         this.member = member;
     }
-
-//    private void addShares(Share shares) {
-//        this.shares.add(shares);
-//        shares.addShares(this);
-//    }
 
     public Board update(String title, String content, String location, String date) {
         this.title = title;

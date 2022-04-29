@@ -7,7 +7,6 @@ import com.ssung.travelDiary.service.image.ImageService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.board.dto.BoardSearchDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
-import com.ssung.travelDiary.web.board.dto.ShareBoardSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -32,16 +31,16 @@ public class BoardController {
 
     @GetMapping("/privateBoardList")
     public String privateBoardList(Model model,
-                                   @SessionAttribute String memberId,
+                                   @SessionAttribute Long memberId,
                                    @ModelAttribute BoardSearchDto dateDto) {
 
         if(dateDto.getDate() == null || dateDto.getDate().equals("")) dateDto.setDate(LocalDate.now().toString());
 
-        List<Board> board = boardService.findList(Long.parseLong(memberId), dateDto.getDate());
+        List<Board> board = boardService.findList(memberId, dateDto.getDate());
         model.addAttribute("boards", board);
         model.addAttribute("date", dateDto.getDate());
 
-        return "board/privateBoardList";
+        return "board/boardList";
     }
 
     @GetMapping("/{boardId}")
@@ -66,7 +65,7 @@ public class BoardController {
     @PostMapping("/save")
     public String boardSave(@Valid @ModelAttribute("board") BoardSaveRequestDto dto,
                             BindingResult bindingResult,
-                            @SessionAttribute String memberId) throws IOException {
+                            @SessionAttribute Long memberId) throws IOException {
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult = {}", bindingResult);
@@ -107,24 +106,5 @@ public class BoardController {
     @DeleteMapping("/{boardId}")
     public Long delete(@PathVariable Long boardId) {
         return boardService.delete(boardId);
-    }
-
-    @GetMapping("/share")
-    public String shareBoardCreateForm(Model model) {
-
-        model.addAttribute("board", new ShareBoardSaveRequestDto());
-
-        return "board/shareBoardCreateForm";
-    }
-
-    @PostMapping("/share")
-    public String shareBoardSave(@Valid @ModelAttribute("board") ShareBoardSaveRequestDto dto,
-                                 BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            return "board/shareBoardCreateForm";
-        }
-
-        return "redirection:/board/privateBoardList";
     }
 }

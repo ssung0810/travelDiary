@@ -1,33 +1,34 @@
 package com.ssung.travelDiary.domain.share;
 
-import com.ssung.travelDiary.domain.board.Board;
-import com.ssung.travelDiary.domain.members.Member;
+import com.ssung.travelDiary.domain.BaseTimeEntity;
 import lombok.Builder;
+import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@Getter
 @Entity
-public class Share {
+public class Share extends BaseTimeEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "share_id")
     private Long id;
 
     private String title;
     private String creator;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @OneToMany(mappedBy = "share", cascade = CascadeType.PERSIST)
+    private List<ShareMember> shareMember = new ArrayList<>();
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id")
-//    private Member member;
+    @OneToMany(mappedBy = "share", cascade = CascadeType.PERSIST)
+    private List<ShareBoard> shareBoard = new ArrayList<>();
 
-//    public Share createShare(String creator, Member member) {
-//        this.creator = creator;
-//        this.member = member;
-//
-//        return this;
-//    }
+
+    @Builder
+    public Share(String title, String creator) {
+        this.title = title;
+        this.creator = creator;
+    }
 }

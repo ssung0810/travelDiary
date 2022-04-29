@@ -32,16 +32,12 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-//    @Embedded
     @OneToOne
     @JoinColumn(name = "image_id")
     private Image image;
 
     @OneToMany(mappedBy = "member")
     private List<Board> boards = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member")
-    private List<Share> shareList = new ArrayList<>();
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

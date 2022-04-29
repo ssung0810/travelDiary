@@ -26,4 +26,12 @@ public class BoardSaveRequestDto {
 
     public BoardSaveRequestDto() {
     }
+
+    public BoardSaveRequestDto(String title, String content, String location, List<MultipartFile> images, String date) {
+        this.title = title;
+        this.content = content;
+        this.location = location;
+        this.images = images;
+        this.date = date;
+    }
 }

@@ -10,6 +10,8 @@
 <section class="container">
     <div>
         <form action="/share" method="post" th:object="${share}">
+            <input type="hidden" th:field="*{creator}">
+
             <div class="form-group">
                 <label for="title">폴더 이름</label>
                 <input type="text" id="title" th:field="*{title}"

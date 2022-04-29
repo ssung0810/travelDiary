@@ -51,8 +51,13 @@ public class Image {
         return image;
     }
 
-//    public void addMember(Member member) {
-//        this.member = member;
-//    }
+    @Override
+    public String toString() {
+        return "Image{" +
+                "id=" + id +
+                ", images=" + images.getOriginalFileName() +
+                ", board=" + board +
+                '}';
+    }
 }
 

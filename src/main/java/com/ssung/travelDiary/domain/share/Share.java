@@ -25,7 +25,6 @@ public class Share extends BaseTimeEntity {
     @OneToMany(mappedBy = "share", cascade = CascadeType.PERSIST)
     private List<ShareBoard> shareBoard = new ArrayList<>();
 
-
     @Builder
     public Share(String title, String creator) {
         this.title = title;

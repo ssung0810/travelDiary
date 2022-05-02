@@ -58,4 +58,11 @@ public class ShareService {
 
         return shareRepository.findList(member);
     }
+
+    /**
+     * 특정 공유폴더 내부 게시글 조회
+     */
+    public List<Board> findShareBoard(Long shareId) {
+        return shareRepository.findShareBoard(shareId);
+    }
 }

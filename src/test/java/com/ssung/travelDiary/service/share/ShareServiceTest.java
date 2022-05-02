@@ -1,7 +1,6 @@
 package com.ssung.travelDiary.service.share;
 
 import com.ssung.travelDiary.domain.board.Board;
-import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.domain.share.Share;
 import com.ssung.travelDiary.domain.share.ShareBoard;
@@ -18,6 +17,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,62 @@ class ShareServiceTest {
     @Test
     public void 공유폴더_저장() throws Exception {
         // given
+        Share share = createShare();
+
+        // when
+        List<ShareBoard> shareBoard = share.getShareBoard();
+        List<ShareMember> shareMember = share.getShareMember();
+
+        // then
+        assertThat(share.getTitle()).isEqualTo("shareTitle");
+        assertThat(shareBoard.size()).isEqualTo(2);
+        assertThat(shareMember.size()).isEqualTo(2);
+        assertThat(shareBoard.get(0).getShare().getId()).isEqualTo(share.getId());
+        assertThat(shareMember.get(0).getShare().getId()).isEqualTo(share.getId());
+    }
+
+    @Test
+    void 공유폴더_리스트_출력() throws Exception {
+        // given
+        createShare();
+
+        // when
+        Share share = shareService.findList(1L).get(0);
+
+        // then
+        assertThat(share.getTitle()).isEqualTo("shareTitle");
+    }
+
+    @Test
+    void 공유폴더_리스트_출력_member없음() throws Exception {
+        // given
+        createShare();
+
+        MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
+        MemberSaveRequestDto dto = new MemberSaveRequestDto("username3", "password3", "email3", multipartFile, Role.USER);
+        Long findId = memberService.sign(dto);
+
+        // when
+        List<Share> list = shareService.findList(findId);
+
+        // then
+        assertThat(list.size()).isEqualTo(0);
+    }
+
+    @Test
+    void 공유된_게시글_전체조회() throws Exception {
+        // given
+        Share share = createShare();
+
+        // when
+        List<Board> shareBoard = shareService.findShareBoard(share.getId());
+
+        // then
+        assertThat(shareBoard.size()).isEqualTo(2);
+        assertThat(shareBoard.get(0).getTitle()).isEqualTo("title");
+    }
+
+    private Share createShare() throws IOException {
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
 
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
@@ -63,28 +119,11 @@ class ShareServiceTest {
         boards.add(board2.getId());
 
         ShareSaveRequestDto shareSaveRequestDto = new ShareSaveRequestDto(title, creator, members, boards);
+        ShareSaveRequestDto shareSaveRequestDto2 = new ShareSaveRequestDto(title, creator, members, boards);
 
-        // when
         Share share = shareService.save(shareSaveRequestDto, findId);
-        List<ShareBoard> shareBoard = share.getShareBoard();
-        List<ShareMember> shareMember = share.getShareMember();
+        shareService.save(shareSaveRequestDto2, findId);
 
-        // then
-        assertThat(share.getTitle()).isEqualTo(title);
-        assertThat(shareBoard.size()).isEqualTo(2);
-        assertThat(shareMember.size()).isEqualTo(2);
-        assertThat(shareBoard.get(0).getShare().getId()).isEqualTo(share.getId());
-        assertThat(shareMember.get(0).getShare().getId()).isEqualTo(share.getId());
-    }
-
-    @Test
-    void 공유폴더_리스트_출력() throws Exception {
-        // given
-        List<Share> list = shareService.findList(1L);
-//        Member list = shareService.findList(1L);
-
-        // when
-
-        // then
+        return share;
     }
 }

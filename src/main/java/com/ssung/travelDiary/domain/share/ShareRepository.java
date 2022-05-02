@@ -1,5 +1,6 @@
 package com.ssung.travelDiary.domain.share;
 
+import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.members.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,4 +11,7 @@ import java.util.List;
 public interface ShareRepository extends JpaRepository<Share, Long> {
     @Query("select s from Share s join s.shareMember sm on sm.member = :member")
     List<Share> findList(@Param("member") Member member);
+
+    @Query("select b from Share s join s.shareBoard sb on s.id = :share_id join sb.board b")
+    List<Board> findShareBoard(@Param("share_id") Long share_id);
 }

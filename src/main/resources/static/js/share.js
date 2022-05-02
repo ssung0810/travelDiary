@@ -1,3 +1,4 @@
+// 게시글 추가
 $("#addSearch").on("click", function() {
     var param = {
         type: $("#searchType").val(),
@@ -14,4 +15,3 @@ $("#addSearch").on("click", function() {
 
     })
 });
-

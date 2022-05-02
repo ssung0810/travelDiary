@@ -8,6 +8,8 @@ import com.ssung.travelDiary.domain.share.Share;
 import com.ssung.travelDiary.domain.share.ShareBoard;
 import com.ssung.travelDiary.domain.share.ShareMember;
 import com.ssung.travelDiary.domain.share.ShareRepository;
+import com.ssung.travelDiary.web.share.dto.ShareBoardResponseDto;
+import com.ssung.travelDiary.web.share.dto.ShareListResponseDto;
 import com.ssung.travelDiary.web.share.dto.ShareSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -53,7 +55,7 @@ public class ShareService {
     /**
      * 공유폴더 리스트 출력
      */
-    public List<Share> findList(Long memberId) {
+    public List<ShareListResponseDto> findList(Long memberId) {
         Member member = memberRepository.findById(memberId).orElse(null);
 
         return shareRepository.findList(member);
@@ -62,7 +64,7 @@ public class ShareService {
     /**
      * 특정 공유폴더 내부 게시글 조회
      */
-    public List<Board> findShareBoard(Long shareId) {
+    public List<ShareBoardResponseDto> findShareBoard(Long shareId) {
         return shareRepository.findShareBoard(shareId);
     }
 }

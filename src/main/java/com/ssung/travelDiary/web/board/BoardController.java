@@ -26,7 +26,6 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-    private final ImageService imageService;
     private final FileHandler fileHandler;
 
     @GetMapping("/privateBoardList")
@@ -39,6 +38,7 @@ public class BoardController {
         List<Board> board = boardService.findList(memberId, dateDto.getDate());
         model.addAttribute("boards", board);
         model.addAttribute("date", dateDto.getDate());
+        model.addAttribute("memberId", memberId);
 
         return "board/boardList";
     }

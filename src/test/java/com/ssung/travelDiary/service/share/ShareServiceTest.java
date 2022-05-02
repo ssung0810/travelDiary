@@ -9,6 +9,8 @@ import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
+import com.ssung.travelDiary.web.share.dto.ShareBoardResponseDto;
+import com.ssung.travelDiary.web.share.dto.ShareListResponseDto;
 import com.ssung.travelDiary.web.share.dto.ShareSaveRequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,7 @@ class ShareServiceTest {
     @Autowired BoardService boardService;
     @Autowired ShareService shareService;
 
+    private Long memberId;
 
     @Test
     public void 공유폴더_저장() throws Exception {
@@ -55,26 +58,24 @@ class ShareServiceTest {
     @Test
     void 공유폴더_리스트_출력() throws Exception {
         // given
-        createShare();
+        Share share = createShare();
 
         // when
-        Share share = shareService.findList(1L).get(0);
+        ShareListResponseDto responseDto = shareService.findList(memberId).get(0);
 
         // then
-        assertThat(share.getTitle()).isEqualTo("shareTitle");
+        assertThat(responseDto.getTitle()).isEqualTo("shareTitle");
     }
 
     @Test
     void 공유폴더_리스트_출력_member없음() throws Exception {
         // given
-        createShare();
-
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username3", "password3", "email3", multipartFile, Role.USER);
         Long findId = memberService.sign(dto);
 
         // when
-        List<Share> list = shareService.findList(findId);
+        List<ShareListResponseDto> list = shareService.findList(findId);
 
         // then
         assertThat(list.size()).isEqualTo(0);
@@ -86,7 +87,7 @@ class ShareServiceTest {
         Share share = createShare();
 
         // when
-        List<Board> shareBoard = shareService.findShareBoard(share.getId());
+        List<ShareBoardResponseDto> shareBoard = shareService.findShareBoard(share.getId());
 
         // then
         assertThat(shareBoard.size()).isEqualTo(2);
@@ -100,15 +101,15 @@ class ShareServiceTest {
         MemberSaveRequestDto dto2 = new MemberSaveRequestDto("username2", "password2", "email2", multipartFile, Role.USER);
         Long findId = memberService.sign(dto);
         Long findId2 = memberService.sign(dto2);
+        memberId = findId;
 
         BoardSaveRequestDto boardSaveRequestDto = new BoardSaveRequestDto("title", "content", "location", new ArrayList<>(), LocalDate.now().toString());
         BoardSaveRequestDto boardSaveRequestDto2 = new BoardSaveRequestDto("title2", "content2", "location2", new ArrayList<>(), LocalDate.now().toString());
         Board board = boardService.save(boardSaveRequestDto, findId);
         Board board2 = boardService.save(boardSaveRequestDto2, findId);
 
-
         String title = "shareTitle";
-        String creator = "username";
+        String creator = "test";
 
         ArrayList<Long> members = new ArrayList<>();
         members.add(findId);

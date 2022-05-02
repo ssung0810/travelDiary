@@ -9,10 +9,6 @@
 
 <section class="container">
 
-    <div id="shareBox">
-
-    </div>
-
     <div id="searchContainer">
         <form class="form-inline" action="/board/privateBoardList" method="get">
             <div class="searchBox form-group">
@@ -23,12 +19,17 @@
             <button type="submit" id="dateSearchBtn" class="btn btn-primary">조회</button>
         </form>
 
-        <div>
+        <div id="shareBox">
+            <select id="shareList" name="shareList" class="form-select">
+                <option value="0">내 폴더</option>
+            </select>
             <a href="/share" class="btn btn-primary">공유 폴더 만들기</a>
         </div>
     </div>
 
     <hr>
+
+    <input type="hidden" id="memberId" th:value="${memberId}">
 
     <div class="row" th:object="${board}">
         <div class="col-sm-6 col-md-4" th:each="board : ${boards}">
@@ -50,6 +51,10 @@
     </div>
 
 </section>
+
+<div >
+
+</div>
 
 </body>
 </html>

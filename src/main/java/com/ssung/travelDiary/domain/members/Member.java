@@ -32,10 +32,6 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-//    @OneToOne
-//    @JoinColumn(name = "image_id")
-//    private Image image;
-
     @Embedded
     private FileDto image;
 
@@ -53,8 +49,6 @@ public class Member extends BaseTimeEntity {
         this.email = email;
         this.image = image;
         this.role = role;
-
-//        image.addMember(this);
     }
 
     public Member update(MemberUpdateRequestDto entity, FileDto image) {

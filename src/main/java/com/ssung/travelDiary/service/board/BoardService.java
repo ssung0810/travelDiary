@@ -9,6 +9,7 @@ import com.ssung.travelDiary.handler.FileHandler;
 import com.ssung.travelDiary.service.image.ImageService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
+import com.ssung.travelDiary.web.share.dto.ShareBoardResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -90,6 +91,13 @@ public class BoardService {
         boardRepository.delete(board);
 
         return board.getId();
+    }
+
+    /**
+     * 공유 게시글 조회
+     */
+    public List<ShareBoardResponseDto> findByMember(Long memberId) {
+        return boardRepository.findByMember_id(memberId);
     }
 
     private Board createBoard(BoardSaveRequestDto dto, Member member) {

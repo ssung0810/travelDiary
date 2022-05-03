@@ -39,48 +39,40 @@
 
 
     <!--공유 게시글 추가 modal-->
-    <div class="modalContainer">
-        <div id="totalBox">
-            <div id="addBox">
-                <div id="searchBox">
-                    <select id="searchType" class="form-select">
-                        <option value="total">전체</option>
-                        <option value="date">날짜</option>
-                        <option value="title">제목</option>
-                    </select>
-                    <input type="text" id="boardSearch" class="form-control" placeholder="조회 내용을 입력하세요">
-                    <button type="button" id="addSearch" class="btn btn-primary">조회</button>
-                </div>
-                <div id="listBox">
-                    <div class="contentBox">
-                        <div class="contentHeader">
-                            <span class="addTitle">제목</span><span class="addDate">2022-04-28</span>
-                        </div>
-                        <div>
-                            <span>내용</span>
-                        </div>
-                    </div>
-                </div>
+    <div id="boardModal" class="modalContainer">
+        <div class="addBox">
+            <div class="searchBox">
+                <select id="searchType" class="form-select">
+                    <option value="total">전체</option>
+                    <option value="date">날짜</option>
+                    <option value="title">제목</option>
+                </select>
+                <input type="text" id="boardSearch" class="form-control" placeholder="조회 내용을 입력하세요">
+                <button type="button" id="addSearch" class="btn btn-primary">조회</button>
             </div>
-            <div id="resultBox">
-                <div class="contentBox">
-                    <div class="contentHeader">
-                        <span class="addTitle">제목</span><span class="addDate">2022-04-28</span>
-                    </div>
-                    <div>
-                        <span>내용</span>
-                    </div>
+            <div id="boardListBox" class="listBox">
+                <div class="boardList" th:each="board : ${boardList}">
+                    <th:block th:object="${board}">
+                        <input type="checkbox" th:id="*{boardId}" th:name="*{boardId}" th:value="*{boardId}">
+                        <label>
+                            <div class="contentBox">
+                                <div class="contentHeader">
+                                    <span class="addTitle" th:text="*{title}">제목</span><span class="addDate" th:text="*{date}">1994-09-16</span>
+                                </div>
+                                <div>
+                                    <span class="addContent" th:text="*{content}">내용</span>
+                                </div>
+                            </div>
+                        </label>
+                    </th:block>
                 </div>
             </div>
         </div>
         <div class="shareBtnBox">
-            <button class="btn btn-primary">저장</button>
-            <button class="btn btn-default">취소</button>
+            <button id="shareBoardSave" class="btn btn-primary">저장</button>
+            <button id="shareBoardCancel" class="btn btn-default modalCancel">취소</button>
         </div>
     </div>
-
-    <!--공유폴더-->
-    <script th:src="@{/js/share.js}" type="text/javascript"></script>
 
 </section>
 

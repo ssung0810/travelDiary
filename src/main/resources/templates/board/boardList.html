@@ -30,6 +30,7 @@
     <hr>
 
     <input type="hidden" id="memberId" th:value="${memberId}">
+    <input type="hidden" id="shareId" th:value="${shareId}" value="0">
 
     <div class="row" th:object="${board}">
         <div class="col-sm-6 col-md-4" th:each="board : ${boards}">

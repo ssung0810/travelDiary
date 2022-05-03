@@ -39,6 +39,7 @@ public class BoardController {
         model.addAttribute("boards", board);
         model.addAttribute("date", dateDto.getDate());
         model.addAttribute("memberId", memberId);
+        model.addAttribute("shareId", 0);
 
         return "board/boardList";
     }

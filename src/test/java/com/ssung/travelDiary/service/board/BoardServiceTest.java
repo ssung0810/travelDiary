@@ -7,6 +7,7 @@ import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
+import com.ssung.travelDiary.web.share.dto.ShareBoardResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -129,6 +130,18 @@ class BoardServiceTest {
 
         // then
         assertThatThrownBy(() -> boardService.findOne(board.getId())).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 생성자에게_속한_공유_게시글_조회() throws Exception {
+        // given
+        Board board = createBoard();
+
+        // when
+        List<ShareBoardResponseDto> boardList = boardService.findByMember(memberId);
+
+        // then
+        assertThat(boardList.get(0).getTitle()).isEqualTo("title");
     }
 
     private Board createBoard() throws IOException {

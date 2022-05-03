@@ -1,6 +1,7 @@
 $(document).ready(function() {
     // 공유폴더 리스트 가져오기
     var memberId = $("#memberId").val();
+    var shareId = $("#shareId").val();
 
     $.ajax({
         type: "GET",
@@ -10,7 +11,11 @@ $(document).ready(function() {
         ContentType: "application/json; charset=UTF-8"
     }).done(function(result) {
         for(var i=0; i<result.length; i++) {
-            $("#shareList").append("<option value="+result[i].id+">"+result[i].title+"</option>");
+            if(shareId == result[i].id) {
+                $("#shareList").append("<option selected value="+result[i].id+">"+result[i].title+"</option>");
+            } else {
+                $("#shareList").append("<option value="+result[i].id+">"+result[i].title+"</option>");
+            }
         }
     }).fail(function(error) {
         console.log(error);
@@ -21,15 +26,21 @@ $(document).ready(function() {
     $("#shareList").on("change", function() {
         var shareId = $("#shareList option:selected").val();
 
-        $.ajax({
-            type: "GET",
-            url: "/shareBoard/"+shareId,
-            dataType: 'json',
-            ContentType: "application/json; charset=UTF-8"
-        }).done(function(result) {
-            console.log(result);
-        }).fail(function(error) {
-            console.log(error);
-        });
+        if(shareId == 0) {
+            window.location.href = "/board/privateBoardList";
+        } else {
+            window.location.href = "/sharePosts/"+shareId;
+        }
+
+//        $.ajax({
+//            type: "GET",
+//            url: "/shareBoard/"+shareId,
+//            dataType: 'json',
+//            ContentType: "application/json; charset=UTF-8"
+//        }).done(function(result) {
+//            console.log(result);
+//        }).fail(function(error) {
+//            console.log(error);
+//        });
     });
 });

@@ -1,15 +1,101 @@
+var _BOARD = [];
+var _MEMBER = [];
+
+$(document).ready(function() {
+    boardSearch();
+    memberSearch();
+});
+
 // 취소 버튼 시 모달 숨기기
 $(".modalCancel").on("click", function() {
-    $("#blackScreen").hide();
-    $("#boardModal").hide();
+
     $("#memberModal").hide();
 });
 
-// 공유 게시글 리스트 조회
-$("#addBoard, #boards").on("click", function() {
+$("#boards").on("click", function() {
     $("#blackScreen").show();
     $("#boardModal").show();
+});
 
+$("#members").on("click", function() {
+    $("#blackScreen").show();
+    $("#memberModal").show();
+});
+
+$("#addBoard").on("click", function() {
+    boardSearch();
+});
+
+$("#addMember").on("click", function() {
+    memberSearch();
+});
+
+// 공유 게시글 리스트 저장
+$("#shareBoardSave").on("click", function() {
+    _BOARD = [];
+
+    $("input[name=boards]:checked").each(function(i) {
+        _BOARD.push($(this).val());
+    });
+
+    boardListSelect();
+
+    $("#boardModal").hide();
+    $("#blackScreen").hide();
+});
+
+// 공유 게시물 리스트 저장취소
+$("#shareBoardCancel").on("click", function() {
+    $("#blackScreen").hide();
+    $("#boardModal").hide();
+
+    boardListSelect();
+});
+
+// 공유대상 저장
+$("#shareMemberSave").on("click",function() {
+    _MEMBER = [];
+
+    $("input[name=members]:checked").each(function(i) {
+        _MEMBER.push($(this).val());
+    });
+
+    memberListSelect();
+
+    $("#memberModal").hide();
+    $("#blackScreen").hide();
+});
+
+// 공유 대상 저장취소
+$("#shareMemberCancel").on("click", function() {
+    $("#blackScreen").hide();
+    $("#memberModal").hide();
+
+    memberListSelect();
+});
+
+function boardListSelect() {
+    $("input[name=boards]").attr("checked", false);
+
+    $("input[name=boards]").each(function() {
+        if(_BOARD.indexOf($(this).val()) > -1) {
+            $(this).prop("checked", true)
+        }
+    });
+}
+
+function memberListSelect() {
+    $("input[name=members]").attr("checked", false);
+
+    $("input[name=members]").each(function() {
+        if(_MEMBER.indexOf($(this).val()) > -1) {
+            $(this).prop("checked", true)
+        }
+    });
+}
+
+// 공유 게시글 리스트 조회
+function boardSearch() {
     var param = {
         type: $("#boardSearchType").val(),
         content: $("#boardSearch").val()
@@ -19,33 +105,18 @@ $("#addBoard, #boards").on("click", function() {
         type: "GET",
         url: "/shareBoardList",
         data: param,
-//        dataType: 'json',
         ContentType: "application/json; charset=UTF-8"
     }).done(function(fragment) {
         $("#boardListBox").replaceWith(fragment);
+        boardListSelect();
     }).fail(function(error) {
-        console.log("error");
         console.log(error);
     })
-});
-
-// 공유 게시글 리스트 저장
-var boards;
-$("#shareBoardSave").on("click", function() {
-//    $("input[name=boardId]:checked").each(function(i) {
-//
-//    });
-
-    $("#boardModal").hide();
-    $("#blackScreen").hide();
-});
+}
 
 
 // 공유 대상 리스트 조회
-$("#members, #addMember").on("click", function() {
-    $("#blackScreen").show();
-    $("#memberModal").show();
-
+function memberSearch() {
     var param = {
         type: $("#searchType").val(),
         content: $("#memberSearch").val()
@@ -55,18 +126,11 @@ $("#members, #addMember").on("click", function() {
         type: "GET",
         url: "/shareMemberList",
         data: param,
-//        dataType: 'json',
         ContentType: "application/json; charset=UTF-8"
     }).done(function(fragment) {
         $("#memberListBox").replaceWith(fragment);
+        memberListSelect();
     }).fail(function(error) {
-        console.log("error");
         console.log(error);
     })
-});
-
-// 공유대상 등록
-$("#shareMemberSave").on("click",function() {
-    $("#memberModal").hide();
-    $("#blackScreen").hide();
-});
+}

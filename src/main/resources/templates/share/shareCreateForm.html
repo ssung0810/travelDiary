@@ -23,12 +23,14 @@
                 <label for="boards">공유 게시글</label>
                 <div>
                     <button type="button" id="boards" class="btn btn-primary">공유 게시글 추가</button>
+                    <div class="field-error" th:errors="*{boards}">게시글 추가 오류</div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="members">공유 대상</label>
                 <div>
                     <button type="button" id="members" class="btn btn-primary">공유 대상 추가</button>
+                    <div class="field-error" th:errors="*{members}">대상 추가 오류</div>
                 </div>
             </div>
 

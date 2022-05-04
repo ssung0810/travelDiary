@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class ShareController {
     }
 
     @PostMapping("/share")
-    public String shareForm(@ModelAttribute("share") ShareSaveRequestDto dto,
+    public String shareForm(@Valid @ModelAttribute("share") ShareSaveRequestDto dto,
                             BindingResult bindingResult,
                             @SessionAttribute Long memberId) {
 

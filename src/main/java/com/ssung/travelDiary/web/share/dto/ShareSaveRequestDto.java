@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,9 +18,9 @@ public class ShareSaveRequestDto {
     private String title;
     @NotBlank
     private String creator;
-    @NotBlank
+    @NotEmpty
     private List<Long> members = new ArrayList<>();
-    @NotBlank
+    @NotEmpty
     private List<Long> boards = new ArrayList<>();
 
     public ShareSaveRequestDto(String title, String creator, List<Long> members, List<Long> boards) {

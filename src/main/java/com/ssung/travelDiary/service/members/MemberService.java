@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -85,6 +88,17 @@ public class MemberService {
         if(!validationPassword(password, member.getPassword())) return null;
 
         return member;
+    }
+
+    /**
+     * 공유폴더 등록할 회원 조회
+     */
+    public List<MemberResponseDto> findShareMember(Long memberId) {
+        return memberRepository.findByIdNot(memberId).stream()
+                .map(m -> new MemberResponseDto(m)).collect(Collectors.toList());
+    }
+    public List<Member> findShareMember2(Long memberId) {
+        return memberRepository.findByIdNot(memberId);
     }
 
     private boolean validationPassword(String password, String encodedPassword) {

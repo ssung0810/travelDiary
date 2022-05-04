@@ -3,9 +3,7 @@ package com.ssung.travelDiary.web.board;
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.handler.FileHandler;
 import com.ssung.travelDiary.service.board.BoardService;
-import com.ssung.travelDiary.service.image.ImageService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
-import com.ssung.travelDiary.web.board.dto.BoardSearchDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,13 +29,13 @@ public class BoardController {
     @GetMapping("/privateBoardList")
     public String privateBoardList(Model model,
                                    @SessionAttribute Long memberId,
-                                   @ModelAttribute BoardSearchDto dateDto) {
+                                   @RequestParam(required = false) String date) {
 
-        if(dateDto.getDate() == null || dateDto.getDate().equals("")) dateDto.setDate(LocalDate.now().toString());
+        if(date == null) date = LocalDate.now().toString();
 
-        List<Board> board = boardService.findList(memberId, dateDto.getDate());
+        List<Board> board = boardService.findList(memberId, date);
         model.addAttribute("boards", board);
-        model.addAttribute("date", dateDto.getDate());
+        model.addAttribute("date", date);
         model.addAttribute("memberId", memberId);
         model.addAttribute("shareId", 0);
 

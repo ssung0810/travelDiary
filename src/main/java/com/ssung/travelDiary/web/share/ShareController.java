@@ -1,7 +1,11 @@
 package com.ssung.travelDiary.web.share;
 
+import com.ssung.travelDiary.domain.members.Member;
+import com.ssung.travelDiary.domain.share.Share;
 import com.ssung.travelDiary.service.board.BoardService;
+import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.service.share.ShareService;
+import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import com.ssung.travelDiary.web.share.dto.ShareBoardResponseDto;
 import com.ssung.travelDiary.web.share.dto.ShareSaveRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,7 @@ public class ShareController {
 
     private final ShareService shareService;
     private final BoardService boardService;
+    private final MemberService memberService;
 
     @GetMapping("/share")
     public String shareForm(Model model,
@@ -32,13 +37,19 @@ public class ShareController {
 
     @PostMapping("/share")
     public String shareForm(@ModelAttribute("share") ShareSaveRequestDto dto,
-                            BindingResult bindingResult) {
+                            BindingResult bindingResult,
+                            @SessionAttribute Long memberId) {
+
+        log.info("dto = {}" , dto);
 
         if (bindingResult.hasErrors()) {
-            return "board/shareBoardCreateForm";
+            log.info("bindingResult = {}", bindingResult);
+            return "share/shareCreateForm";
         }
 
-        return "redirection:/board/privateBoardList";
+        Share saveShare = shareService.save(dto, memberId);
+
+        return "redirect:/board/privateBoardList";
     }
 
     @GetMapping("/sharePosts/{shareId}")
@@ -66,5 +77,17 @@ public class ShareController {
         model.addAttribute("boardList", boardList);
 
         return "/share/shareCreateForm :: #boardListBox";
+    }
+
+    @GetMapping("shareMemberList")
+    public String shareMemberList(@SessionAttribute Long memberId,
+                                  Model model) {
+
+        List<MemberResponseDto> memberList = memberService.findShareMember(memberId);
+//        List<Member> memberList = memberService.findShareMember2(memberId);
+        model.addAttribute("memberList", memberList);
+//        model.addAttribute("member", "");
+
+        return "/share/shareCreateForm :: #memberListBox";
     }
 }

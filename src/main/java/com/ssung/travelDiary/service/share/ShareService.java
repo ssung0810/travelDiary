@@ -35,6 +35,8 @@ public class ShareService {
 
         Share share = Share.builder().title(dto.getTitle()).creator(dto.getCreator()).build();
 
+        share.getShareMember().add(ShareMember.createShareMember(memberRepository.findById(memberId).orElse(null), share));
+
         List<Long> members = dto.getMembers();
         for (Long m : members) {
             Member member = memberRepository.findById(m).orElse(null);

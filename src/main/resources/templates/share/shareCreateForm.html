@@ -8,7 +8,7 @@
 <body th:replace="layout/body :: common_body(~{::section})">
 
 <section class="container">
-    <div>
+    <div id="shareSaveContainer">
         <form action="/share" method="post" th:object="${share}">
             <input type="hidden" th:field="*{creator}">
 
@@ -34,44 +34,74 @@
 
             <button type="submit" class="btn btn-primary">저장</button>
             <button type="button" class="btn btn-default" onclick="history.back()">취소</button>
-        </form>
-    </div>
 
 
-    <!--공유 게시글 추가 modal-->
-    <div id="boardModal" class="modalContainer">
-        <div class="addBox">
-            <div class="searchBox">
-                <select id="searchType" class="form-select">
-                    <option value="total">전체</option>
-                    <option value="date">날짜</option>
-                    <option value="title">제목</option>
-                </select>
-                <input type="text" id="boardSearch" class="form-control" placeholder="조회 내용을 입력하세요">
-                <button type="button" id="addSearch" class="btn btn-primary">조회</button>
-            </div>
-            <div id="boardListBox" class="listBox">
-                <div class="boardList" th:each="board : ${boardList}">
-                    <th:block th:object="${board}">
-                        <input type="checkbox" th:id="*{boardId}" th:name="*{boardId}" th:value="*{boardId}">
-                        <label>
-                            <div class="contentBox">
-                                <div class="contentHeader">
-                                    <span class="addTitle" th:text="*{title}">제목</span><span class="addDate" th:text="*{date}">1994-09-16</span>
-                                </div>
-                                <div>
-                                    <span class="addContent" th:text="*{content}">내용</span>
-                                </div>
-                            </div>
-                        </label>
-                    </th:block>
+
+
+            <!--공유 게시글 추가 modal-->
+            <div id="boardModal" class="modalContainer">
+                <div class="addBox">
+                    <div class="searchBox">
+                        <select id="boardSearchType" class="form-select searchType">
+                            <option value="title">제목</option>
+                            <option value="date">날짜</option>
+                        </select>
+                        <input type="text" id="boardSearch" class="form-control" placeholder="조회 내용을 입력하세요">
+                        <button type="button" id="addBoard" class="btn btn-primary addSearch">조회</button>
+                    </div>
+                    <div id="boardListBox" class="listBox">
+                        <div class="boardList" th:each="board : ${boardList}">
+                            <th:block th:object="${board}">
+                                <input type="checkbox" th:id="board + ${board.id}" th:value="${board.id}" name="boards">
+                                <label>
+                                    <div class="contentBox">
+                                        <div class="contentHeader">
+                                            <span class="addTitle" th:text="${board.title}">제목</span><span class="addDate" th:text="${board.date}">1994-09-16</span>
+                                        </div>
+                                        <div>
+                                            <span class="addContent" th:text="${board.content}">내용</span>
+                                        </div>
+                                    </div>
+                                </label>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+                <div class="shareBtnBox">
+                    <button type="button" id="shareBoardSave" class="btn btn-primary">저장</button>
+                    <button type="button" id="shareBoardCancel" class="btn btn-default modalCancel">취소</button>
                 </div>
             </div>
-        </div>
-        <div class="shareBtnBox">
-            <button id="shareBoardSave" class="btn btn-primary">저장</button>
-            <button id="shareBoardCancel" class="btn btn-default modalCancel">취소</button>
-        </div>
+
+
+            <!--공유 대상 추가 modal-->
+            <div id="memberModal" class="modalContainer">
+                <div class="addBox">
+                    <div class="searchBox">
+                        <select id="MemberSearchType" class="form-select searchType">
+                            <option value="username">별명</option>
+                        </select>
+                        <input type="text" id="MemberSearch" class="form-control" placeholder="조회 내용을 입력하세요">
+                        <button type="button" id="addMember" class="btn btn-primary addSearch">조회</button>
+                    </div>
+                    <div id="memberListBox" class="listBox">
+                        <div class="boardList" th:each="member : ${memberList}">
+                            <th:block th:object="${member}">
+    <!--                            <form th:object="${member}">-->
+                                <input type="checkbox" th:id="member + ${member.id}" th:value="${member.id}" name="members">
+    <!--                            <input type="checkbox" th:field="*{id}">-->
+    <!--                            </form>-->
+                                <label th:text="${member.username}"></label>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+                <div class="shareBtnBox">
+                    <button type="button" id="shareMemberSave" class="btn btn-primary">저장</button>
+                    <button type="button" id="shareMemberCancel" class="btn btn-default modalCancel">취소</button>
+                </div>
+            </div>
+        </form>
     </div>
 
 </section>

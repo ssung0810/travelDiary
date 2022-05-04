@@ -67,23 +67,28 @@
 
 /*** share ***/
 /* 공유 게시글 추가 */
-.modalContainer {z-index: 1200; position: absolute; background: white; padding: 20px; border-radius: 15px;}
+#shareSaveContainer {position: relative;}
 
-/*#totalBox {display: flex; justify-content: space-between;}*/
+.modalContainer {z-index: 1200; position: absolute; background: white; padding: 20px; border-radius: 15px; top: 90px; left: 300px;}
+
+#boardModal {display: none;}
+#memberModal {display: none;}
 
 .addBox {width: 500px; margin: 0 auto;}
 
 .searchBox {display: flex; margin-bottom: 20px;}
-#searchType {width:120px; margin-right: 10px;}
-#addSearch {margin-left: 10px;}
+.searchType {width:120px; margin-right: 10px;}
+.addSearch {margin-left: 10px;}
 .addTitle {font-size: 25px; width: 80%;}
 
 .listBox {max-height: 390px; overflow-y: auto;}
 .contentBox {border-bottom: solid #cbcbcb 1px;}
 .contentHeader {display: flex; justify-content: space-between;}
 .listBox .boardList {display: flex; position: relative;}
-.listBox .boardList input {position: absolute; top: 18px;}
-.listBox .boardList label {width: 100%; padding-left: 25px;}
+#boardListBox .boardList input {position: absolute; top: 18px;}
+#boardListBox .boardList label {width: 100%; padding-left: 25px;}
+#memberListBox .boardList label {width: 100%; padding-left: 10px;}
+
 
 #resultBox {overflow-y: auto;}
 

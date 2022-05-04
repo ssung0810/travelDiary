@@ -1,14 +1,17 @@
 // 취소 버튼 시 모달 숨기기
 $(".modalCancel").on("click", function() {
     $("#blackScreen").hide();
+    $("#boardModal").hide();
+    $("#memberModal").hide();
 });
 
 // 공유 게시글 리스트 조회
-$("#addSearch, #boards").on("click", function() {
+$("#addBoard, #boards").on("click", function() {
     $("#blackScreen").show();
+    $("#boardModal").show();
 
     var param = {
-        type: $("#searchType").val(),
+        type: $("#boardSearchType").val(),
         content: $("#boardSearch").val()
     };
 
@@ -19,7 +22,6 @@ $("#addSearch, #boards").on("click", function() {
 //        dataType: 'json',
         ContentType: "application/json; charset=UTF-8"
     }).done(function(fragment) {
-        console.log(fragment);
         $("#boardListBox").replaceWith(fragment);
     }).fail(function(error) {
         console.log("error");
@@ -27,13 +29,44 @@ $("#addSearch, #boards").on("click", function() {
     })
 });
 
-
 // 공유 게시글 리스트 저장
 var boards;
 $("#shareBoardSave").on("click", function() {
-    $("input[name=boardId]:checked").each(function(i) {
+//    $("input[name=boardId]:checked").each(function(i) {
+//
+//    });
 
-    });
+    $("#boardModal").hide();
+    $("#blackScreen").hide();
+});
 
+
+// 공유 대상 리스트 조회
+$("#members, #addMember").on("click", function() {
+    $("#blackScreen").show();
+    $("#memberModal").show();
+
+    var param = {
+        type: $("#searchType").val(),
+        content: $("#memberSearch").val()
+    };
+
+    $.ajax({
+        type: "GET",
+        url: "/shareMemberList",
+        data: param,
+//        dataType: 'json',
+        ContentType: "application/json; charset=UTF-8"
+    }).done(function(fragment) {
+        $("#memberListBox").replaceWith(fragment);
+    }).fail(function(error) {
+        console.log("error");
+        console.log(error);
+    })
+});
+
+// 공유대상 등록
+$("#shareMemberSave").on("click",function() {
+    $("#memberModal").hide();
     $("#blackScreen").hide();
 });

@@ -79,7 +79,6 @@ public class TestDataInit {
         String creator = "test";
 
         ArrayList<Long> members = new ArrayList<>();
-        members.add(1L);
         members.add(2L);
         members.add(3L);
 

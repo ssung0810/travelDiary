@@ -112,7 +112,6 @@ class ShareServiceTest {
         String creator = "test";
 
         ArrayList<Long> members = new ArrayList<>();
-        members.add(findId);
         members.add(findId2);
 
         ArrayList<Long> boards = new ArrayList<>();

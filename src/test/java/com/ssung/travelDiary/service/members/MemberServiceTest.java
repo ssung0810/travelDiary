@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -166,5 +168,22 @@ class MemberServiceTest {
         // then
         assertThat(updateMember.getEmail()).isEqualTo("email2");
         assertThat(updateMember.getImage().getOriginalFileName()).isEqualTo("test2.png");
+    }
+
+    @Test
+    void 공유폴더_추가할_회원조회() throws Exception {
+        // given
+        MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
+        MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
+        MemberSaveRequestDto dto2 = new MemberSaveRequestDto("username2", "password2", "email2", multipartFile, Role.USER);
+        Long myMemberId = memberService.sign(dto);
+        memberService.sign(dto2);
+
+        // when
+        List<MemberResponseDto> members = memberService.findShareMember(myMemberId);
+
+        // then
+        assertThat(members.size()).isEqualTo(1);
+        assertThat(members.get(0).getUsername()).isEqualTo("username2");
     }
 }

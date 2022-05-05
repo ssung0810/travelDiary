@@ -180,7 +180,7 @@ class MemberServiceTest {
         memberService.sign(dto2);
 
         // when
-        List<MemberResponseDto> members = memberService.findShareMember(myMemberId);
+        List<MemberResponseDto> members = memberService.addMemberSearch(myMemberId, "");
 
         // then
         assertThat(members.size()).isEqualTo(1);

@@ -93,12 +93,9 @@ public class MemberService {
     /**
      * 공유폴더 등록할 회원 조회
      */
-    public List<MemberResponseDto> findShareMember(Long memberId) {
-        return memberRepository.findByIdNot(memberId).stream()
+    public List<MemberResponseDto> addMemberSearch(Long memberId, String value) {
+        return memberRepository.findByMemberIdAndMoreType(memberId, value).stream()
                 .map(m -> new MemberResponseDto(m)).collect(Collectors.toList());
-    }
-    public List<Member> findShareMember2(Long memberId) {
-        return memberRepository.findByIdNot(memberId);
     }
 
     private boolean validationPassword(String password, String encodedPassword) {

@@ -1,5 +1,6 @@
 package com.ssung.travelDiary.web.share.dto;
 
+import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.image.Image;
 import lombok.Getter;
 
@@ -17,12 +18,12 @@ public class ShareBoardResponseDto {
 
     private List<Image> images = new ArrayList<>();
 
-    public ShareBoardResponseDto(Long id, String title, String content, String location, String date) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.location = location;
-        this.date = date;
+    public ShareBoardResponseDto(Board board) {
+        this.id = board.getId();
+        this.title = board.getTitle();
+        this.content = board.getContent();
+        this.location = board.getLocation();
+        this.date = board.getDate();
     }
 
     @Override

@@ -138,7 +138,8 @@ class BoardServiceTest {
         Board board = createBoard();
 
         // when
-        List<ShareBoardResponseDto> boardList = boardService.findByMember(memberId);
+        List<ShareBoardResponseDto> boardList = boardService.addBoardSearch(memberId, "");
+//        List<Board> boardList = boardService.findShareBoard(memberId, "");
 
         // then
         assertThat(boardList.get(0).getTitle()).isEqualTo("title");

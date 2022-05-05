@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -33,7 +34,7 @@ public class ShareService {
     public Share save(ShareSaveRequestDto dto,
                       Long memberId) {
 
-        Share share = Share.builder().title(dto.getTitle()).creator(dto.getCreator()).build();
+        Share share = Share.saveShare(dto.getTitle(), dto.getCreator());
 
         share.getShareMember().add(ShareMember.createShareMember(memberRepository.findById(memberId).orElse(null), share));
 
@@ -60,13 +61,15 @@ public class ShareService {
     public List<ShareListResponseDto> findList(Long memberId) {
         Member member = memberRepository.findById(memberId).orElse(null);
 
-        return shareRepository.findList(member);
+            return shareRepository.findList(member).stream()
+                .map(s -> new ShareListResponseDto(s.getId(), s.getTitle())).collect(Collectors.toList());
     }
 
     /**
      * 특정 공유폴더 내부 게시글 조회
      */
     public List<ShareBoardResponseDto> findShareBoard(Long shareId) {
-        return shareRepository.findShareBoard(shareId);
+        return shareRepository.findShareBoard(shareId).stream()
+                .map(b -> new ShareBoardResponseDto(b)).collect(Collectors.toList());
     }
 }

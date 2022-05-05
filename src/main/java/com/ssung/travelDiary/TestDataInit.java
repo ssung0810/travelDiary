@@ -37,7 +37,7 @@ public class TestDataInit {
     /**
      * 테스트용 데이터 추가
      */
-    @PostConstruct
+//    @PostConstruct
     public void init() throws IOException {
 
         FileDto fileDto = new FileDto("01. 왕이신하나님.png", "1013784853220000.png");

@@ -6,12 +6,6 @@ $(document).ready(function() {
     memberSearch();
 });
 
-// 취소 버튼 시 모달 숨기기
-$(".modalCancel").on("click", function() {
-
-    $("#memberModal").hide();
-});
-
 $("#boards").on("click", function() {
     $("#blackScreen").show();
     $("#boardModal").show();
@@ -38,7 +32,8 @@ $("#shareBoardSave").on("click", function() {
         _BOARD.push($(this).val());
     });
 
-    boardListSelect();
+    boardListSelect(_BOARD);
+    $("#boardSearch").val("");
 
     $("#boardModal").hide();
     $("#blackScreen").hide();
@@ -49,7 +44,8 @@ $("#shareBoardCancel").on("click", function() {
     $("#blackScreen").hide();
     $("#boardModal").hide();
 
-    boardListSelect();
+    boardListSelect(_BOARD);
+    $("#boardSearch").val("");
 });
 
 // 공유대상 저장
@@ -60,7 +56,7 @@ $("#shareMemberSave").on("click",function() {
         _MEMBER.push($(this).val());
     });
 
-    memberListSelect();
+    memberListSelect(_MEMBER);
 
     $("#memberModal").hide();
     $("#blackScreen").hide();
@@ -71,24 +67,25 @@ $("#shareMemberCancel").on("click", function() {
     $("#blackScreen").hide();
     $("#memberModal").hide();
 
-    memberListSelect();
+    memberListSelect(_MEMBER);
 });
 
-function boardListSelect() {
+function boardListSelect(obj) {
+    console.log(obj);
     $("input[name=boards]").attr("checked", false);
 
     $("input[name=boards]").each(function() {
-        if(_BOARD.indexOf($(this).val()) > -1) {
+        if(obj.length > 0 && obj.indexOf($(this).val()) > -1) {
             $(this).prop("checked", true)
         }
     });
 }
 
-function memberListSelect() {
+function memberListSelect(obj) {
     $("input[name=members]").attr("checked", false);
 
     $("input[name=members]").each(function() {
-        if(_MEMBER.indexOf($(this).val()) > -1) {
+        if(obj.length > 0 && obj.indexOf($(this).val()) > -1) {
             $(this).prop("checked", true)
         }
     });
@@ -96,9 +93,15 @@ function memberListSelect() {
 
 // 공유 게시글 리스트 조회
 function boardSearch() {
+    var boardSelectObj = [];
+
+    $("input[name=boards]:checked").each(function(i) {
+        boardSelectObj.push($(this).val());
+    });
+
     var param = {
         type: $("#boardSearchType").val(),
-        content: $("#boardSearch").val()
+        value: $("#boardSearch").val()
     };
 
     $.ajax({
@@ -108,7 +111,7 @@ function boardSearch() {
         ContentType: "application/json; charset=UTF-8"
     }).done(function(fragment) {
         $("#boardListBox").replaceWith(fragment);
-        boardListSelect();
+        boardListSelect(boardSelectObj);
     }).fail(function(error) {
         console.log(error);
     })
@@ -117,9 +120,15 @@ function boardSearch() {
 
 // 공유 대상 리스트 조회
 function memberSearch() {
+    var memberSelectObj = [];
+
+    $("input[name=members]:checked").each(function(i) {
+        memberSelectObj.push($(this).val());
+    });
+
     var param = {
         type: $("#searchType").val(),
-        content: $("#memberSearch").val()
+        value: $("#memberSearch").val()
     };
 
     $.ajax({
@@ -129,7 +138,7 @@ function memberSearch() {
         ContentType: "application/json; charset=UTF-8"
     }).done(function(fragment) {
         $("#memberListBox").replaceWith(fragment);
-        memberListSelect();
+        memberListSelect(memberSelectObj);
     }).fail(function(error) {
         console.log(error);
     })

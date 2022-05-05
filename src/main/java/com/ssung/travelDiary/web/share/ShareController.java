@@ -1,5 +1,6 @@
 package com.ssung.travelDiary.web.share;
 
+import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.share.Share;
 import com.ssung.travelDiary.service.board.BoardService;
@@ -41,8 +42,6 @@ public class ShareController {
                             BindingResult bindingResult,
                             @SessionAttribute Long memberId) {
 
-        log.info("dto = {}" , dto);
-
         if (bindingResult.hasErrors()) {
             log.info("bindingResult = {}", bindingResult);
             return "share/shareCreateForm";
@@ -50,7 +49,7 @@ public class ShareController {
 
         Share saveShare = shareService.save(dto, memberId);
 
-        return "redirect:/board/privateBoardList";
+        return "redirect:/sharePosts/"+saveShare.getId();
     }
 
     @GetMapping("/sharePosts/{shareId}")
@@ -59,8 +58,6 @@ public class ShareController {
                                  @SessionAttribute Long memberId) {
 
         List<ShareBoardResponseDto> shareBoard = shareService.findShareBoard(shareId);
-
-        log.info("shareBoard = {}", shareBoard);
 
         model.addAttribute("boards", shareBoard);
         model.addAttribute("date", LocalDate.now().toString());
@@ -72,9 +69,10 @@ public class ShareController {
 
     @GetMapping("shareBoardList")
     public String shareBoardList(@SessionAttribute Long memberId,
+                                 @RequestParam String value,
                                  Model model) {
 
-        List<ShareBoardResponseDto> boardList = boardService.findByMember(memberId);
+        List<ShareBoardResponseDto> boardList = boardService.addBoardSearch(memberId, value);
         model.addAttribute("boardList", boardList);
 
         return "/share/shareCreateForm :: #boardListBox";
@@ -82,9 +80,10 @@ public class ShareController {
 
     @GetMapping("shareMemberList")
     public String shareMemberList(@SessionAttribute Long memberId,
+                                  @RequestParam String value,
                                   Model model) {
 
-        List<MemberResponseDto> memberList = memberService.findShareMember(memberId);
+        List<MemberResponseDto> memberList = memberService.addMemberSearch(memberId, value);
 //        List<Member> memberList = memberService.findShareMember2(memberId);
         model.addAttribute("memberList", memberList);
 //        model.addAttribute("member", "");

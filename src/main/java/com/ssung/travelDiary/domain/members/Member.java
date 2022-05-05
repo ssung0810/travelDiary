@@ -35,7 +35,7 @@ public class Member extends BaseTimeEntity {
     @Embedded
     private FileDto image;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Board> boards = new ArrayList<>();
 
     @Column(nullable = false)

@@ -10,6 +10,7 @@ import com.ssung.travelDiary.service.image.ImageService;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
 import com.ssung.travelDiary.web.share.dto.ShareBoardResponseDto;
+import com.ssung.travelDiary.web.share.dto.ShareSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -94,11 +96,17 @@ public class BoardService {
     }
 
     /**
-     * 공유 게시글 조회
+     * 공유폴더 저장 시 게시글 등록 조회
      */
-    public List<ShareBoardResponseDto> findByMember(Long memberId) {
-        return boardRepository.findByMember_id(memberId);
+    public List<ShareBoardResponseDto> addBoardSearch(Long memberId, String value) {
+        Member member = memberRepository.findById(memberId).orElse(null);
+
+        return boardRepository.findByMemberIdAndMoreType(member, value).stream()
+                .map(b -> new ShareBoardResponseDto(b)).collect(Collectors.toList());
     }
+//    public List<Board> findByMemberIdAndMoreType(Long memberId, String value) {
+//        return boardRepository.findByMember_id(memberId);
+//    }
 
     private Board createBoard(BoardSaveRequestDto dto, Member member) {
         return Board.builder()

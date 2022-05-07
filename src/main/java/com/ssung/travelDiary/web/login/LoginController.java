@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -23,7 +24,7 @@ public class LoginController {
 
     private final MemberService memberService;
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String loginForm(Model model) {
         model.addAttribute("login", new MemberLoginRequestDto());
 
@@ -34,6 +35,7 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute("login") MemberLoginRequestDto login,
                         BindingResult bindingResult,
+                        @RequestParam(defaultValue = "/board/privateBoardList") String requestURL,
                         HttpSession httpSession) {
 
         if(bindingResult.hasErrors()) {
@@ -47,19 +49,18 @@ public class LoginController {
             return "members/login";
         }
 
-        httpSession.setAttribute(SessionConst.LOGIN_MEMBER, member.getId());
-        httpSession.setAttribute("username", member.getUsername());
-        httpSession.setAttribute("memberId", member.getId());
+        httpSession.setAttribute(SessionConst.MEMBER_ID, member.getId());
+        httpSession.setAttribute(SessionConst.USERNAME, member.getUsername());
 
         if(member.getImage() == null)
-            httpSession.setAttribute("imageName", null);
+            httpSession.setAttribute(SessionConst.USER_IMAGE, null);
         else
-            httpSession.setAttribute("imageName", member.getImage().getStoredFileName());
+            httpSession.setAttribute(SessionConst.USER_IMAGE, member.getImage().getStoredFileName());
 
-        return "redirect:/board/privateBoardList";
+        return "redirect:" + requestURL;
     }
 
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public String logout(HttpSession httpSession) {
         if (httpSession != null) {
             httpSession.invalidate();

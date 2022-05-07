@@ -1,5 +1,7 @@
 package com.ssung.travelDiary.web;
 
 public interface SessionConst {
-    String LOGIN_MEMBER = "login";
+    String MEMBER_ID = "id";
+    String USERNAME = "username";
+    String USER_IMAGE = "image";
 }

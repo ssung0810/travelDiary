@@ -24,7 +24,6 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-    private final FileHandler fileHandler;
 
     @GetMapping("/privateBoardList")
     public String privateBoardList(Model model,
@@ -99,11 +98,5 @@ public class BoardController {
         Board board = boardService.update(boardId, dto);
 
         return "redirect:/board/"+board.getId();
-    }
-
-    @ResponseBody
-    @DeleteMapping("/{boardId}")
-    public Long delete(@PathVariable Long boardId) {
-        return boardService.delete(boardId);
     }
 }

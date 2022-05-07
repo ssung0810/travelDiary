@@ -1,14 +1,12 @@
 package com.ssung.travelDiary.web.members;
 
 import com.ssung.travelDiary.domain.members.Member;
-import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,11 +24,8 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
-
     // 회원가입 화면
-    @GetMapping("/sign")
+    @GetMapping("/")
     public String signForm(Model model) {
         model.addAttribute("member", new MemberSaveRequestDto());
         return "members/sign";
@@ -61,7 +56,7 @@ public class MemberController {
 //    }
 
     // 회원가입 후 메인화면으로 이동
-    @PostMapping("/sign")
+    @PostMapping("/")
     public String sign(@Valid @ModelAttribute("member") MemberSaveRequestDto dto,
                        BindingResult bindingResult) throws Exception {
 
@@ -78,10 +73,10 @@ public class MemberController {
 
         memberService.sign(dto);
 
-        return "redirect:/";
+        return "redirect:/login";
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/profileForm")
     public String profileForm(@SessionAttribute String username,
                               Model model) {
 
@@ -92,7 +87,7 @@ public class MemberController {
         return "/members/profileForm";
     }
 
-    @GetMapping("/profileForm")
+    @GetMapping("/profile")
     public String profileUpdateForm(@SessionAttribute String username,
                                     Model model) {
 

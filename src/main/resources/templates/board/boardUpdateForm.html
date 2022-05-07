@@ -5,9 +5,13 @@
 
     <link />
 </head>
-<body th:replace="layout/body :: common_body(~{::section})">
+<!--<body th:replace="layout/body :: common_body(~{::section})">-->
+<body>
 
-<section class="container">
+<!--헤더-->
+<div th:replace="layout/header :: header"></div>
+
+<div class="container">
     <div>
         <form action="board.html" th:action="@{|/board/${board.id}/update|}" method="post" th:object="${board}" enctype="multipart/form-data">
             <div class="form-group">
@@ -45,9 +49,13 @@
             <a href="/board/board.html" th:href="@{|/board/${board.id}|}" class="btn btn-default">취소</a>
         </form>
     </div>
-</section>
+</div>
 
-<script th:src="@{/js/warning/warning.js}" type="text/javascript"></script>
+<!--푸터-->
+<div th:replace="layout/footer :: footer"></div>
+<!--<script th:src="@{/js/warning/warning.js}" type="text/javascript"></script>-->
+
+<script th:src="@{/js/board.js}" type="text/javascript"></script>
 
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.ssung.travelDiary.web.board;
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.handler.FileHandler;
 import com.ssung.travelDiary.service.board.BoardService;
+import com.ssung.travelDiary.web.SessionConst;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class BoardController {
 
     @GetMapping("/privateBoardList")
     public String privateBoardList(Model model,
-                                   @SessionAttribute Long memberId,
+                                   @SessionAttribute(name = SessionConst.USER_ID) Long memberId,
                                    @RequestParam(required = false) String date) {
 
         if(date == null) date = LocalDate.now().toString();
@@ -63,7 +64,7 @@ public class BoardController {
     @PostMapping("/save")
     public String boardSave(@Valid @ModelAttribute("board") BoardSaveRequestDto dto,
                             BindingResult bindingResult,
-                            @SessionAttribute Long memberId) throws IOException {
+                            @SessionAttribute(name = SessionConst.USER_ID) Long memberId) throws IOException {
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult = {}", bindingResult);

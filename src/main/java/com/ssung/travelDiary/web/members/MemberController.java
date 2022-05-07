@@ -2,6 +2,7 @@ package com.ssung.travelDiary.web.members;
 
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.service.members.MemberService;
+import com.ssung.travelDiary.web.SessionConst;
 import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
@@ -77,7 +78,7 @@ public class MemberController {
     }
 
     @GetMapping("/profileForm")
-    public String profileForm(@SessionAttribute String username,
+    public String profileForm(@SessionAttribute(name = SessionConst.USERNAME) String username,
                               Model model) {
 
         MemberResponseDto member = memberService.findByUsername(username);
@@ -88,7 +89,7 @@ public class MemberController {
     }
 
     @GetMapping("/profile")
-    public String profileUpdateForm(@SessionAttribute String username,
+    public String profileUpdateForm(@SessionAttribute(name = SessionConst.USERNAME) String username,
                                     Model model) {
 
         MemberUpdateRequestDto member = new MemberUpdateRequestDto(memberService.findByUsername(username));

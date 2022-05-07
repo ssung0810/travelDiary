@@ -6,6 +6,7 @@ import com.ssung.travelDiary.domain.share.Share;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.service.share.ShareService;
+import com.ssung.travelDiary.web.SessionConst;
 import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import com.ssung.travelDiary.web.share.dto.ShareBoardResponseDto;
 import com.ssung.travelDiary.web.share.dto.ShareSaveRequestDto;
@@ -31,7 +32,7 @@ public class ShareController {
 
     @GetMapping("/share")
     public String shareForm(Model model,
-                            @SessionAttribute String username) {
+                            @SessionAttribute(name = SessionConst.USERNAME) String username) {
         model.addAttribute("share", new ShareSaveRequestDto(username));
 
         return "share/shareCreateForm";
@@ -40,7 +41,7 @@ public class ShareController {
     @PostMapping("/share")
     public String shareForm(@Valid @ModelAttribute("share") ShareSaveRequestDto dto,
                             BindingResult bindingResult,
-                            @SessionAttribute Long memberId) {
+                            @SessionAttribute(name = SessionConst.USER_ID) Long memberId) {
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult = {}", bindingResult);
@@ -55,7 +56,7 @@ public class ShareController {
     @GetMapping("/sharePosts/{shareId}")
     public String sharePostsList(Model model,
                                  @PathVariable Long shareId,
-                                 @SessionAttribute Long memberId) {
+                                 @SessionAttribute(name = SessionConst.USER_ID) Long memberId) {
 
         List<ShareBoardResponseDto> shareBoard = shareService.findShareBoard(shareId);
 
@@ -68,7 +69,7 @@ public class ShareController {
     }
 
     @GetMapping("shareBoardList")
-    public String shareBoardList(@SessionAttribute Long memberId,
+    public String shareBoardList(@SessionAttribute(name = SessionConst.USER_ID) Long memberId,
                                  @RequestParam String value,
                                  Model model) {
 
@@ -79,7 +80,7 @@ public class ShareController {
     }
 
     @GetMapping("shareMemberList")
-    public String shareMemberList(@SessionAttribute Long memberId,
+    public String shareMemberList(@SessionAttribute(name = SessionConst.USER_ID) Long memberId,
                                   @RequestParam String value,
                                   Model model) {
 

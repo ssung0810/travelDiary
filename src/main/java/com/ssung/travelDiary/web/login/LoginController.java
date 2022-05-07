@@ -49,7 +49,7 @@ public class LoginController {
             return "members/login";
         }
 
-        httpSession.setAttribute(SessionConst.MEMBER_ID, member.getId());
+        httpSession.setAttribute(SessionConst.USER_ID, member.getId());
         httpSession.setAttribute(SessionConst.USERNAME, member.getUsername());
 
         if(member.getImage() == null)

@@ -3,6 +3,7 @@ package com.ssung.travelDiary.web.share;
 import com.ssung.travelDiary.domain.share.Share;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.share.ShareService;
+import com.ssung.travelDiary.web.SessionConst;
 import com.ssung.travelDiary.web.share.dto.ShareBoardResponseDto;
 import com.ssung.travelDiary.web.share.dto.ShareListResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class ShareApiController {
     private final ShareService shareService;
 
     @GetMapping("/shareList")
-    public List<ShareListResponseDto> shareList(@SessionAttribute Long memberId) {
+    public List<ShareListResponseDto> shareList(@SessionAttribute(name = SessionConst.USER_ID) Long memberId) {
         return shareService.findList(memberId);
     }
 

@@ -23,10 +23,6 @@ var main = {
                 return;
             }
         });
-
-//        function isImage(file) {
-//            return ;
-//        }
     },
 
     duplicate : function() {
@@ -50,8 +46,6 @@ var main = {
             console.log(error);
         })
     }
-
-
 };
 
 main.init();

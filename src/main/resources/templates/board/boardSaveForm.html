@@ -5,9 +5,13 @@
 
     <link />
 </head>
-<body th:replace="layout/body :: common_body(~{::section})">
+<!--<body th:replace="layout/body :: common_body(~{::section})">-->
+<body>
 
-<section class="container">
+<!--헤더-->
+<div th:replace="layout/header :: header"></div>
+
+<div class="container">
     <div>
         <form action="/board/save" method="post" th:object="${board}" enctype="multipart/form-data">
             <div class="form-group">
@@ -49,9 +53,16 @@
 
     <div id="map"></div>
 
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=0l7kyxi7uv"></script>
-    <script th:src="@{/js/maps.js}" type="text/javascript"></script>
-</section>
+
+</div>
+
+<!--푸터-->
+<div th:replace="layout/footer :: footer"></div>
+
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=0l7kyxi7uv"></script>
+<script th:src="@{/js/maps.js}" type="text/javascript"></script>
+
+<script th:src="@{/js/board.js}" type="text/javascript"></script>
 
 </body>
 </html>

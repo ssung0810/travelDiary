@@ -35,7 +35,7 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute("login") MemberLoginRequestDto login,
                         BindingResult bindingResult,
-                        @RequestParam(defaultValue = "/board/privateBoardList") String requestURL,
+                        @RequestParam(defaultValue = "/board/privateBoardList") String redirectURL,
                         HttpSession httpSession) {
 
         if(bindingResult.hasErrors()) {
@@ -57,7 +57,7 @@ public class LoginController {
         else
             httpSession.setAttribute(SessionConst.USER_IMAGE, member.getImage().getStoredFileName());
 
-        return "redirect:" + requestURL;
+        return "redirect:" + redirectURL;
     }
 
     @PostMapping("/logout")

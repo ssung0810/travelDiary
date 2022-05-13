@@ -77,7 +77,7 @@ public class MemberService {
     /**
      * 아이디 및 비밀번호 체크
      */
-    public Member loginValidation(String username, String password) {
+    public MemberResponseDto loginValidation(String username, String password) {
 
         Member member = memberRepository.findByUsername(username)
                 .orElse(null);
@@ -86,7 +86,7 @@ public class MemberService {
 
         if(!validationPassword(password, member.getPassword())) return null;
 
-        return member;
+        return new MemberResponseDto(member);
     }
 
     /**

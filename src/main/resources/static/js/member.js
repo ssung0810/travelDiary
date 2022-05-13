@@ -29,7 +29,7 @@ var main = {
         var username = $("#username").val();
 
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: "/member/api/duplicate",
             data: username,
             dataType: 'json',

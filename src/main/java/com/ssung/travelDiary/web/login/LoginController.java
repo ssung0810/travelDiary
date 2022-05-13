@@ -4,6 +4,7 @@ import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.SessionConst;
 import com.ssung.travelDiary.web.login.dto.MemberLoginRequestDto;
+import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,7 @@ public class LoginController {
             return "members/login";
         }
 
-        Member member = memberService.loginValidation(login.getUsername(), login.getPassword());
+        MemberResponseDto member = memberService.loginValidation(login.getUsername(), login.getPassword());
         if (member == null) {
             bindingResult.reject("loginFail", "* 아이디 및 비밀번호가 잘못되었습니다.");
             return "members/login";

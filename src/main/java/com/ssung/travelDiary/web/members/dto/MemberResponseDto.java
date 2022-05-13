@@ -3,8 +3,11 @@ package com.ssung.travelDiary.web.members.dto;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.web.file.FileDto;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Getter
+@Getter @Setter
+@NoArgsConstructor
 public class MemberResponseDto {
 
     private Long id;

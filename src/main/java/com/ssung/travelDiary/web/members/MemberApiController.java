@@ -18,8 +18,9 @@ public class MemberApiController {
 
     private final MemberService memberService;
 
-    @PostMapping("/duplicate")
-    public boolean duplicateUsername(@RequestBody String username) {
+    @GetMapping("/duplicate")
+    public boolean duplicateUsername(@RequestParam String username) {
+        log.info("username = {}",  username);
         MemberResponseDto member = memberService.findByUsername(username);
 
         if (member.getId() != null) return false;

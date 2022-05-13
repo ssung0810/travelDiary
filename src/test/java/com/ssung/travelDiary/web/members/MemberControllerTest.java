@@ -1,9 +1,15 @@
 package com.ssung.travelDiary.web.members;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.service.members.MemberService;
+import com.ssung.travelDiary.web.SessionConst;
+import com.ssung.travelDiary.web.file.FileDto;
+import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
+import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
+import jdk.jfr.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +23,9 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -55,15 +63,12 @@ class MemberControllerTest {
     @Test
     void 회원가입() throws Exception {
         // given\
-        MockMultipartFile multipartFile = new MockMultipartFile("image", "test.png", MediaType.IMAGE_PNG_VALUE, "test".getBytes());
-//        MemberSaveRequestDto requestDto = new MemberSaveRequestDto("username", 1, "password", "password", "email", null, Role.USER);
-
-//        given(memberService.sign(requestDto)).willReturn(1L);
+        given(memberService.sign(any(MemberSaveRequestDto.class))).willReturn(1L);
 
         // when, then
         mockMvc.perform(multipart(baseUrl + '/')
-                        .file(multipartFile)
-//                        .content(objectMapper.writeValueAsString(requestDto)))
+                        .file("image", new byte[]{})
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("username", "username")
                         .param("username_validation", "1")
                         .param("password", "password123!")
@@ -72,12 +77,11 @@ class MemberControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
 
-//        verify(memberService).sign(requestDto);
+        verify(memberService).sign(any(MemberSaveRequestDto.class));
     }
 
     @Test
     void 회원가입_검증에러_발생() throws Exception {
-        // given
         mockMvc.perform(post(baseUrl + "/")
                         .param("username", "username")
                         .param("username_validation", "0")
@@ -85,11 +89,67 @@ class MemberControllerTest {
                         .param("password_check", "password1")
                         .param("email", "email"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("members/sign"))
-                .andDo(print());
+                .andExpect(view().name("members/sign"));
 
-        // when
+        verify(memberService, never()).sign(any(MemberSaveRequestDto.class));
+    }
+    
+    @Test
+    void 프로필_폼() throws Exception {
+        mockMvc.perform(get(baseUrl + "/profileForm")
+                        .sessionAttr(SessionConst.USER_ID, 1L))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/members/profileForm"));
 
-        // then
+        verify(memberService).findOne(1L);
+    }
+
+    @Test
+    void 프로필수정_폼() throws Exception {
+        Member member = Member.builder().username("username").build();
+        given(memberService.findOne(1L)).willReturn(new MemberResponseDto(member));
+
+        mockMvc.perform(get(baseUrl + "/profile")
+                        .sessionAttr(SessionConst.USER_ID, 1L))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/members/profileUpdateForm"));
+
+        verify(memberService).findOne(1L);
+    }
+
+    @Test
+    void 프로필수정() throws Exception {
+        // given
+        Member member = new Member();
+        given(memberService.update(any(MemberUpdateRequestDto.class))).willReturn(member);
+
+        // when, then
+        mockMvc.perform(multipart(baseUrl + "/profile")
+                        .file("image", new byte[]{})
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("username", "username")
+                        .param("password", "password123!")
+                        .param("password_check", "password123!")
+                        .param("email", "email@naver.com"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/members/profileForm"));
+
+        verify(memberService).update(any(MemberUpdateRequestDto.class));
+    }
+
+    @Test
+    void 프로필수정_검증에러() throws Exception {
+        // when, then
+        mockMvc.perform(multipart(baseUrl + "/profile")
+                        .file("image", new byte[]{})
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("username", "username")
+                        .param("password", "password")
+                        .param("password_check", "password1")
+                        .param("email", "email"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/members/profileUpdateForm"));
+
+        verify(memberService, never()).update(any(MemberUpdateRequestDto.class));
     }
 }

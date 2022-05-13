@@ -44,9 +44,9 @@ public class MemberService {
     /**
      * 유저 검색
      */
-    public Member findOne(Long memberId) {
-        return memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+    public MemberResponseDto findOne(Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
+        return new MemberResponseDto(member);
     }
 
     /**

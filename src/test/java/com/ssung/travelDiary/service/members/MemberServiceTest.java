@@ -40,7 +40,7 @@ class MemberServiceTest {
         Long findId = memberService.sign(dto);
 
         // when
-        Member findMember = memberService.findOne(findId);
+        MemberResponseDto findMember = memberService.findOne(findId);
 
         // then
         assertThat(findMember.getId()).isEqualTo(findId);
@@ -54,7 +54,7 @@ class MemberServiceTest {
         Long findId = memberService.sign(dto);
 
         // when
-        Member findMember = memberService.findOne(findId);
+        MemberResponseDto findMember = memberService.findOne(findId);
 
         // then
         assertThat(findMember.getImage().getOriginalFileName()).isEqualTo(multipartFile.getOriginalFilename());
@@ -85,10 +85,10 @@ class MemberServiceTest {
         Long findId = memberService.sign(dto);
 
         // when
-        Member member = memberService.findOne(findId);
+        MemberResponseDto findMember = memberService.findOne(findId);
 
         // then
-        assertThat(member.getUsername()).isEqualTo(dto.getUsername());
+        assertThat(findMember.getUsername()).isEqualTo(dto.getUsername());
     }
 
     @Test

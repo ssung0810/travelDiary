@@ -2,8 +2,6 @@ package com.ssung.travelDiary.domain.members;
 
 import com.ssung.travelDiary.domain.BaseTimeEntity;
 import com.ssung.travelDiary.domain.board.Board;
-import com.ssung.travelDiary.domain.image.Image;
-import com.ssung.travelDiary.domain.share.Share;
 import com.ssung.travelDiary.web.file.FileDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
 import lombok.Builder;

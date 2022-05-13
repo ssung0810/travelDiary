@@ -78,10 +78,10 @@ public class MemberController {
     }
 
     @GetMapping("/profileForm")
-    public String profileForm(@SessionAttribute(name = SessionConst.USERNAME) String username,
+    public String profileForm(@SessionAttribute(name = SessionConst.USER_ID) Long userId,
                               Model model) {
 
-        MemberResponseDto member = memberService.findByUsername(username);
+        MemberResponseDto member = memberService.findOne(userId);
 
         model.addAttribute("member", member);
 
@@ -89,10 +89,10 @@ public class MemberController {
     }
 
     @GetMapping("/profile")
-    public String profileUpdateForm(@SessionAttribute(name = SessionConst.USERNAME) String username,
+    public String profileUpdateForm(@SessionAttribute(name = SessionConst.USER_ID) Long userId,
                                     Model model) {
 
-        MemberUpdateRequestDto member = new MemberUpdateRequestDto(memberService.findByUsername(username));
+        MemberUpdateRequestDto member = new MemberUpdateRequestDto(memberService.findOne(userId));
         model.addAttribute("member", member);
 
         return "/members/profileUpdateForm";

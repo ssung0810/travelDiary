@@ -103,7 +103,7 @@ class MemberServiceTest {
         String password = "password";
 
         // when
-        Member member = memberService.loginValidation(username, password);
+        MemberResponseDto member = memberService.loginValidation(username, password);
 
         // then
         assertThat(member).isEqualTo(null);
@@ -121,7 +121,7 @@ class MemberServiceTest {
         String password = "password2";
 
         // when
-        Member member = memberService.loginValidation(username, password);
+        MemberResponseDto member = memberService.loginValidation(username, password);
 
         // then
         assertThat(member).isEqualTo(null);
@@ -139,7 +139,7 @@ class MemberServiceTest {
         String password = "password";
 
         // when
-        Member member = memberService.loginValidation(username, password);
+        MemberResponseDto member = memberService.loginValidation(username, password);
 
         // then
         assertThat(member).isNotEqualTo(null);

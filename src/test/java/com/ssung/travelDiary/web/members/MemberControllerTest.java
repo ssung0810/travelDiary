@@ -1,25 +1,18 @@
 package com.ssung.travelDiary.web.members;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssung.travelDiary.domain.members.Member;
-import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.SessionConst;
-import com.ssung.travelDiary.web.file.FileDto;
 import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
 import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
-import jdk.jfr.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -28,7 +21,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,11 +31,6 @@ class MemberControllerTest {
 
     @Mock
     MemberService memberService;
-
-    @Autowired
-    private TestRestTemplate restTemplate;
-
-    ObjectMapper objectMapper = new ObjectMapper();
 
     MockMvc mockMvc;
 

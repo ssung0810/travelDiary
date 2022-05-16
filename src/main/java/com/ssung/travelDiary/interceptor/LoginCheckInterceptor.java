@@ -6,6 +6,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Iterator;
 
 @Slf4j
 public class LoginCheckInterceptor implements HandlerInterceptor {
@@ -17,6 +18,10 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         log.info("인터셉터 요청 = {}", requestURI);
 
         HttpSession session = request.getSession(false);
+        Iterator<String> stringIterator = session.getAttributeNames().asIterator();
+        while (stringIterator.hasNext()) {
+            log.info("sessionValue = {}", session.getAttribute(stringIterator.next()));
+        }
         if (session == null) {
             log.info("미인증 사용자 요청");
             response.sendRedirect("/login?redirectURL=" + requestURI);

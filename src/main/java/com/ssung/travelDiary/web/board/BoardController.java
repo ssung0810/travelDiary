@@ -1,9 +1,9 @@
 package com.ssung.travelDiary.web.board;
 
 import com.ssung.travelDiary.domain.board.Board;
-import com.ssung.travelDiary.handler.FileHandler;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.web.SessionConst;
+import com.ssung.travelDiary.web.board.dto.BoardResponseDto;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class BoardController {
 
         if(date == null) date = LocalDate.now().toString();
 
-        List<Board> board = boardService.findList(memberId, date);
+        List<BoardResponseDto> board = boardService.findList(memberId, date);
         model.addAttribute("boards", board);
         model.addAttribute("date", date);
         model.addAttribute("memberId", memberId);
@@ -45,7 +45,7 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public String boardSearch(@PathVariable Long boardId,
                               Model model) {
-        Board board = boardService.findOne(boardId);
+        BoardResponseDto board = boardService.findOne(boardId);
 
         model.addAttribute("board", board);
         model.addAttribute("images", board.getImages());
@@ -71,7 +71,7 @@ public class BoardController {
             return "board/boardSaveForm";
         }
 
-        Board board = boardService.save(dto, memberId);
+        BoardResponseDto board = boardService.save(dto, memberId);
 
         return "redirect:/board/privateBoardList?date=" + board.getDate();
     }
@@ -80,7 +80,7 @@ public class BoardController {
     public String updateForm(@PathVariable Long boardId,
                              Model model) {
 
-        Board board = boardService.findOne(boardId);
+        BoardResponseDto board = boardService.findOne(boardId);
         model.addAttribute("board", board);
 
         return "board/boardUpdateForm";
@@ -96,7 +96,7 @@ public class BoardController {
             return "board/boardUpdateForm";
         }
 
-        Board board = boardService.update(boardId, dto);
+        BoardResponseDto board = boardService.update(dto, boardId);
 
         return "redirect:/board/"+board.getId();
     }

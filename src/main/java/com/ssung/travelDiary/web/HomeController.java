@@ -11,18 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class HomeController {
 
     @GetMapping("/")
-    public String home(HttpServletRequest request, HttpServletResponse response) {
-
-//        Cookie cookie = new Cookie("userId", "1");
-//        cookie.setMaxAge(3600);
-//        cookie.setDomain("example.org");
-//        cookie.setPath("/");
-//        cookie.setSecure(true);
-//        cookie.setHttpOnly(true);
-//
-//        response.addCookie(cookie);
-//
-//        Cookie[] cookies = request.getCookies();
+    public String home() {
 
         return "redirect:/login";
     }

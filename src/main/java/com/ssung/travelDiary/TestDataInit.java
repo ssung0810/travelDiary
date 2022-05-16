@@ -10,6 +10,7 @@ import com.ssung.travelDiary.handler.FileHandler;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.service.share.ShareService;
+import com.ssung.travelDiary.web.board.dto.BoardResponseDto;
 import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
 import com.ssung.travelDiary.web.file.FileDto;
 import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
@@ -37,7 +38,7 @@ public class TestDataInit {
     /**
      * 테스트용 데이터 추가
      */
-    @PostConstruct
+//    @PostConstruct
     public void init() throws IOException {
 
         FileDto fileDto = new FileDto("01. 왕이신하나님.png", "1013784853220000.png");
@@ -72,8 +73,8 @@ public class TestDataInit {
 
         BoardSaveRequestDto boardSaveRequestDto = new BoardSaveRequestDto("title", "content", "location", new ArrayList<>(), LocalDate.now().toString());
         BoardSaveRequestDto boardSaveRequestDto2 = new BoardSaveRequestDto("title2", "content2", "location2", new ArrayList<>(), LocalDate.now().toString());
-        Board board = boardService.save(boardSaveRequestDto, 1L);
-        Board board2 = boardService.save(boardSaveRequestDto2, 1L);
+        BoardResponseDto board = boardService.save(boardSaveRequestDto, 1L);
+        BoardResponseDto board2 = boardService.save(boardSaveRequestDto2, 1L);
 
         String title = "shareTitle";
         String creator = "test";

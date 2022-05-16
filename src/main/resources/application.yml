@@ -28,6 +28,9 @@ spring:
 #        show_sql: true
         format_sql: true
 
+#  session:
+#    store-type: jdbc
+
 logging:
   level:
     org.hibernate.SQL: debug

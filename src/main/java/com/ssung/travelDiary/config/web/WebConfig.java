@@ -1,10 +1,8 @@
 package com.ssung.travelDiary.config.web;
 
 import com.ssung.travelDiary.filter.LoginCheckFilter;
-import com.ssung.travelDiary.filter.ServletFilter;
 import com.ssung.travelDiary.interceptor.LoginCheckInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

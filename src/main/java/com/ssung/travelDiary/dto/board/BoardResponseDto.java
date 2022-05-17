@@ -1,4 +1,4 @@
-package com.ssung.travelDiary.web.board.dto;
+package com.ssung.travelDiary.dto.board;
 
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.image.Image;

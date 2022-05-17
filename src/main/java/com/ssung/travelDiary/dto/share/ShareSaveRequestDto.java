@@ -1,4 +1,4 @@
-package com.ssung.travelDiary.web.share.dto;
+package com.ssung.travelDiary.dto.share;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

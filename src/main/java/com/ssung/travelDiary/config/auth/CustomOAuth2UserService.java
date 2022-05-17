@@ -4,7 +4,6 @@ import com.ssung.travelDiary.config.auth.dto.OAuthAttributes;
 import com.ssung.travelDiary.config.auth.dto.SessionUser;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
-import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

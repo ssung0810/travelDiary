@@ -1,25 +1,20 @@
 package com.ssung.travelDiary;
 
-import com.ssung.travelDiary.domain.board.Board;
-import com.ssung.travelDiary.domain.image.ImageRepository;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
-import com.ssung.travelDiary.domain.share.Share;
 import com.ssung.travelDiary.handler.FileHandler;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.service.share.ShareService;
-import com.ssung.travelDiary.web.board.dto.BoardResponseDto;
-import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
-import com.ssung.travelDiary.web.file.FileDto;
-import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
-import com.ssung.travelDiary.web.share.dto.ShareSaveRequestDto;
+import com.ssung.travelDiary.dto.board.BoardResponseDto;
+import com.ssung.travelDiary.dto.board.BoardSaveRequestDto;
+import com.ssung.travelDiary.dto.file.FileDto;
+import com.ssung.travelDiary.dto.share.ShareSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;

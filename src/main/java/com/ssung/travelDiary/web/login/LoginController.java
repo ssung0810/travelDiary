@@ -1,10 +1,9 @@
 package com.ssung.travelDiary.web.login;
 
-import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.SessionConst;
-import com.ssung.travelDiary.web.login.dto.MemberLoginRequestDto;
-import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
+import com.ssung.travelDiary.dto.login.MemberLoginRequestDto;
+import com.ssung.travelDiary.dto.member.MemberResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

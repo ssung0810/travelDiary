@@ -3,7 +3,7 @@ package com.ssung.travelDiary.service.image;
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.image.Image;
 import com.ssung.travelDiary.domain.image.ImageRepository;
-import com.ssung.travelDiary.web.file.FileDto;
+import com.ssung.travelDiary.dto.file.FileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -8,7 +8,7 @@
 <body>
 
 <div class="loginBox">
-    <form action="/member/" th:object="${member}" method="post" enctype="multipart/form-data">
+    <form action="/member" th:object="${member}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="username_validation" th:field="*{username_validation}" value="0">
 
         <div class="form-group">

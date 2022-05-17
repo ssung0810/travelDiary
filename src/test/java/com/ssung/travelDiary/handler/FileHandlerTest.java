@@ -1,42 +1,25 @@
 package com.ssung.travelDiary.handler;
 
-import com.ssung.travelDiary.web.file.FileDto;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import com.ssung.travelDiary.dto.file.FileDto;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-//@ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @Transactional
 class FileHandlerTest {
 
-//    @InjectMocks
     @Autowired
     FileHandler fileHandler;
-
-    MockMvc mockMvc;
-
-    @BeforeEach
-    void beforeEach() {
-        mockMvc = MockMvcBuilders.standaloneSetup(fileHandler).build();
-    }
 
     @Value("${file.dir}")
     private String fileDir;

@@ -1,7 +1,7 @@
 package com.ssung.travelDiary.web.login;
 
 import com.ssung.travelDiary.service.members.MemberService;
-import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
+import com.ssung.travelDiary.dto.member.MemberResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

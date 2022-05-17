@@ -12,7 +12,7 @@ public class BoardApiController {
 
     private final BoardService boardService;
 
-    @DeleteMapping("/{boardId}")
+    @DeleteMapping("/board/{boardId}")
     public Long delete(@PathVariable Long boardId) {
         return boardService.delete(boardId);
     }

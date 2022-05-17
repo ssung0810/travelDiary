@@ -1,14 +1,10 @@
 package com.ssung.travelDiary.web.members;
 
-import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.service.members.MemberService;
-import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
+import com.ssung.travelDiary.dto.member.MemberResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,7 +16,6 @@ public class MemberApiController {
 
     @GetMapping("/duplicate")
     public boolean duplicateUsername(@RequestParam String username) {
-        log.info("username = {}",  username);
         MemberResponseDto member = memberService.findByUsername(username);
 
         if (member.getId() != null) return false;

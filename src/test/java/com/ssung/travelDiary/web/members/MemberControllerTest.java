@@ -3,9 +3,9 @@ package com.ssung.travelDiary.web.members;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.SessionConst;
-import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
-import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
-import com.ssung.travelDiary.web.members.dto.MemberUpdateRequestDto;
+import com.ssung.travelDiary.dto.member.MemberResponseDto;
+import com.ssung.travelDiary.dto.member.MemberSaveRequestDto;
+import com.ssung.travelDiary.dto.member.MemberUpdateRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,17 +43,18 @@ class MemberControllerTest {
 
     @Test
     void 회원가입_폼() throws Exception {
-        mockMvc.perform(get(baseUrl + "/"))
+        mockMvc.perform(get(baseUrl))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void 회원가입() throws Exception {
-        // given\
+    void 회원가입_성공() throws Exception {
+        // given
         given(memberService.sign(any(MemberSaveRequestDto.class))).willReturn(1L);
+//        given(memberService.sign(new MemberSaveRequestDto())).willReturn(1L);
 
         // when, then
-        mockMvc.perform(multipart(baseUrl + '/')
+        mockMvc.perform(multipart(baseUrl)
                         .file("image", new byte[]{})
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("username", "username")
@@ -64,12 +65,13 @@ class MemberControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
 
+//        verify(memberService).sign(new MemberSaveRequestDto());
         verify(memberService).sign(any(MemberSaveRequestDto.class));
     }
 
     @Test
     void 회원가입_검증에러_발생() throws Exception {
-        mockMvc.perform(post(baseUrl + "/")
+        mockMvc.perform(post(baseUrl)
                         .param("username", "username")
                         .param("username_validation", "0")
                         .param("password", "password")

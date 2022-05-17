@@ -1,4 +1,4 @@
-package com.ssung.travelDiary.web.share.dto;
+package com.ssung.travelDiary.dto.share;
 
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.image.Image;
@@ -24,16 +24,6 @@ public class ShareBoardResponseDto {
         this.content = board.getContent();
         this.location = board.getLocation();
         this.date = board.getDate();
-    }
-
-    @Override
-    public String toString() {
-        return "ShareBoardResponseDto{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", location='" + location + '\'' +
-                ", date='" + date + '\'' +
-                '}';
+        this.images = board.getImages();
     }
 }

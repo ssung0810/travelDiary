@@ -1,27 +1,22 @@
 package com.ssung.travelDiary.web.board;
 
-import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.web.SessionConst;
-import com.ssung.travelDiary.web.board.dto.BoardResponseDto;
-import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
-import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
+import com.ssung.travelDiary.dto.board.BoardResponseDto;
+import com.ssung.travelDiary.dto.board.BoardSaveRequestDto;
+import com.ssung.travelDiary.dto.board.BoardUpdateRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;

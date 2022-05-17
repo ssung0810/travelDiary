@@ -4,10 +4,11 @@ import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.image.Image;
 import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.service.members.MemberService;
-import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
-import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
-import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
-import com.ssung.travelDiary.web.share.dto.ShareBoardResponseDto;
+import com.ssung.travelDiary.dto.board.BoardResponseDto;
+import com.ssung.travelDiary.dto.board.BoardSaveRequestDto;
+import com.ssung.travelDiary.dto.board.BoardUpdateRequestDto;
+import com.ssung.travelDiary.dto.member.MemberSaveRequestDto;
+import com.ssung.travelDiary.dto.share.ShareBoardResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -80,13 +81,13 @@ class BoardServiceTest {
     }
 
     @Test
-    void 개인_게시글_조회() throws Exception {
+    void 개인_게시글_리스트_조회() throws Exception {
         // given
-        Board board = createBoard();
+        BoardResponseDto board = createBoard();
         String date = LocalDate.now().toString();
 
         // when
-        List<Board> boards = boardService.findList(memberId, date);
+        List<BoardResponseDto> boards = boardService.findList(memberId, date);
 
         // then
         assertThat(boards.size()).isEqualTo(1);
@@ -96,10 +97,10 @@ class BoardServiceTest {
     @Test
     void 게시글_단일조회() throws Exception {
         // given
-        Board board = createBoard();
+        BoardResponseDto board = createBoard();
 
         // when
-        Board findBoard = boardService.findOne(board.getId());
+        BoardResponseDto findBoard = boardService.findOne(board.getId());
 
         // then
         assertThat(findBoard.getContent()).isEqualTo("content");
@@ -108,13 +109,13 @@ class BoardServiceTest {
     @Test
     void 게시글_수정() throws Exception {
         // given
-        Board board = createBoard();
+        BoardResponseDto board = createBoard();
         BoardUpdateRequestDto updateRequestDto = new BoardUpdateRequestDto(
                 "title2", "content2", "location2", new ArrayList<>(), LocalDate.now().toString()
         );
 
         // when
-        Board updateBoard = boardService.update(board.getId(), updateRequestDto);
+        BoardResponseDto updateBoard = boardService.update(updateRequestDto, board.getId());
 
         // then
         assertThat(updateBoard.getTitle()).isEqualTo("title2");
@@ -123,7 +124,7 @@ class BoardServiceTest {
     @Test
     void 게시글_삭제() throws Exception {
         // given
-        Board board = createBoard();
+        BoardResponseDto board = createBoard();
 
         // when
         boardService.delete(board.getId());
@@ -135,7 +136,7 @@ class BoardServiceTest {
     @Test
     void 생성자에게_속한_공유_게시글_조회() throws Exception {
         // given
-        Board board = createBoard();
+        BoardResponseDto board = createBoard();
 
         // when
         List<ShareBoardResponseDto> boardList = boardService.addBoardSearch(memberId, "");
@@ -145,7 +146,7 @@ class BoardServiceTest {
         assertThat(boardList.get(0).getTitle()).isEqualTo("title");
     }
 
-    private Board createBoard() throws IOException {
+    private BoardResponseDto createBoard() throws IOException {
         BoardSaveRequestDto boardSaveRequestDto = new BoardSaveRequestDto(
                 "title", "content", "location", new ArrayList<>(), LocalDate.now().toString()
         );

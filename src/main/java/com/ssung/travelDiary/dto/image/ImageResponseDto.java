@@ -1,6 +1,6 @@
-package com.ssung.travelDiary.web.image.dto;
+package com.ssung.travelDiary.dto.image;
 
-import com.ssung.travelDiary.web.file.FileDto;
+import com.ssung.travelDiary.dto.file.FileDto;
 import lombok.Getter;
 
 @Getter

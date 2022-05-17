@@ -4,13 +4,13 @@ import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.board.BoardRepository;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
-import com.ssung.travelDiary.web.file.FileDto;
+import com.ssung.travelDiary.dto.board.BoardResponseDto;
+import com.ssung.travelDiary.dto.file.FileDto;
 import com.ssung.travelDiary.handler.FileHandler;
 import com.ssung.travelDiary.service.image.ImageService;
-import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
-import com.ssung.travelDiary.web.board.dto.BoardUpdateRequestDto;
-import com.ssung.travelDiary.web.share.dto.ShareBoardResponseDto;
-import com.ssung.travelDiary.web.share.dto.ShareSaveRequestDto;
+import com.ssung.travelDiary.dto.board.BoardSaveRequestDto;
+import com.ssung.travelDiary.dto.board.BoardUpdateRequestDto;
+import com.ssung.travelDiary.dto.share.ShareBoardResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class BoardService {
      * 게시글 저장
      */
     @Transactional
-    public Board save(BoardSaveRequestDto dto, Long memberId) throws IOException {
+    public BoardResponseDto save(BoardSaveRequestDto dto, Long memberId) throws IOException {
         Member member = memberRepository.findById(memberId).orElse(null);
 
         Board board = createBoard(dto, member);
@@ -43,7 +43,7 @@ public class BoardService {
 
         imageService.saveBoard(fileHandler.storeFiles(dto.getImages()), board);
 
-        return board;
+        return new BoardResponseDto(board);
     }
 
     /**
@@ -54,32 +54,34 @@ public class BoardService {
     }
 
     /**
-     * 개인 게시글 조회
+     * 개인 게시글 리스트 조회
      */
-    public List<Board> findList(Long member_id, String date) {
+    public List<BoardResponseDto> findList(Long member_id, String date) {
 //        return boardRepository.findBoardList(member_id, date);
-        return boardRepository.findByMember_idAndDate(member_id, date);
+//        return boardRepository.findByMember_idAndDate(member_id, date);
+        return boardRepository.findByMember_idAndDate(member_id, date).stream()
+                .map(b -> new BoardResponseDto(b)).collect(Collectors.toList());
     }
 
     /**
      * 게시글 단일 조회
      */
-    public Board findOne(Long boardId) {
-        return boardRepository.findById(boardId)
-                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+    public BoardResponseDto findOne(Long boardId) {
+        return new BoardResponseDto(boardRepository.findById(boardId)
+                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다.")));
     }
 
     /**
      * 게시글 수정
      */
     @Transactional
-    public Board update(Long boardId, BoardUpdateRequestDto dto) throws IOException {
+    public BoardResponseDto update(BoardUpdateRequestDto dto, Long boardId) throws IOException {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
         List<FileDto> images = fileHandler.storeFiles(dto.getImages());
 
-        return board.update(dto.getTitle(), dto.getContent(), dto.getLocation(), dto.getDate());
+        return new BoardResponseDto(board.update(dto.getTitle(), dto.getContent(), dto.getLocation(), dto.getDate()));
     }
 
     /**

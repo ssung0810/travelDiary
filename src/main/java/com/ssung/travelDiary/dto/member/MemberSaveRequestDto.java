@@ -1,4 +1,4 @@
-package com.ssung.travelDiary.web.members.dto;
+package com.ssung.travelDiary.dto.member;
 
 import com.ssung.travelDiary.domain.members.Role;
 import lombok.Getter;

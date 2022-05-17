@@ -1,15 +1,13 @@
 package com.ssung.travelDiary.web.share;
 
-import com.ssung.travelDiary.domain.board.Board;
-import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.share.Share;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.service.share.ShareService;
 import com.ssung.travelDiary.web.SessionConst;
-import com.ssung.travelDiary.web.members.dto.MemberResponseDto;
-import com.ssung.travelDiary.web.share.dto.ShareBoardResponseDto;
-import com.ssung.travelDiary.web.share.dto.ShareSaveRequestDto;
+import com.ssung.travelDiary.dto.member.MemberResponseDto;
+import com.ssung.travelDiary.dto.share.ShareBoardResponseDto;
+import com.ssung.travelDiary.dto.share.ShareSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

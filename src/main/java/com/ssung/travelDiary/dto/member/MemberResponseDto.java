@@ -1,7 +1,7 @@
-package com.ssung.travelDiary.web.members.dto;
+package com.ssung.travelDiary.dto.member;
 
 import com.ssung.travelDiary.domain.members.Member;
-import com.ssung.travelDiary.web.file.FileDto;
+import com.ssung.travelDiary.dto.file.FileDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

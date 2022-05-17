@@ -1,4 +1,4 @@
-package com.ssung.travelDiary.web.members.dto;
+package com.ssung.travelDiary.dto.member;
 
 import lombok.Getter;
 import lombok.Setter;

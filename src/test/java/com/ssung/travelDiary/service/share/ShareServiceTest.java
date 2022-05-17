@@ -1,22 +1,21 @@
 package com.ssung.travelDiary.service.share;
 
-import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.domain.share.Share;
 import com.ssung.travelDiary.domain.share.ShareBoard;
 import com.ssung.travelDiary.domain.share.ShareMember;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.members.MemberService;
-import com.ssung.travelDiary.web.board.dto.BoardSaveRequestDto;
-import com.ssung.travelDiary.web.members.dto.MemberSaveRequestDto;
-import com.ssung.travelDiary.web.share.dto.ShareBoardResponseDto;
-import com.ssung.travelDiary.web.share.dto.ShareListResponseDto;
-import com.ssung.travelDiary.web.share.dto.ShareSaveRequestDto;
+import com.ssung.travelDiary.dto.board.BoardResponseDto;
+import com.ssung.travelDiary.dto.board.BoardSaveRequestDto;
+import com.ssung.travelDiary.dto.member.MemberSaveRequestDto;
+import com.ssung.travelDiary.dto.share.ShareBoardResponseDto;
+import com.ssung.travelDiary.dto.share.ShareListResponseDto;
+import com.ssung.travelDiary.dto.share.ShareSaveRequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
@@ -105,8 +104,8 @@ class ShareServiceTest {
 
         BoardSaveRequestDto boardSaveRequestDto = new BoardSaveRequestDto("title", "content", "location", new ArrayList<>(), LocalDate.now().toString());
         BoardSaveRequestDto boardSaveRequestDto2 = new BoardSaveRequestDto("title2", "content2", "location2", new ArrayList<>(), LocalDate.now().toString());
-        Board board = boardService.save(boardSaveRequestDto, findId);
-        Board board2 = boardService.save(boardSaveRequestDto2, findId);
+        BoardResponseDto board = boardService.save(boardSaveRequestDto, findId);
+        BoardResponseDto board2 = boardService.save(boardSaveRequestDto2, findId);
 
         String title = "shareTitle";
         String creator = "test";

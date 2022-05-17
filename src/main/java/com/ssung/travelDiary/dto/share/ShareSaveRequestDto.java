@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ShareSaveRequestDto {
 
+    private Long id;
     @NotBlank
     private String title;
     @NotBlank
@@ -32,15 +33,5 @@ public class ShareSaveRequestDto {
 
     public ShareSaveRequestDto(String creator) {
         this.creator = creator;
-    }
-
-    @Override
-    public String toString() {
-        return "ShareSaveRequestDto{" +
-                "title='" + title + '\'' +
-                ", creator='" + creator + '\'' +
-                ", members=" + members.size() +
-                ", boards=" + boards.size() +
-                '}';
     }
 }

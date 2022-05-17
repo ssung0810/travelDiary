@@ -10,6 +10,7 @@ import com.ssung.travelDiary.domain.share.ShareMember;
 import com.ssung.travelDiary.domain.share.ShareRepository;
 import com.ssung.travelDiary.dto.share.ShareBoardResponseDto;
 import com.ssung.travelDiary.dto.share.ShareListResponseDto;
+import com.ssung.travelDiary.dto.share.ShareResponseDto;
 import com.ssung.travelDiary.dto.share.ShareSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,8 @@ public class ShareService {
      * 공유폴더 저장
      */
     @Transactional
-    public Share save(ShareSaveRequestDto dto,
-                      Long memberId) {
+    public ShareResponseDto save(ShareSaveRequestDto dto,
+                                 Long memberId) {
 
         Share share = Share.saveShare(dto.getTitle(), dto.getCreator());
 
@@ -52,7 +53,7 @@ public class ShareService {
 
         shareRepository.save(share);
 
-        return share;
+        return new ShareResponseDto(share);
     }
 
     /**

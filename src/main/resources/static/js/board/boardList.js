@@ -29,7 +29,7 @@ $(document).ready(function() {
         if(shareId == 0) {
             window.location.href = "/board/privateBoardList";
         } else {
-            window.location.href = "/sharePosts/"+shareId;
+            window.location.href = "/share/"+shareId;
         }
 
 //        $.ajax({

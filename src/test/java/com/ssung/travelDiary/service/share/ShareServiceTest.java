@@ -4,6 +4,7 @@ import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.domain.share.Share;
 import com.ssung.travelDiary.domain.share.ShareBoard;
 import com.ssung.travelDiary.domain.share.ShareMember;
+import com.ssung.travelDiary.dto.share.ShareResponseDto;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.dto.board.BoardResponseDto;
@@ -40,7 +41,7 @@ class ShareServiceTest {
     @Test
     public void 공유폴더_저장() throws Exception {
         // given
-        Share share = createShare();
+        ShareResponseDto share = createShare();
 
         // when
         List<ShareBoard> shareBoard = share.getShareBoard();
@@ -57,7 +58,7 @@ class ShareServiceTest {
     @Test
     void 공유폴더_리스트_출력() throws Exception {
         // given
-        Share share = createShare();
+        createShare();
 
         // when
         ShareListResponseDto responseDto = shareService.findList(memberId).get(0);
@@ -83,7 +84,7 @@ class ShareServiceTest {
     @Test
     void 공유된_게시글_전체조회() throws Exception {
         // given
-        Share share = createShare();
+        ShareResponseDto share = createShare();
 
         // when
         List<ShareBoardResponseDto> shareBoard = shareService.findShareBoard(share.getId());
@@ -93,25 +94,25 @@ class ShareServiceTest {
         assertThat(shareBoard.get(0).getTitle()).isEqualTo("title");
     }
 
-    private Share createShare() throws IOException {
+    private ShareResponseDto createShare() throws IOException {
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
 
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
         MemberSaveRequestDto dto2 = new MemberSaveRequestDto("username2", "password2", "email2", multipartFile, Role.USER);
-        Long findId = memberService.sign(dto);
-        Long findId2 = memberService.sign(dto2);
-        memberId = findId;
+        Long memberId = memberService.sign(dto);
+        Long memberId2 = memberService.sign(dto2);
+        this.memberId = memberId;
 
         BoardSaveRequestDto boardSaveRequestDto = new BoardSaveRequestDto("title", "content", "location", new ArrayList<>(), LocalDate.now().toString());
         BoardSaveRequestDto boardSaveRequestDto2 = new BoardSaveRequestDto("title2", "content2", "location2", new ArrayList<>(), LocalDate.now().toString());
-        BoardResponseDto board = boardService.save(boardSaveRequestDto, findId);
-        BoardResponseDto board2 = boardService.save(boardSaveRequestDto2, findId);
+        BoardResponseDto board = boardService.save(boardSaveRequestDto, memberId);
+        BoardResponseDto board2 = boardService.save(boardSaveRequestDto2, memberId);
 
         String title = "shareTitle";
         String creator = "test";
 
         ArrayList<Long> members = new ArrayList<>();
-        members.add(findId2);
+        members.add(memberId2);
 
         ArrayList<Long> boards = new ArrayList<>();
         boards.add(board.getId());
@@ -120,8 +121,8 @@ class ShareServiceTest {
         ShareSaveRequestDto shareSaveRequestDto = new ShareSaveRequestDto(title, creator, members, boards);
         ShareSaveRequestDto shareSaveRequestDto2 = new ShareSaveRequestDto(title, creator, members, boards);
 
-        Share share = shareService.save(shareSaveRequestDto, findId);
-        shareService.save(shareSaveRequestDto2, findId);
+        ShareResponseDto share = shareService.save(shareSaveRequestDto, memberId);
+        shareService.save(shareSaveRequestDto2, memberId);
 
         return share;
     }

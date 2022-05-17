@@ -1,6 +1,7 @@
 package com.ssung.travelDiary.web.share;
 
 import com.ssung.travelDiary.domain.share.Share;
+import com.ssung.travelDiary.dto.share.ShareResponseDto;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.service.share.ShareService;
@@ -22,13 +23,14 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
+@RequestMapping("/share")
 public class ShareController {
 
     private final ShareService shareService;
     private final BoardService boardService;
     private final MemberService memberService;
 
-    @GetMapping("/share")
+    @GetMapping
     public String shareForm(Model model,
                             @SessionAttribute(name = SessionConst.USERNAME) String username) {
         model.addAttribute("share", new ShareSaveRequestDto(username));
@@ -36,7 +38,7 @@ public class ShareController {
         return "share/shareCreateForm";
     }
 
-    @PostMapping("/share")
+    @PostMapping
     public String shareForm(@Valid @ModelAttribute("share") ShareSaveRequestDto dto,
                             BindingResult bindingResult,
                             @SessionAttribute(name = SessionConst.USER_ID) Long memberId) {
@@ -46,12 +48,12 @@ public class ShareController {
             return "share/shareCreateForm";
         }
 
-        Share saveShare = shareService.save(dto, memberId);
+        ShareResponseDto share = shareService.save(dto, memberId);
 
-        return "redirect:/sharePosts/"+saveShare.getId();
+        return "redirect:/share/"+share.getId();
     }
 
-    @GetMapping("/sharePosts/{shareId}")
+    @GetMapping("/{shareId}")
     public String sharePostsList(Model model,
                                  @PathVariable Long shareId,
                                  @SessionAttribute(name = SessionConst.USER_ID) Long memberId) {
@@ -66,7 +68,7 @@ public class ShareController {
         return "board/boardList";
     }
 
-    @GetMapping("shareBoardList")
+    @GetMapping("/shareBoardList")
     public String shareBoardList(@SessionAttribute(name = SessionConst.USER_ID) Long memberId,
                                  @RequestParam String value,
                                  Model model) {
@@ -74,10 +76,10 @@ public class ShareController {
         List<ShareBoardResponseDto> boardList = boardService.addBoardSearch(memberId, value);
         model.addAttribute("boardList", boardList);
 
-        return "/share/shareCreateForm :: #boardListBox";
+        return "share/shareCreateForm :: #boardListBox";
     }
 
-    @GetMapping("shareMemberList")
+    @GetMapping("/shareMemberList")
     public String shareMemberList(@SessionAttribute(name = SessionConst.USER_ID) Long memberId,
                                   @RequestParam String value,
                                   Model model) {
@@ -87,6 +89,6 @@ public class ShareController {
         model.addAttribute("memberList", memberList);
 //        model.addAttribute("member", "");
 
-        return "/share/shareCreateForm :: #memberListBox";
+        return "share/shareCreateForm :: #memberListBox";
     }
 }

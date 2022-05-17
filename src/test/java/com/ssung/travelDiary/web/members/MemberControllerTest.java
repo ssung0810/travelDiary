@@ -49,10 +49,6 @@ class MemberControllerTest {
 
     @Test
     void 회원가입_성공() throws Exception {
-        // given
-        given(memberService.sign(any(MemberSaveRequestDto.class))).willReturn(1L);
-//        given(memberService.sign(new MemberSaveRequestDto())).willReturn(1L);
-
         // when, then
         mockMvc.perform(multipart(baseUrl)
                         .file("image", new byte[]{})
@@ -65,8 +61,8 @@ class MemberControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
 
-//        verify(memberService).sign(new MemberSaveRequestDto());
-        verify(memberService).sign(any(MemberSaveRequestDto.class));
+        verify(memberService).sign(new MemberSaveRequestDto());
+//        verify(memberService).sign(any(MemberSaveRequestDto.class));
     }
 
     @Test

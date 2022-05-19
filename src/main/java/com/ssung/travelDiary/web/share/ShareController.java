@@ -39,7 +39,7 @@ public class ShareController {
     }
 
     @PostMapping
-    public String shareForm(@Valid @ModelAttribute("share") ShareSaveRequestDto dto,
+    public String shareSave(@Valid @ModelAttribute("share") ShareSaveRequestDto dto,
                             BindingResult bindingResult,
                             @SessionAttribute(name = SessionConst.USER_ID) Long memberId) {
 

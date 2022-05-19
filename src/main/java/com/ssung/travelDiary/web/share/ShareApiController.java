@@ -6,16 +6,14 @@ import com.ssung.travelDiary.dto.share.ShareBoardResponseDto;
 import com.ssung.travelDiary.dto.share.ShareListResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/share/api")
 public class ShareApiController {
 
     private final ShareService shareService;
@@ -25,8 +23,8 @@ public class ShareApiController {
         return shareService.findList(memberId);
     }
 
-    @GetMapping("/shareBoard/{shareId}")
-    public List<ShareBoardResponseDto> shareBoard(@PathVariable Long shareId) {
-        return shareService.findShareBoard(shareId);
-    }
+//    @GetMapping("/shareBoard/{shareId}")
+//    public List<ShareBoardResponseDto> shareBoard(@PathVariable Long shareId) {
+//        return shareService.findShareBoard(shareId);
+//    }
 }

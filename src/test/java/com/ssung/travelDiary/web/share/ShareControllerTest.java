@@ -118,7 +118,7 @@ class ShareControllerTest {
     @Test
     void 공유폴더_생성_시_게시글_조회() throws Exception {
         // when, then
-        mockMvc.perform(get("/share/shareBoardList")
+        mockMvc.perform(get("/share/shareBoard")
                         .sessionAttr(SessionConst.USER_ID, "1")
                         .param("value", "title"))
                 .andExpect(status().isOk())
@@ -130,7 +130,7 @@ class ShareControllerTest {
     @Test
     void 공유폴더_생성_시_회원_조회() throws Exception {
         // when, then
-        mockMvc.perform(get("/share/shareMemberList")
+        mockMvc.perform(get("/share/shareMember")
                         .sessionAttr(SessionConst.USER_ID, "1")
                         .param("value", "title"))
                 .andExpect(status().isOk())

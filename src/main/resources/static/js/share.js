@@ -106,7 +106,7 @@ function boardSearch() {
 
     $.ajax({
         type: "GET",
-        url: "/shareBoardList",
+        url: "/shareBoard",
         data: param,
         ContentType: "application/json; charset=UTF-8"
     }).done(function(fragment) {
@@ -133,7 +133,7 @@ function memberSearch() {
 
     $.ajax({
         type: "GET",
-        url: "/shareMemberList",
+        url: "/shareMember",
         data: param,
         ContentType: "application/json; charset=UTF-8"
     }).done(function(fragment) {

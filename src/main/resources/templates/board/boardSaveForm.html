@@ -13,7 +13,7 @@
 
 <div class="container">
     <div>
-        <form action="/board/save" method="post" th:object="${board}" enctype="multipart/form-data">
+        <form action="/board" method="post" th:object="${board}" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="date">날짜</label>
                     <input type="text" id="date" th:errorclass="field-error" class="form-control write" th:field="*{date}"

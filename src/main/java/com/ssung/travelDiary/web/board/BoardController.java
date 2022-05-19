@@ -52,15 +52,15 @@ public class BoardController {
         return "board/board";
     }
 
-    @GetMapping("/save")
-    public String saveForm(Model model) {
+    @GetMapping
+    public String boardSaveForm(Model model) {
 
         model.addAttribute("board", new BoardSaveRequestDto());
 
         return "board/boardSaveForm";
     }
 
-    @PostMapping("/save")
+    @PostMapping
     public String boardSave(@Valid @ModelAttribute("board") BoardSaveRequestDto dto,
                             BindingResult bindingResult,
                             @SessionAttribute(name = SessionConst.USER_ID) Long memberId) throws IOException {
@@ -85,7 +85,7 @@ public class BoardController {
         return "board/boardUpdateForm";
     }
 
-    @PostMapping("/{boardId}/update")
+    @PatchMapping("/{boardId}")
     public String updateBoard(@PathVariable Long boardId,
                               @Valid @ModelAttribute("board") BoardUpdateRequestDto dto,
                               BindingResult bindingResult) throws IOException {

@@ -68,7 +68,7 @@ public class ShareController {
         return "board/boardList";
     }
 
-    @GetMapping("/shareBoardList")
+    @GetMapping("/shareBoard")
     public String shareBoardList(@SessionAttribute(name = SessionConst.USER_ID) Long memberId,
                                  @RequestParam String value,
                                  Model model) {
@@ -79,7 +79,7 @@ public class ShareController {
         return "share/shareCreateForm :: #boardListBox";
     }
 
-    @GetMapping("/shareMemberList")
+    @GetMapping("/shareMember")
     public String shareMemberList(@SessionAttribute(name = SessionConst.USER_ID) Long memberId,
                                   @RequestParam String value,
                                   Model model) {

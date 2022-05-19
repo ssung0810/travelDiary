@@ -76,7 +76,7 @@ class BoardControllerTest {
     @Test
     void 게시글_저장_폼() throws Exception {
         // when, then
-        mockMvc.perform(get(basicURL + "/save"))
+        mockMvc.perform(get(basicURL))
                 .andExpect(status().isOk())
                 .andExpect(view().name("board/boardSaveForm"));
     }
@@ -89,7 +89,7 @@ class BoardControllerTest {
         given(boardService.save(any(BoardSaveRequestDto.class), anyLong())).willReturn(new BoardResponseDto(board));
 
         // when, then
-        mockMvc.perform(post(basicURL + "/save")
+        mockMvc.perform(post(basicURL)
                         .param("title", "title")
                         .param("content", "content")
                         .param("location", "location")
@@ -104,7 +104,7 @@ class BoardControllerTest {
     @Test
     void 게시글_저장_검증에러() throws Exception {
         // when, then
-        mockMvc.perform(post(basicURL + "/save")
+        mockMvc.perform(post(basicURL)
                         .param("title", "title")
                         .sessionAttr(SessionConst.USER_ID, "1"))
                 .andExpect(status().isOk())
@@ -132,12 +132,12 @@ class BoardControllerTest {
         given(boardService.update(any(BoardUpdateRequestDto.class), anyLong())).willReturn(responseDto);
 
         // when, then
-        mockMvc.perform(post(basicURL + "/1/update")
+        mockMvc.perform(patch(basicURL + "/1")
                         .param("title", "title")
                         .param("content", "content")
                         .param("location", "location")
                         .param("date", LocalDate.now().toString()))
-                .andExpect(status().isOk())
+                .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/board/1"));
 
         verify(boardService).update(any(BoardUpdateRequestDto.class), anyLong());
@@ -146,7 +146,7 @@ class BoardControllerTest {
     @Test
     void 게시글_수정_검증에러() throws Exception {
         // when, then
-        mockMvc.perform(post(basicURL + "/1/update")
+        mockMvc.perform(patch(basicURL + "/1")
                         .param("title", "title"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("board/boardUpdateForm"));

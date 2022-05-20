@@ -27,11 +27,6 @@ class MemberServiceTest {
     @Autowired
     MemberRepository memberRepository;
 
-    @BeforeEach
-    void clean() {
-
-    }
-
     @Test
     void 프로필_이미지없는_회원가입() throws Exception {
         // given

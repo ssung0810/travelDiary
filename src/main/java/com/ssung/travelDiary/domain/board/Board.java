@@ -3,6 +3,7 @@ package com.ssung.travelDiary.domain.board;
 import com.ssung.travelDiary.domain.BaseTimeEntity;
 import com.ssung.travelDiary.domain.image.Image;
 import com.ssung.travelDiary.domain.members.Member;
+import com.ssung.travelDiary.dto.file.FileDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,18 +35,22 @@ public class Board extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Image> images = new ArrayList<>();
 
     private String date;
 
     @Builder
-    public Board(String title, String content, String location, String date, Member member) {
+    public Board(String title, String content, String location, String date, Member member, List<FileDto> fileDtoList) {
         this.title = title;
         this.content = content;
         this.location = location;
         this.date = date;
         this.member = member;
+
+        if (fileDtoList.size() > 0) {
+            addImage(fileDtoList);
+        }
     }
 
     public Board update(String title, String content, String location, String date) {
@@ -55,5 +60,11 @@ public class Board extends BaseTimeEntity {
         this.date = date;
 
         return this;
+    }
+
+    private void addImage(List<FileDto> fileDtoList) {
+        for (FileDto fileDto : fileDtoList) {
+            images.add(Image.builder().images(fileDto).board(this).build());
+        }
     }
 }

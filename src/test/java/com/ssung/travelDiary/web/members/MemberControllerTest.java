@@ -61,8 +61,7 @@ class MemberControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
 
-        verify(memberService).sign(new MemberSaveRequestDto());
-//        verify(memberService).sign(any(MemberSaveRequestDto.class));
+        verify(memberService).sign(any(MemberSaveRequestDto.class));
     }
 
     @Test

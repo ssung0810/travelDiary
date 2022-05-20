@@ -26,18 +26,10 @@ public class Image {
     @JoinColumn(name = "board_id")
     private Board board;
 
-//    private void addBoard(Board board) {
-//        board.getImages().add(this);
-//    }
-
     @Builder
     public Image(FileDto images, Board board) {
         this.images = images;
         this.board = board;
-
-        board.getImages().add(this);
-
-//        addBoard(board);
     }
 }
 

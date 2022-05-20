@@ -1,4 +1,4 @@
-package com.ssung.travelDiary.config.web;
+package com.ssung.travelDiary.config;
 
 import com.ssung.travelDiary.filter.LoginCheckFilter;
 import com.ssung.travelDiary.interceptor.LoginCheckInterceptor;

@@ -3,16 +3,15 @@ package com.ssung.travelDiary.service.board;
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.board.BoardRepository;
 import com.ssung.travelDiary.domain.image.Image;
+import com.ssung.travelDiary.domain.image.ImageRepository;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.dto.board.BoardResponseDto;
-import com.ssung.travelDiary.dto.file.FileDto;
-import com.ssung.travelDiary.exception.BoardNotFountException;
-import com.ssung.travelDiary.handler.FileHandler;
-import com.ssung.travelDiary.service.image.ImageService;
 import com.ssung.travelDiary.dto.board.BoardSaveRequestDto;
 import com.ssung.travelDiary.dto.board.BoardUpdateRequestDto;
 import com.ssung.travelDiary.dto.share.ShareBoardResponseDto;
+import com.ssung.travelDiary.exception.BoardNotFountException;
+import com.ssung.travelDiary.handler.FileHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
-    private final ImageService imageService;
+    private final ImageRepository imageRepository;
     private final FileHandler fileHandler;
 
     /**
@@ -77,9 +76,11 @@ public class BoardService {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new BoardNotFountException("게시글이 존재하지 않습니다."));
 
-        List<FileDto> images = fileHandler.storeFiles(dto.getImages());
+        for (Image image : board.getImages()) {
+            imageRepository.delete(image);
+        }
 
-        return new BoardResponseDto(board.update(dto.getTitle(), dto.getContent(), dto.getLocation(), dto.getDate()));
+        return new BoardResponseDto(board.update(dto.getTitle(), dto.getContent(), dto.getLocation(), dto.getDate(), fileHandler.storeFiles(dto.getImages())));
     }
 
     /**

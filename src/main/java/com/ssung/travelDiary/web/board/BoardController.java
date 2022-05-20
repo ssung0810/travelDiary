@@ -85,7 +85,7 @@ public class BoardController {
         return "board/boardUpdateForm";
     }
 
-    @PatchMapping("/{boardId}")
+    @PutMapping("/{boardId}")
     public String updateBoard(@PathVariable Long boardId,
                               @Valid @ModelAttribute("board") BoardUpdateRequestDto dto,
                               BindingResult bindingResult) throws IOException {

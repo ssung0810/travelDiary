@@ -18,6 +18,7 @@ public class BoardUpdateRequestDto {
 
     @NotBlank
     private String location;
+
     private List<MultipartFile> images;
 
     @NotBlank

@@ -2,7 +2,9 @@ package com.ssung.travelDiary.service.board;
 
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.image.Image;
+import com.ssung.travelDiary.domain.image.ImageRepository;
 import com.ssung.travelDiary.domain.members.Role;
+import com.ssung.travelDiary.exception.BoardNotFountException;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.dto.board.BoardResponseDto;
 import com.ssung.travelDiary.dto.board.BoardSaveRequestDto;
@@ -31,6 +33,7 @@ class BoardServiceTest {
 
     @Autowired BoardService boardService;
     @Autowired MemberService memberService;
+    @Autowired ImageRepository imageRepository;
 
     static Long memberId;
 
@@ -48,10 +51,11 @@ class BoardServiceTest {
         boardService.save(boardSaveRequestDto, memberId);
 
         // when
-        Board findTravel = boardService.findAll().get(0);
+        Board findBoard = boardService.findAll().get(0);
 
         // then
-        assertThat(findTravel.getContent()).isEqualTo("content");
+        assertThat(findBoard.getContent()).isEqualTo("content");
+        assertThat(findBoard.getImages().size()).isEqualTo(0);
     }
 
     @Test
@@ -77,7 +81,7 @@ class BoardServiceTest {
 
         // then
         assertThat(findBoard.getContent()).isEqualTo("content");
-//        assertThat(findBoard.getImages().size()).isEqualTo(2);
+        assertThat(findBoard.getImages().size()).isEqualTo(2);
     }
 
     @Test
@@ -110,15 +114,22 @@ class BoardServiceTest {
     void 게시글_수정() throws Exception {
         // given
         BoardResponseDto board = createBoard();
+        List<MultipartFile> multipartFiles = List.of(
+                new MockMultipartFile("image3", "image3", MediaType.IMAGE_PNG_VALUE, "image3".getBytes()),
+                new MockMultipartFile("image4", "image4", MediaType.IMAGE_PNG_VALUE, "image4".getBytes())
+        );
         BoardUpdateRequestDto updateRequestDto = new BoardUpdateRequestDto(
-                "title2", "content2", "location2", new ArrayList<>(), LocalDate.now().toString()
+                "title2", "content2", "location2", multipartFiles, LocalDate.now().toString()
         );
 
         // when
         BoardResponseDto updateBoard = boardService.update(updateRequestDto, board.getId());
+        BoardResponseDto findBoard = boardService.findOne(updateBoard.getId());
 
         // then
-        assertThat(updateBoard.getTitle()).isEqualTo("title2");
+        assertThat(findBoard.getTitle()).isEqualTo("title2");
+        assertThat(findBoard.getImages().size()).isEqualTo(2);
+        assertThat(findBoard.getImages().get(0).getImages().getOriginalFileName()).isEqualTo("image3");
     }
 
     @Test
@@ -130,7 +141,7 @@ class BoardServiceTest {
         boardService.delete(board.getId());
 
         // then
-        assertThatThrownBy(() -> boardService.findOne(board.getId())).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> boardService.findOne(board.getId())).isInstanceOf(BoardNotFountException.class);
     }
 
     @Test
@@ -140,15 +151,19 @@ class BoardServiceTest {
 
         // when
         List<ShareBoardResponseDto> boardList = boardService.addBoardSearch(memberId, "");
-//        List<Board> boardList = boardService.findShareBoard(memberId, "");
 
         // then
         assertThat(boardList.get(0).getTitle()).isEqualTo("title");
     }
 
     private BoardResponseDto createBoard() throws IOException {
+        List<MultipartFile> multipartFiles = List.of(
+                new MockMultipartFile("image1", "image1", MediaType.IMAGE_PNG_VALUE, "image1".getBytes()),
+                new MockMultipartFile("image2", "image2", MediaType.IMAGE_PNG_VALUE, "image2".getBytes())
+        );
+
         BoardSaveRequestDto boardSaveRequestDto = new BoardSaveRequestDto(
-                "title", "content", "location", new ArrayList<>(), LocalDate.now().toString()
+                "title", "content", "location", multipartFiles, LocalDate.now().toString()
         );
 
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});

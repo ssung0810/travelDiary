@@ -35,7 +35,11 @@ public class Board extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(
+            mappedBy = "board",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL, CascadeType.REMOVE}
+    )
     private List<Image> images = new ArrayList<>();
 
     private String date;
@@ -48,21 +52,27 @@ public class Board extends BaseTimeEntity {
         this.date = date;
         this.member = member;
 
-        if (fileDtoList.size() > 0) {
+        if(!fileDtoList.isEmpty()) {
             addImage(fileDtoList);
         }
     }
 
-    public Board update(String title, String content, String location, String date) {
+    public Board update(String title, String content, String location, String date, List<FileDto> fileDtoList) {
         this.title = title;
         this.content = content;
         this.location = location;
         this.date = date;
 
+        if(!fileDtoList.isEmpty()) {
+            addImage(fileDtoList);
+        }
+
         return this;
     }
 
     private void addImage(List<FileDto> fileDtoList) {
+        images = new ArrayList<>();
+
         for (FileDto fileDto : fileDtoList) {
             images.add(Image.builder().images(fileDto).board(this).build());
         }

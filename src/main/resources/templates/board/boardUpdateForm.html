@@ -13,7 +13,7 @@
 <div class="container">
     <div>
         <form action="board.html" th:action="@{|/board/${board.id}|}" method="post" th:object="${board}" enctype="multipart/form-data">
-            <input type="hidden" name="_method" value="patch">
+            <input type="hidden" name="_method" value="put">
 
             <div class="form-group">
                 <label for="date">날짜</label>

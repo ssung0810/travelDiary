@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Enumeration;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,8 +37,15 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute("login") MemberLoginRequestDto login,
                         BindingResult bindingResult,
-                        @RequestParam(defaultValue = "/board/privateBoardList") String redirectURL,
-                        HttpSession httpSession) {
+                        @RequestParam(name = "redirectURL", defaultValue = "/board/privateBoardList") String redirectURL,
+                        HttpSession httpSession,
+                        HttpServletRequest request) {
+
+        Enumeration<String> parameterNames = request.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            String name = parameterNames.nextElement();
+            log.info("{} || {}", name, request.getParameter(name));
+        }
 
         if(bindingResult.hasErrors()) {
             log.info("bindingResult = {}", bindingResult);
@@ -56,6 +65,8 @@ public class LoginController {
             httpSession.setAttribute(SessionConst.USER_IMAGE, null);
         else
             httpSession.setAttribute(SessionConst.USER_IMAGE, member.getImage().getStoredFileName());
+
+        log.info("redirectURL = {}", redirectURL);
 
         return "redirect:" + redirectURL;
     }

@@ -38,10 +38,11 @@
     box-sizing: content-box;
 }
 
-/* member */
+/** member **/
 .passwordCk {display: hidden;}
 
 #profileUpload {margin: 0 25px; width:150px; height:150px; padding: 5px; border-radius: 115px;}
+
 
 /** board **/
 /* boardList */

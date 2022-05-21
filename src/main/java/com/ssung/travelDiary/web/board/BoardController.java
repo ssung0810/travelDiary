@@ -35,7 +35,6 @@ public class BoardController {
         List<BoardResponseDto> board = boardService.findList(memberId, date);
         model.addAttribute("boards", board);
         model.addAttribute("date", date);
-        model.addAttribute("memberId", memberId);
         model.addAttribute("shareId", 0);
 
         return "board/boardList";

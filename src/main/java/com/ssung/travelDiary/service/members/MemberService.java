@@ -69,7 +69,8 @@ public class MemberService {
 
         FileDto fileDto = fileHandler.storeFile(requestDto.getImage());
 
-        requestDto.setPassword(encodePassword(requestDto.getPassword()));
+        if(requestDto.getPassword() == null) requestDto.setPassword(member.getPassword());
+        else requestDto.setPassword(encodePassword(requestDto.getPassword()));
 
         return member.update(requestDto, fileDto);
     }
@@ -97,10 +98,6 @@ public class MemberService {
                 .map(m -> new MemberResponseDto(m)).collect(Collectors.toList());
     }
 
-    private boolean validationPassword(String password, String encodedPassword) {
-        return passwordEncoder.matches(password, encodedPassword);
-    }
-
     private Member createMember(MemberSaveRequestDto dto, FileDto image) {
         return Member.builder()
                 .username(dto.getUsername())
@@ -109,6 +106,10 @@ public class MemberService {
                 .image(image)
                 .role(Role.USER)
                 .build();
+    }
+
+    private boolean validationPassword(String password, String encodedPassword) {
+        return passwordEncoder.matches(password, encodedPassword);
     }
 
     private String encodePassword(String password) {

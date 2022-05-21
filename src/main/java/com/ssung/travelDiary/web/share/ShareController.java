@@ -62,7 +62,6 @@ public class ShareController {
 
         model.addAttribute("boards", shareBoard);
         model.addAttribute("date", LocalDate.now().toString());
-        model.addAttribute("memberId", memberId);
         model.addAttribute("shareId", shareId);
 
         return "board/boardList";

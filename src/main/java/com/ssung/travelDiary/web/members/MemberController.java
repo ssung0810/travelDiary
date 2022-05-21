@@ -84,6 +84,7 @@ public class MemberController {
         }
 
         if (bindingResult.hasErrors()) {
+            log.info("bindingResult = {}", bindingResult);
             return "/members/profileUpdateForm";
         }
 
@@ -96,6 +97,8 @@ public class MemberController {
     }
 
     private boolean passwordValidation(String password, String password_check) {
+        if(password == null) return false;
+
         return !password.equals(password_check);
     }
 }

@@ -51,6 +51,11 @@ var main = {
             alert("글이 삭제되었습니다.");
             window.location.href = '/board/privateBoardList';
         }).fail(function(error) {
+            console.log(error.responseJSON);
+            if(error.responseJSON.trace.includes("BoardNotFoundException")) {
+                alert(error.responseJSON.message);
+                window.location.href = '/board/privateBoardList';
+            }
             alert("삭제에 실패했습니다.");
             alert(JSON.stringify(error));
         })

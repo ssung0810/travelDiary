@@ -1,13 +1,10 @@
 $(document).ready(function() {
     // 공유폴더 리스트 가져오기
-    var memberId = $("#memberId").val();
     var shareId = $("#shareId").val();
 
     $.ajax({
         type: "GET",
         url: "/shareList",
-        data: memberId,
-        dataType: 'json',
         ContentType: "application/json; charset=UTF-8"
     }).done(function(result) {
         for(var i=0; i<result.length; i++) {

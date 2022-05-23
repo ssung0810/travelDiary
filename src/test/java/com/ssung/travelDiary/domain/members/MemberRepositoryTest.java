@@ -1,6 +1,6 @@
 package com.ssung.travelDiary.domain.members;
 
-import com.ssung.travelDiary.exception.MemberNotFoundException;
+import com.ssung.travelDiary.exception.member.MemberNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -92,6 +92,22 @@ class MemberRepositoryTest {
         // then
         assertThat(username).isTrue();
         assertThat(username2).isFalse();
+    }
+
+    @Test
+    public void 해당_이메일이_존재하는지_여부확인() throws Exception {
+        // given
+        Member member = createMember();
+        memberRepository.save(member);
+        clear();
+
+        // when
+        boolean email = memberRepository.existsByEmail("email");
+        boolean email2 = memberRepository.existsByUsername("email2");
+
+        // then
+        assertThat(email).isTrue();
+        assertThat(email2).isFalse();
     }
 
 

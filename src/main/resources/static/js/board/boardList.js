@@ -4,7 +4,7 @@ $(document).ready(function() {
 
     $.ajax({
         type: "GET",
-        url: "/shareList",
+        url: "/share/api/shareList",
         ContentType: "application/json; charset=UTF-8"
     }).done(function(result) {
         for(var i=0; i<result.length; i++) {

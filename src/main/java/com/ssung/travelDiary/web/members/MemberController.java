@@ -1,6 +1,7 @@
 package com.ssung.travelDiary.web.members;
 
 import com.ssung.travelDiary.domain.members.Member;
+import com.ssung.travelDiary.exception.member.MemberEmailAlreadyExistException;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.SessionConst;
 import com.ssung.travelDiary.dto.member.MemberResponseDto;
@@ -35,10 +36,10 @@ public class MemberController {
     // 회원가입 후 메인화면으로 이동
     @PostMapping
     public String sign(@Valid @ModelAttribute("member") MemberSaveRequestDto dto,
-                       BindingResult bindingResult) throws Exception {
+                       BindingResult bindingResult) throws IOException {
 
         if(passwordValidation(dto.getPassword(), dto.getPassword_check())) {
-            bindingResult.rejectValue("password_check", "passwordValidation", "");
+            bindingResult.rejectValue("password_check", "passwordValidation", null);
         }
         if(dto.getUsername_validation() == 0) {
             bindingResult.reject("usernameValidation", null);
@@ -48,7 +49,12 @@ public class MemberController {
             return "members/sign";
         }
 
-        memberService.sign(dto);
+        try {
+            memberService.sign(dto);
+        } catch (MemberEmailAlreadyExistException e) {
+            bindingResult.rejectValue("email", "emailValidation", null);
+            return "members/sign";
+        }
 
         return "redirect:/login";
     }

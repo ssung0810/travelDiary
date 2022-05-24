@@ -46,8 +46,8 @@
                     <li><a href="/board">작성하기</a></li>
                     <li><a href="/member/profileForm" class="navbar-link">마이페이지</a></li>
                     <li><a href="/logout" class="navbar-link">로그아웃</a></li>
-                    <li th:unless="${session.imageName == null}"><img id="profile" src="/images/ico_user.jpg" th:src="|/image/${session.imageName}|"></li>
-                    <li th:if="${session.imageName == null}"><img id="profile" src="/images/ico_user.jpg"></li>
+                    <li th:unless="${session.image == null}"><img id="profile" src="/images/ico_user.jpg" th:src="|/image/${session.image}|"></li>
+                    <li th:if="${session.image == null}"><img id="profile" src="/images/ico_user.jpg"></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

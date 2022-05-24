@@ -42,7 +42,7 @@ class LoginControllerTest {
     }
 
     @Test
-    void 로그인_성공() throws Exception {
+    void 로그인_성공_기본_게시글리스트_화면() throws Exception {
         // given
         String username = "username";
         String password = "password123!";
@@ -60,6 +60,30 @@ class LoginControllerTest {
                         .param("password", password))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/board/privateBoardList"));
+
+        verify(memberService).loginValidation(username, password);
+    }
+
+    @Test
+    void 로그인_성공_리다이렉트_화면() throws Exception {
+        // given
+        String username = "username";
+        String password = "password123!";
+
+        MemberResponseDto responseDto = new MemberResponseDto();
+        responseDto.setId(1L);
+        responseDto.setUsername("username");
+        responseDto.setImage(null);
+
+        given(memberService.loginValidation(username, password)).willReturn(responseDto);
+
+        // when, then
+        mockMvc.perform(post("/login")
+                        .param("username", username)
+                        .param("password", password)
+                        .param("redirectURL", "/member/profileForm"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/member/profileForm"));
 
         verify(memberService).loginValidation(username, password);
     }

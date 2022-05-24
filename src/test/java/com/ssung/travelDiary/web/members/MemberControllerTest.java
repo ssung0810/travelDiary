@@ -1,6 +1,7 @@
 package com.ssung.travelDiary.web.members;
 
 import com.ssung.travelDiary.domain.members.Member;
+import com.ssung.travelDiary.exception.member.MemberEmailAlreadyExistException;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.SessionConst;
 import com.ssung.travelDiary.dto.member.MemberResponseDto;
@@ -76,6 +77,22 @@ class MemberControllerTest {
                 .andExpect(view().name("members/sign"));
 
         verify(memberService, never()).sign(any(MemberSaveRequestDto.class));
+    }
+
+    @Test
+    void 회원가입_이메일_중복에러_발생() throws Exception {
+        given(memberService.sign(any(MemberSaveRequestDto.class))).willThrow(MemberEmailAlreadyExistException.class);
+
+        mockMvc.perform(post(baseUrl)
+                        .param("username", "username")
+                        .param("username_validation", "1")
+                        .param("password", "password123!")
+                        .param("password_check", "password123!")
+                        .param("email", "email@naver.com"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("members/sign"));
+
+        verify(memberService).sign(any(MemberSaveRequestDto.class));
     }
     
     @Test

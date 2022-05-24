@@ -132,7 +132,7 @@ class BoardControllerTest {
         given(boardService.update(any(BoardUpdateRequestDto.class), anyLong())).willReturn(responseDto);
 
         // when, then
-        mockMvc.perform(patch(basicURL + "/1")
+        mockMvc.perform(put(basicURL + "/1")
                         .param("title", "title")
                         .param("content", "content")
                         .param("location", "location")
@@ -146,7 +146,7 @@ class BoardControllerTest {
     @Test
     void 게시글_수정_검증에러() throws Exception {
         // when, then
-        mockMvc.perform(patch(basicURL + "/1")
+        mockMvc.perform(put(basicURL + "/1")
                         .param("title", "title"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("board/boardUpdateForm"));

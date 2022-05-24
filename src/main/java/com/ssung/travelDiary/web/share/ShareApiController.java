@@ -1,12 +1,14 @@
 package com.ssung.travelDiary.web.share;
 
+import com.ssung.travelDiary.dto.share.ShareListResponseDto;
 import com.ssung.travelDiary.service.share.ShareService;
 import com.ssung.travelDiary.web.SessionConst;
-import com.ssung.travelDiary.dto.share.ShareBoardResponseDto;
-import com.ssung.travelDiary.dto.share.ShareListResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.util.List;
 

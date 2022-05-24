@@ -48,44 +48,44 @@ public class TestDataInit {
 
         memberRepository.save(member);
 
-        Member member1 = Member.builder()
-                .username("username")
-                .password(passwordEncoder.encode("password"))
-                .email("email")
-                .image(null)
-                .role(Role.USER)
-                .build();
-        Member member2 = Member.builder()
-                .username("username2")
-                .password(passwordEncoder.encode("password2"))
-                .email("email2")
-                .image(null)
-                .role(Role.USER)
-                .build();
-
-        memberRepository.save(member1);
-        memberRepository.save(member2);
-
-        BoardSaveRequestDto boardSaveRequestDto = new BoardSaveRequestDto("title", "content", "location", new ArrayList<>(), LocalDate.now().toString());
-        BoardSaveRequestDto boardSaveRequestDto2 = new BoardSaveRequestDto("title2", "content2", "location2", new ArrayList<>(), LocalDate.now().toString());
-        BoardResponseDto board = boardService.save(boardSaveRequestDto, 1L);
-        BoardResponseDto board2 = boardService.save(boardSaveRequestDto2, 1L);
-
-        String title = "shareTitle";
-        String creator = "test";
-
-        ArrayList<Long> members = new ArrayList<>();
-        members.add(2L);
-        members.add(3L);
-
-        ArrayList<Long> boards = new ArrayList<>();
-        boards.add(board.getId());
-        boards.add(board2.getId());
-
-        ShareSaveRequestDto shareSaveRequestDto = new ShareSaveRequestDto(title, creator, members, boards);
-        ShareSaveRequestDto shareSaveRequestDto2 = new ShareSaveRequestDto(title, creator, members, boards);
-
-        shareService.save(shareSaveRequestDto, 1L);
-        shareService.save(shareSaveRequestDto2, 1L);
+//        Member member1 = Member.builder()
+//                .username("username")
+//                .password(passwordEncoder.encode("password"))
+//                .email("email")
+//                .image(null)
+//                .role(Role.USER)
+//                .build();
+//        Member member2 = Member.builder()
+//                .username("username2")
+//                .password(passwordEncoder.encode("password2"))
+//                .email("email2")
+//                .image(null)
+//                .role(Role.USER)
+//                .build();
+//
+//        memberRepository.save(member1);
+//        memberRepository.save(member2);
+//
+//        BoardSaveRequestDto boardSaveRequestDto = new BoardSaveRequestDto("title", "content", "location", new ArrayList<>(), LocalDate.now().toString());
+//        BoardSaveRequestDto boardSaveRequestDto2 = new BoardSaveRequestDto("title2", "content2", "location2", new ArrayList<>(), LocalDate.now().toString());
+//        BoardResponseDto board = boardService.save(boardSaveRequestDto, 1L);
+//        BoardResponseDto board2 = boardService.save(boardSaveRequestDto2, 1L);
+//
+//        String title = "shareTitle";
+//        String creator = "test";
+//
+//        ArrayList<Long> members = new ArrayList<>();
+//        members.add(2L);
+//        members.add(3L);
+//
+//        ArrayList<Long> boards = new ArrayList<>();
+//        boards.add(board.getId());
+//        boards.add(board2.getId());
+//
+//        ShareSaveRequestDto shareSaveRequestDto = new ShareSaveRequestDto(title, creator, members, boards);
+//        ShareSaveRequestDto shareSaveRequestDto2 = new ShareSaveRequestDto(title, creator, members, boards);
+//
+//        shareService.save(shareSaveRequestDto, 1L);
+//        shareService.save(shareSaveRequestDto2, 1L);
     }
 }

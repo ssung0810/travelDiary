@@ -26,7 +26,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         } else {
             Iterator<String> stringIterator = session.getAttributeNames().asIterator();
             while (stringIterator.hasNext()) {
-                log.info("sessionValue = {}", session.getAttribute(stringIterator.next()));
+                String sessionName = stringIterator.next();
+                log.info("name = {} | sessionValue = {}", sessionName, session.getAttribute(sessionName));
             }
         }
 

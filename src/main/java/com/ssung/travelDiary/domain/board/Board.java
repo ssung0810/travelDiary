@@ -52,7 +52,7 @@ public class Board extends BaseTimeEntity {
         this.date = date;
         this.member = member;
 
-        if(!fileDtoList.isEmpty()) {
+        if(fileDtoList != null && !fileDtoList.isEmpty()) {
             addImage(fileDtoList);
         }
     }

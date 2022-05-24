@@ -3,6 +3,9 @@ package com.ssung.travelDiary.service.members;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
+import com.ssung.travelDiary.exception.member.MemberEmailAlreadyExistException;
+import com.ssung.travelDiary.exception.member.MemberNotFoundException;
+import com.ssung.travelDiary.exception.member.MemberUsernameAlreadyExistException;
 import com.ssung.travelDiary.handler.FileHandler;
 import com.ssung.travelDiary.dto.file.FileDto;
 import com.ssung.travelDiary.dto.member.MemberResponseDto;
@@ -32,10 +35,14 @@ public class MemberService {
      * 회원가입
      */
     @Transactional
-    public Long sign(MemberSaveRequestDto dto) throws IOException {
+    public Long sign(MemberSaveRequestDto dto) throws IOException, MemberEmailAlreadyExistException {
+        Member member = null;
+
         FileDto fileDto = fileHandler.storeFile(dto.getImage());
 
-        Member member = createMember(dto, fileDto);
+        member = createMember(dto, fileDto);
+
+        MemberEmailValidation(dto.getEmail());
         memberRepository.save(member);
 
         return member.getId();
@@ -45,7 +52,7 @@ public class MemberService {
      * 유저 검색
      */
     public MemberResponseDto findOne(Long memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
         return new MemberResponseDto(member);
     }
 
@@ -65,12 +72,13 @@ public class MemberService {
     @Transactional
     public Member update(MemberUpdateRequestDto requestDto) throws IOException {
         Member member = memberRepository.findByUsername(requestDto.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+                .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
         FileDto fileDto = fileHandler.storeFile(requestDto.getImage());
 
-        if(requestDto.getPassword() == null) requestDto.setPassword(member.getPassword());
-        else requestDto.setPassword(encodePassword(requestDto.getPassword()));
+        requestDto.setPassword(encodePassword(requestDto.getPassword()));
+//        if(requestDto.getPassword() == null) requestDto.setPassword(member.getPassword());
+//        else requestDto.setPassword(encodePassword(requestDto.getPassword()));
 
         return member.update(requestDto, fileDto);
     }
@@ -88,6 +96,14 @@ public class MemberService {
         if(!validationPassword(password, member.getPassword())) return null;
 
         return new MemberResponseDto(member);
+    }
+
+    private void MemberUsernameValidation(String username) {
+        if(memberRepository.existsByUsername(username)) throw new MemberUsernameAlreadyExistException("이미 존재하는 회원입니다.");
+    }
+
+    private void MemberEmailValidation(String email) {
+        if(memberRepository.existsByEmail(email)) throw new MemberEmailAlreadyExistException("이미 존재하는 이메일입니다.");
     }
 
     /**
@@ -115,4 +131,6 @@ public class MemberService {
     private String encodePassword(String password) {
         return passwordEncoder.encode(password);
     }
+
+
 }

@@ -1,12 +1,14 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
+<head th:replace="layout/header :: common_head(~{::title}, ~{::link})">
+    <title>에러 페이지</title>
+
+    <link />
 </head>
 <body>
 <div class="container error-page">
     <div class="py-5 text-center">
-        <h2>존재하지 않는 회원입니다.</h2>
+        <h2>존재하지 않는 게시글입니다.</h2>
         <button type="button" onclick="history.back()">뒤로가기</button>
     </div>
 </div> <!-- /container -->

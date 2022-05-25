@@ -86,7 +86,7 @@ public class MemberController {
                                 HttpSession httpSession) throws IOException {
 
         if(passwordValidation(dto.getPassword(), dto.getPassword_check())) {
-            bindingResult.rejectValue("password_check", "passwordValidation", "");
+            bindingResult.rejectValue("password_check", "passwordValidation", null);
         }
 
         if (bindingResult.hasErrors()) {
@@ -94,10 +94,15 @@ public class MemberController {
             return "/members/profileUpdateForm";
         }
 
-        Member member = memberService.update(dto);
+        Member member = null;
+        try {
+            member = memberService.update(dto);
+        } catch (MemberEmailAlreadyExistException e) {
+            bindingResult.rejectValue("email", "emailValidation", null);
+        }
 
         if(!dto.getImage().isEmpty())
-            httpSession.setAttribute("imageName", member.getImage().getStoredFileName());
+            httpSession.setAttribute(SessionConst.USER_IMAGE, member.getImage().getStoredFileName());
 
         return "/members/profileForm";
     }

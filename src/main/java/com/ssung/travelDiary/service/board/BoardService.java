@@ -10,7 +10,8 @@ import com.ssung.travelDiary.dto.board.BoardResponseDto;
 import com.ssung.travelDiary.dto.board.BoardSaveRequestDto;
 import com.ssung.travelDiary.dto.board.BoardUpdateRequestDto;
 import com.ssung.travelDiary.dto.share.ShareBoardResponseDto;
-import com.ssung.travelDiary.exception.BoardNotFountException;
+import com.ssung.travelDiary.exception.board.BoardNotFountException;
+import com.ssung.travelDiary.exception.member.MemberNotFoundException;
 import com.ssung.travelDiary.handler.FileHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,7 @@ public class BoardService {
      */
     @Transactional
     public BoardResponseDto save(BoardSaveRequestDto dto, Long memberId) throws IOException {
-        Member member = memberRepository.findById(memberId).orElse(null);
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
         Board board = createBoard(dto, member);
         boardRepository.save(board);
@@ -100,7 +101,7 @@ public class BoardService {
      * 공유폴더 저장 시 게시글 등록 조회
      */
     public List<ShareBoardResponseDto> addBoardSearch(Long memberId, String value) {
-        Member member = memberRepository.findById(memberId).orElse(null);
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
         return boardRepository.findByMemberIdAndMoreType(member, value).stream()
                 .map(b -> new ShareBoardResponseDto(b)).collect(Collectors.toList());

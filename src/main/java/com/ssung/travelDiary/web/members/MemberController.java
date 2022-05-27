@@ -51,7 +51,7 @@ public class MemberController {
         }
 
         try {
-            memberService.sign(dto);
+            memberService.save(dto);
         } catch (MemberEmailAlreadyExistException e) {
             bindingResult.rejectValue("email", "emailValidation", null);
             return "members/sign";

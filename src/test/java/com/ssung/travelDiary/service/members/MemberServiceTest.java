@@ -34,7 +34,7 @@ class MemberServiceTest {
         // given
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
-        Long findId = memberService.sign(dto);
+        Long findId = memberService.save(dto);
 
         // when
         MemberResponseDto findMember = memberService.findOne(findId);
@@ -48,7 +48,7 @@ class MemberServiceTest {
         // given
         MockMultipartFile multipartFile = new MockMultipartFile("image", "test.png", MediaType.IMAGE_PNG_VALUE, "test".getBytes());
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
-        Long findId = memberService.sign(dto);
+        Long findId = memberService.save(dto);
 
         // when
         MemberResponseDto findMember = memberService.findOne(findId);
@@ -63,7 +63,7 @@ class MemberServiceTest {
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
 
-        Long findId = memberService.sign(dto);
+        Long findId = memberService.save(dto);
         String validationUsername = "validation";
 
         // when, then
@@ -76,7 +76,7 @@ class MemberServiceTest {
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
 
-        Long findId = memberService.sign(dto);
+        Long findId = memberService.save(dto);
 
         // when
         MemberResponseDto findMember = memberService.findOne(findId);
@@ -91,7 +91,7 @@ class MemberServiceTest {
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
 
-        Long findId = memberService.sign(dto);
+        Long findId = memberService.save(dto);
 
         String username = "username2";
         String password = "password";
@@ -109,7 +109,7 @@ class MemberServiceTest {
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
 
-        Long findId = memberService.sign(dto);
+        Long findId = memberService.save(dto);
 
         String username = "username";
         String password = "password2";
@@ -127,7 +127,7 @@ class MemberServiceTest {
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
 
-        Long findId = memberService.sign(dto);
+        Long findId = memberService.save(dto);
 
         String username = "username";
         String password = "password";
@@ -145,7 +145,7 @@ class MemberServiceTest {
         MockMultipartFile multipartFile = new MockMultipartFile("image", "test.png", MediaType.IMAGE_PNG_VALUE, "test".getBytes());
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
 
-        Long memberId = memberService.sign(dto);
+        Long memberId = memberService.save(dto);
 
         String updateEmail = "email2";
         MockMultipartFile updateMultipartFile = new MockMultipartFile("image", "test2.png", MediaType.IMAGE_PNG_VALUE, "test".getBytes());
@@ -170,8 +170,8 @@ class MemberServiceTest {
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
         MemberSaveRequestDto dto2 = new MemberSaveRequestDto("username2", "password2", "email2", multipartFile, Role.USER);
-        Long myMemberId = memberService.sign(dto);
-        memberService.sign(dto2);
+        Long myMemberId = memberService.save(dto);
+        memberService.save(dto2);
 
         // when
         List<MemberResponseDto> members = memberService.addMemberSearch(myMemberId, "");

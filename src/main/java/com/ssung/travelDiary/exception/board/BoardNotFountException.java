@@ -1,4 +1,4 @@
-package com.ssung.travelDiary.exception;
+package com.ssung.travelDiary.exception.board;
 
 public class BoardNotFountException extends RuntimeException {
 

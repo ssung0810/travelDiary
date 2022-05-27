@@ -69,7 +69,7 @@ class MemberControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
 
-        verify(memberService).sign(any(MemberSaveRequestDto.class));
+        verify(memberService).save(any(MemberSaveRequestDto.class));
     }
 
     @Test
@@ -83,12 +83,12 @@ class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("members/sign"));
 
-        verify(memberService, never()).sign(any(MemberSaveRequestDto.class));
+        verify(memberService, never()).save(any(MemberSaveRequestDto.class));
     }
 
     @Test
     void 회원가입_이메일_중복에러_발생() throws Exception {
-        given(memberService.sign(any(MemberSaveRequestDto.class))).willThrow(MemberEmailAlreadyExistException.class);
+        given(memberService.save(any(MemberSaveRequestDto.class))).willThrow(MemberEmailAlreadyExistException.class);
 
         mockMvc.perform(post(baseUrl)
                         .param("username", "username")
@@ -99,7 +99,7 @@ class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("members/sign"));
 
-        verify(memberService).sign(any(MemberSaveRequestDto.class));
+        verify(memberService).save(any(MemberSaveRequestDto.class));
     }
     
     @Test

@@ -35,7 +35,7 @@ public class MemberService {
      * 회원가입
      */
     @Transactional
-    public Long sign(MemberSaveRequestDto dto) throws IOException, MemberEmailAlreadyExistException {
+    public Long save(MemberSaveRequestDto dto) throws IOException, MemberEmailAlreadyExistException {
         MemberUsernameValidation(dto.getUsername());
         MemberEmailValidation(dto.getEmail());
 

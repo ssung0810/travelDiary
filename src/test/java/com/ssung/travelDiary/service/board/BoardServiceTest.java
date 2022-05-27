@@ -4,7 +4,7 @@ import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.image.Image;
 import com.ssung.travelDiary.domain.image.ImageRepository;
 import com.ssung.travelDiary.domain.members.Role;
-import com.ssung.travelDiary.exception.BoardNotFountException;
+import com.ssung.travelDiary.exception.board.BoardNotFountException;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.dto.board.BoardResponseDto;
 import com.ssung.travelDiary.dto.board.BoardSaveRequestDto;
@@ -46,7 +46,7 @@ class BoardServiceTest {
 
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
-        Long memberId = memberService.sign(dto);
+        Long memberId = memberService.save(dto);
 
         boardService.save(boardSaveRequestDto, memberId);
 
@@ -71,7 +71,7 @@ class BoardServiceTest {
 
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
-        Long memberId = memberService.sign(dto);
+        Long memberId = memberService.save(dto);
 
         boardService.save(boardSaveRequestDto, memberId);
 
@@ -168,7 +168,7 @@ class BoardServiceTest {
 
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
-        memberId = memberService.sign(dto);
+        memberId = memberService.save(dto);
 
         return boardService.save(boardSaveRequestDto, memberId);
     }

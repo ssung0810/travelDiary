@@ -72,7 +72,7 @@ class ShareServiceTest {
         // given
         MockMultipartFile multipartFile = new MockMultipartFile("null", new byte[]{});
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username3", "password3", "email3", multipartFile, Role.USER);
-        Long findId = memberService.sign(dto);
+        Long findId = memberService.save(dto);
 
         // when
         List<ShareListResponseDto> list = shareService.findList(findId);
@@ -99,8 +99,8 @@ class ShareServiceTest {
 
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
         MemberSaveRequestDto dto2 = new MemberSaveRequestDto("username2", "password2", "email2", multipartFile, Role.USER);
-        Long memberId = memberService.sign(dto);
-        Long memberId2 = memberService.sign(dto2);
+        Long memberId = memberService.save(dto);
+        Long memberId2 = memberService.save(dto2);
         this.memberId = memberId;
 
         BoardSaveRequestDto boardSaveRequestDto = new BoardSaveRequestDto("title", "content", "location", new ArrayList<>(), LocalDate.now().toString());

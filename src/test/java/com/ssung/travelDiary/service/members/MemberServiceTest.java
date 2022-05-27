@@ -6,6 +6,7 @@ import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.dto.member.MemberResponseDto;
 import com.ssung.travelDiary.dto.member.MemberSaveRequestDto;
 import com.ssung.travelDiary.dto.member.MemberUpdateRequestDto;
+import com.ssung.travelDiary.exception.member.MemberNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Transactional
@@ -62,13 +64,10 @@ class MemberServiceTest {
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
 
         Long findId = memberService.sign(dto);
-
-        // when
         String validationUsername = "validation";
-        MemberResponseDto result = memberService.findByUsername(validationUsername);
 
-        // then
-        assertThat(result.getId()).isEqualTo(null);
+        // when, then
+        assertThatThrownBy(() -> memberService.findByUsername(validationUsername)).isInstanceOf(MemberNotFoundException.class);
     }
 
     @Test
@@ -146,7 +145,7 @@ class MemberServiceTest {
         MockMultipartFile multipartFile = new MockMultipartFile("image", "test.png", MediaType.IMAGE_PNG_VALUE, "test".getBytes());
         MemberSaveRequestDto dto = new MemberSaveRequestDto("username", "password", "email", multipartFile, Role.USER);
 
-        Long findId = memberService.sign(dto);
+        Long memberId = memberService.sign(dto);
 
         String updateEmail = "email2";
         MockMultipartFile updateMultipartFile = new MockMultipartFile("image", "test2.png", MediaType.IMAGE_PNG_VALUE, "test".getBytes());
@@ -158,7 +157,7 @@ class MemberServiceTest {
         requestDto.setImage(updateMultipartFile);
 
         // when
-        Member updateMember = memberService.update(requestDto);
+        MemberResponseDto updateMember = memberService.update(requestDto, memberId);
 
         // then
         assertThat(updateMember.getEmail()).isEqualTo("email2");

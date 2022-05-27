@@ -2,6 +2,7 @@ package com.ssung.travelDiary.web.members;
 
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.exception.member.MemberEmailAlreadyExistException;
+import com.ssung.travelDiary.exception.member.MemberUsernameAlreadyExistException;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.SessionConst;
 import com.ssung.travelDiary.dto.member.MemberResponseDto;
@@ -80,7 +81,7 @@ public class MemberController {
         return "/members/profileUpdateForm";
     }
 
-    @PostMapping("/profile")
+    @PutMapping("/profile")
     public String profileUpdate(@Valid @ModelAttribute("member") MemberUpdateRequestDto dto,
                                 BindingResult bindingResult,
                                 HttpSession httpSession) throws IOException {
@@ -94,11 +95,16 @@ public class MemberController {
             return "/members/profileUpdateForm";
         }
 
-        Member member = null;
+        MemberResponseDto member = null;
+        Long memberId = (Long) httpSession.getAttribute(SessionConst.USER_ID);
         try {
-            member = memberService.update(dto);
+            member = memberService.update(dto, memberId);
         } catch (MemberEmailAlreadyExistException e) {
             bindingResult.rejectValue("email", "emailValidation", null);
+            return "/members/profileUpdateForm";
+        } catch (MemberUsernameAlreadyExistException e) {
+            bindingResult.rejectValue("username", "usernameValidation.profile", null);
+            return "/members/profileUpdateForm";
         }
 
         if(!dto.getImage().isEmpty())

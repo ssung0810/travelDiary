@@ -2,6 +2,7 @@ package com.ssung.travelDiary.web.members;
 
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.exception.member.MemberEmailAlreadyExistException;
+import com.ssung.travelDiary.exception.member.MemberUsernameAlreadyExistException;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.web.SessionConst;
 import com.ssung.travelDiary.dto.member.MemberResponseDto;
@@ -14,14 +15,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -121,28 +128,37 @@ class MemberControllerTest {
     @Test
     void 프로필수정() throws Exception {
         // given
-        Member member = new Member();
-        given(memberService.update(any(MemberUpdateRequestDto.class))).willReturn(member);
+        given(memberService.update(any(MemberUpdateRequestDto.class), anyLong())).willReturn(new MemberResponseDto());
 
         // when, then
-        mockMvc.perform(multipart(baseUrl + "/profile")
+        MockMultipartHttpServletRequestBuilder builder = multipart(baseUrl + "/profile");
+        builder.with(new RequestPostProcessor() {
+            @Override
+            public MockHttpServletRequest postProcessRequest(MockHttpServletRequest request) {
+                request.setMethod("PUT");
+                return request;
+            }
+        });
+
+        mockMvc.perform(builder
                         .file("image", new byte[]{})
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("username", "username")
                         .param("password", "password123!")
                         .param("password_check", "password123!")
-                        .param("email", "email@naver.com"))
+                        .param("email", "email@naver.com")
+                        .sessionAttr(SessionConst.USER_ID, 1L))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("/members/profileForm"));
 
-        verify(memberService).update(any(MemberUpdateRequestDto.class));
+        verify(memberService).update(any(MemberUpdateRequestDto.class), anyLong());
     }
 
     @Test
     void 프로필수정_검증에러() throws Exception {
         // when, then
-        mockMvc.perform(multipart(baseUrl + "/profile")
-                        .file("image", new byte[]{})
+        mockMvc.perform(put(baseUrl + "/profile")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("username", "username")
                         .param("password", "password")
@@ -151,6 +167,44 @@ class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("/members/profileUpdateForm"));
 
-        verify(memberService, never()).update(any(MemberUpdateRequestDto.class));
+        verify(memberService, never()).update(any(MemberUpdateRequestDto.class), anyLong());
+    }
+
+    @Test
+    void 프로필수정_이메일_중복_예외처리() throws Exception {
+        // given
+        given(memberService.update(any(MemberUpdateRequestDto.class), anyLong())).willThrow(MemberEmailAlreadyExistException.class);
+
+        // when, then
+        mockMvc.perform(put(baseUrl + "/profile")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("username", "username")
+                        .param("password", "password123!")
+                        .param("password_check", "password123!")
+                        .param("email", "email@naver.com")
+                        .sessionAttr(SessionConst.USER_ID, 1L))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/members/profileUpdateForm"));
+
+        verify(memberService).update(any(MemberUpdateRequestDto.class), anyLong());
+    }
+
+    @Test
+    void 프로필수정_별명_중복_예외처리() throws Exception {
+        // given
+        given(memberService.update(any(MemberUpdateRequestDto.class), anyLong())).willThrow(MemberUsernameAlreadyExistException.class);
+
+        // when, then
+        mockMvc.perform(put(baseUrl + "/profile")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("username", "username")
+                        .param("password", "password123!")
+                        .param("password_check", "password123!")
+                        .param("email", "email@naver.com")
+                        .sessionAttr(SessionConst.USER_ID, 1L))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/members/profileUpdateForm"));
+
+        verify(memberService).update(any(MemberUpdateRequestDto.class), anyLong());
     }
 }

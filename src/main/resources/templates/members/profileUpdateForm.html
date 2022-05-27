@@ -9,6 +9,8 @@
 
 <div class="loginBox">
     <form action="/member/profile" th:object="${member}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_method" value="put">
+
         <div class="form-group">
             <a href="javascript:void(0);" onclick="$('#image').trigger('click')">
                 <img th:unless="${session.imageName == null}" id="profileUpload" src="/images/ico_user.jpg" th:src="|/image/${session.imageName}|">
@@ -19,7 +21,9 @@
 
         <div class="form-group">
             <label for="username">별명</label>
-            <input type="text" id="username" th:field="*{username}" class="form-control read" readonly>
+            <input type="text" id="username" th:field="*{username}" th:errorclass="field-error" class="form-control read" readonly>
+
+            <div th:errors="*{username}" class="field-error">별명 입력 에러</div>
         </div>
 
         <div class="form-group">

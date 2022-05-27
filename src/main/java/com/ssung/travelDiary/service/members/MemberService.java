@@ -36,13 +36,11 @@ public class MemberService {
      */
     @Transactional
     public Long sign(MemberSaveRequestDto dto) throws IOException, MemberEmailAlreadyExistException {
-        Member member = null;
+        MemberUsernameValidation(dto.getUsername());
+        MemberEmailValidation(dto.getEmail());
 
         FileDto fileDto = fileHandler.storeFile(dto.getImage());
-
-        member = createMember(dto, fileDto);
-
-        MemberEmailValidation(dto.getEmail());
+        Member member = createMember(dto, fileDto);
         memberRepository.save(member);
 
         return member.getId();
@@ -61,7 +59,7 @@ public class MemberService {
      */
     public MemberResponseDto findByUsername(String username) {
         Member member = memberRepository.findByUsername(username)
-                .orElse(null);
+                .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
         return new MemberResponseDto(member);
     }
@@ -70,17 +68,18 @@ public class MemberService {
      * 프로필 정보 변경
      */
     @Transactional
-    public Member update(MemberUpdateRequestDto requestDto) throws IOException {
-        Member member = memberRepository.findByUsername(requestDto.getUsername())
+    public MemberResponseDto update(MemberUpdateRequestDto requestDto, Long memberId) throws IOException {
+        Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+
+        if(!requestDto.getUsername().equals(member.getUsername())) MemberUsernameValidation(requestDto.getUsername());
+        if(!requestDto.getEmail().equals(member.getEmail())) MemberEmailValidation(requestDto.getEmail());
 
         FileDto fileDto = fileHandler.storeFile(requestDto.getImage());
 
         requestDto.setPassword(encodePassword(requestDto.getPassword()));
-//        if(requestDto.getPassword() == null) requestDto.setPassword(member.getPassword());
-//        else requestDto.setPassword(encodePassword(requestDto.getPassword()));
 
-        return member.update(requestDto, fileDto);
+        return new MemberResponseDto(member.update(requestDto, fileDto));
     }
 
     /**
@@ -98,20 +97,20 @@ public class MemberService {
         return new MemberResponseDto(member);
     }
 
-    private void MemberUsernameValidation(String username) {
-        if(memberRepository.existsByUsername(username)) throw new MemberUsernameAlreadyExistException("이미 존재하는 회원입니다.");
-    }
-
-    private void MemberEmailValidation(String email) {
-        if(memberRepository.existsByEmail(email)) throw new MemberEmailAlreadyExistException("이미 존재하는 이메일입니다.");
-    }
-
     /**
      * 공유폴더 등록할 회원 조회
      */
     public List<MemberResponseDto> addMemberSearch(Long memberId, String value) {
         return memberRepository.findByMemberIdAndMoreType(memberId, value).stream()
                 .map(m -> new MemberResponseDto(m)).collect(Collectors.toList());
+    }
+
+    private void MemberUsernameValidation(String username) {
+        if(memberRepository.existsByUsername(username)) throw new MemberUsernameAlreadyExistException("이미 존재하는 별명입니다.");
+    }
+
+    private void MemberEmailValidation(String email) {
+        if(memberRepository.existsByEmail(email)) throw new MemberEmailAlreadyExistException("이미 존재하는 이메일입니다.");
     }
 
     private Member createMember(MemberSaveRequestDto dto, FileDto image) {

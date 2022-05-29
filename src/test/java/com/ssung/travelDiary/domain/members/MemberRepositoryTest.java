@@ -1,5 +1,7 @@
 package com.ssung.travelDiary.domain.members;
 
+import com.ssung.travelDiary.dto.file.FileDto;
+import com.ssung.travelDiary.dto.member.MemberUpdateRequestDto;
 import com.ssung.travelDiary.exception.member.MemberNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,11 +45,21 @@ class MemberRepositoryTest {
         clear();
 
         Member findMember = memberRepository.getById(member.getId());
-//        findMember.
+        MemberUpdateRequestDto requestDto = new MemberUpdateRequestDto();
+        String updateUsername = "username2";
+        String updatePassword = "password2";
+        String updateEmail = "email2";
+        requestDto.setUsername(updateUsername);
+        requestDto.setPassword(updatePassword);
+        requestDto.setEmail(updateEmail);
 
         // when
-        
+        Member updateMember = findMember.update(requestDto, null);
+        clear();
+        Member resultMember = memberRepository.getById(updateMember.getId());
+
         // then
+        assertThat(resultMember.getUsername()).isEqualTo(updateUsername);
     }
 
     @Test
@@ -108,6 +121,22 @@ class MemberRepositoryTest {
         // then
         assertThat(email).isTrue();
         assertThat(email2).isFalse();
+    }
+
+    @Test
+    void 본인을_제외하고_별명으로_검색() throws Exception {
+        // given
+        Member member = createMember();
+        memberRepository.save(member);
+        clear();
+
+        // when
+        List<Member> EmptyMembers = memberRepository.findByMemberIdAndMoreType(1L, "");
+        List<Member> members = memberRepository.findByMemberIdAndMoreType(2L, "");
+
+        // then
+        assertThat(EmptyMembers.size()).isEqualTo(0);
+        assertThat(members.size()).isEqualTo(1);
     }
 
 

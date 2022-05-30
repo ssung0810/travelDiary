@@ -33,7 +33,6 @@ class BoardServiceTest {
 
     @Autowired BoardService boardService;
     @Autowired MemberService memberService;
-    @Autowired ImageRepository imageRepository;
 
     static Long memberId;
 

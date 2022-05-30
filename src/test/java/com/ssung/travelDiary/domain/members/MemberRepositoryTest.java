@@ -1,12 +1,12 @@
 package com.ssung.travelDiary.domain.members;
 
-import com.ssung.travelDiary.dto.file.FileDto;
 import com.ssung.travelDiary.dto.member.MemberUpdateRequestDto;
 import com.ssung.travelDiary.exception.member.MemberNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,13 +17,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DataJpaTest
+@Transactional
 class MemberRepositoryTest {
 
-    @Autowired private MemberRepository memberRepository;
+    @Autowired MemberRepository memberRepository;
     @PersistenceContext EntityManager em;
 
     @Test
-    public void 회원_저장() throws Exception {
+    void 회원_저장() throws Exception {
         // given
         Member member = createMember();
         memberRepository.save(member);
@@ -38,7 +39,7 @@ class MemberRepositoryTest {
     }
     
     @Test
-    public void 회원_수정() throws Exception {
+    void 회원_수정() throws Exception {
         // given
         Member member = createMember();
         memberRepository.save(member);
@@ -63,7 +64,7 @@ class MemberRepositoryTest {
     }
 
     @Test
-    public void 회원_삭제() throws Exception {
+    void 회원_삭제() throws Exception {
         // given
         Member member = memberRepository.save(createMember());
         clear();
@@ -77,7 +78,7 @@ class MemberRepositoryTest {
     }
 
     @Test
-    public void 별명으로_조회() throws Exception {
+    void 별명으로_조회() throws Exception {
         // given
         Member member = createMember();
         memberRepository.save(member);
@@ -92,7 +93,7 @@ class MemberRepositoryTest {
     }
     
     @Test
-    public void 해당_별명이_존재하는지_여부확인() throws Exception {
+    void 해당_별명이_존재하는지_여부확인() throws Exception {
         // given
         Member member = createMember();
         memberRepository.save(member);
@@ -108,7 +109,7 @@ class MemberRepositoryTest {
     }
 
     @Test
-    public void 해당_이메일이_존재하는지_여부확인() throws Exception {
+    void 해당_이메일이_존재하는지_여부확인() throws Exception {
         // given
         Member member = createMember();
         memberRepository.save(member);
@@ -130,6 +131,7 @@ class MemberRepositoryTest {
         memberRepository.save(member);
         clear();
 
+
         // when
         List<Member> EmptyMembers = memberRepository.findByMemberIdAndMoreType(1L, "");
         List<Member> members = memberRepository.findByMemberIdAndMoreType(2L, "");
@@ -139,9 +141,8 @@ class MemberRepositoryTest {
         assertThat(members.size()).isEqualTo(1);
     }
 
-
     @Test
-    public void 별명_유니크키_확인() throws Exception {
+    void 별명_유니크키_확인() throws Exception {
         // given
         memberRepository.save(createMember());
         clear();
@@ -154,7 +155,7 @@ class MemberRepositoryTest {
     }
 
     @Test
-    public void 이메일_유니크키_확인() throws Exception {
+    void 이메일_유니크키_확인() throws Exception {
         // given
         memberRepository.save(createMember());
         clear();
@@ -166,12 +167,12 @@ class MemberRepositoryTest {
         assertThatThrownBy(() -> memberRepository.save(member2)).isInstanceOf(DataIntegrityViolationException.class);
     }
 
-    public void clear() {
+    private void clear() {
         em.flush();
         em.clear();
     }
 
-    public Member createMember() {
+    private Member createMember() {
         return Member.builder()
                 .username("username")
                 .password("password")
@@ -179,7 +180,8 @@ class MemberRepositoryTest {
                 .role(Role.USER)
                 .build();
     }
-    public Member createMember(String username, String password, String email) {
+
+    private Member createMember(String username, String password, String email) {
         return Member.builder()
                 .username(username)
                 .password(password)

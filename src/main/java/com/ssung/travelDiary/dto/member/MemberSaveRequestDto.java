@@ -38,14 +38,4 @@ public class MemberSaveRequestDto {
         this.image = image;
         this.role = role;
     }
-
-    public MemberSaveRequestDto(String username, int username_validation, String password, String password_check, String email, MultipartFile image, Role role) {
-        this.username = username;
-        this.username_validation = username_validation;
-        this.password = password;
-        this.password_check = password_check;
-        this.email = email;
-        this.image = image;
-        this.role = role;
-    }
 }

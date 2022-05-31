@@ -46,15 +46,15 @@ public class Board extends BaseTimeEntity {
     private String date;
 
     @Builder
-    public Board(String title, String content, String location, String date, Member member, List<FileDto> fileDtoList) {
+    public Board(String title, String content, String location, String date, Member member, List<FileDto> images) {
         this.title = title;
         this.content = content;
         this.location = location;
         this.date = date;
         this.member = member;
 
-        if(fileDtoList != null && !fileDtoList.isEmpty()) {
-            addImage(fileDtoList);
+        if(images != null && !images.isEmpty()) {
+            addImage(images);
         }
     }
 
@@ -75,7 +75,7 @@ public class Board extends BaseTimeEntity {
         images = new ArrayList<>();
 
         for (FileDto fileDto : fileDtoList) {
-            images.add(Image.builder().images(fileDto).board(this).build());
+            images.add(Image.builder().image(fileDto).board(this).build());
         }
     }
 }

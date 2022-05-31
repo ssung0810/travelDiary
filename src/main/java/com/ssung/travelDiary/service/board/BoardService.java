@@ -114,7 +114,7 @@ public class BoardService {
                 .location(dto.getLocation())
                 .content(dto.getContent())
                 .member(member)
-                .fileDtoList(fileHandler.storeFiles(dto.getImages()))
+                .images(fileHandler.storeFiles(dto.getImages()))
                 .build();
     }
 }

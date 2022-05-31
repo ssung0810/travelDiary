@@ -128,7 +128,7 @@ class BoardServiceTest {
         // then
         assertThat(findBoard.getTitle()).isEqualTo("title2");
         assertThat(findBoard.getImages().size()).isEqualTo(2);
-        assertThat(findBoard.getImages().get(0).getImages().getOriginalFileName()).isEqualTo("image3");
+        assertThat(findBoard.getImages().get(0).getImage().getOriginalFileName()).isEqualTo("image3");
     }
 
     @Test

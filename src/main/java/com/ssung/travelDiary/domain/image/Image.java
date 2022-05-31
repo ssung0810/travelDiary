@@ -20,15 +20,15 @@ public class Image {
     private Long id;
 
     @Embedded
-    private FileDto images;
+    private FileDto image;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
 
     @Builder
-    public Image(FileDto images, Board board) {
-        this.images = images;
+    public Image(FileDto image, Board board) {
+        this.image = image;
         this.board = board;
     }
 }

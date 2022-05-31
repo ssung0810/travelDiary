@@ -1,7 +1,7 @@
 package com.ssung.travelDiary.web.login;
 
 import com.ssung.travelDiary.service.members.MemberService;
-import com.ssung.travelDiary.web.SessionConst;
+import com.ssung.travelDiary.constancy.SessionConst;
 import com.ssung.travelDiary.dto.login.MemberLoginRequestDto;
 import com.ssung.travelDiary.dto.member.MemberResponseDto;
 import lombok.RequiredArgsConstructor;

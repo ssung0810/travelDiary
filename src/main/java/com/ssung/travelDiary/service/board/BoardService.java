@@ -1,5 +1,6 @@
 package com.ssung.travelDiary.service.board;
 
+import com.ssung.travelDiary.constancy.ErrorMessageConst;
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.board.BoardRepository;
 import com.ssung.travelDiary.domain.image.Image;
@@ -38,7 +39,7 @@ public class BoardService {
      */
     @Transactional
     public BoardResponseDto save(BoardSaveRequestDto dto, Long memberId) throws IOException {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException));
 
         Board board = createBoard(dto, member);
         boardRepository.save(board);
@@ -66,7 +67,7 @@ public class BoardService {
      */
     public BoardResponseDto findOne(Long boardId) {
         return new BoardResponseDto(boardRepository.findById(boardId)
-                .orElseThrow(() -> new BoardNotFountException("게시글이 존재하지 않습니다.")));
+                .orElseThrow(() -> new BoardNotFountException(ErrorMessageConst.BoardNotFoundException)));
     }
 
     /**
@@ -75,7 +76,7 @@ public class BoardService {
     @Transactional
     public BoardResponseDto update(BoardUpdateRequestDto dto, Long boardId) throws IOException {
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new BoardNotFountException("게시글이 존재하지 않습니다."));
+                .orElseThrow(() -> new BoardNotFountException(ErrorMessageConst.BoardNotFoundException));
 
         for (Image image : board.getImages()) {
             imageRepository.delete(image);
@@ -90,7 +91,7 @@ public class BoardService {
     @Transactional
     public Long delete(Long boardId) {
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new BoardNotFountException("게시글이 존재하지 않습니다."));
+                .orElseThrow(() -> new BoardNotFountException(ErrorMessageConst.BoardNotFoundException));
 
         boardRepository.delete(board);
 
@@ -101,7 +102,7 @@ public class BoardService {
      * 공유폴더 저장 시 게시글 등록 조회
      */
     public List<ShareBoardResponseDto> addBoardSearch(Long memberId, String value) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException));
 
         return boardRepository.findByMemberIdAndMoreType(member, value).stream()
                 .map(b -> new ShareBoardResponseDto(b)).collect(Collectors.toList());

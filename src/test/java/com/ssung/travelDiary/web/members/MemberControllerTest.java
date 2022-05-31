@@ -4,7 +4,7 @@ import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.exception.member.MemberEmailAlreadyExistException;
 import com.ssung.travelDiary.exception.member.MemberUsernameAlreadyExistException;
 import com.ssung.travelDiary.service.members.MemberService;
-import com.ssung.travelDiary.web.SessionConst;
+import com.ssung.travelDiary.constancy.SessionConst;
 import com.ssung.travelDiary.dto.member.MemberResponseDto;
 import com.ssung.travelDiary.dto.member.MemberSaveRequestDto;
 import com.ssung.travelDiary.dto.member.MemberUpdateRequestDto;
@@ -18,7 +18,6 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 

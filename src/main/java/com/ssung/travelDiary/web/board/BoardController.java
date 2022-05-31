@@ -1,7 +1,7 @@
 package com.ssung.travelDiary.web.board;
 
 import com.ssung.travelDiary.service.board.BoardService;
-import com.ssung.travelDiary.web.SessionConst;
+import com.ssung.travelDiary.constancy.SessionConst;
 import com.ssung.travelDiary.dto.board.BoardResponseDto;
 import com.ssung.travelDiary.dto.board.BoardSaveRequestDto;
 import com.ssung.travelDiary.dto.board.BoardUpdateRequestDto;

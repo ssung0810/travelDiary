@@ -7,7 +7,7 @@ import com.ssung.travelDiary.dto.share.ShareSaveRequestDto;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.service.share.ShareService;
-import com.ssung.travelDiary.web.SessionConst;
+import com.ssung.travelDiary.constancy.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

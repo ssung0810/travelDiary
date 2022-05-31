@@ -1,4 +1,4 @@
-package com.ssung.travelDiary.web;
+package com.ssung.travelDiary.constancy;
 
 public interface SessionConst {
     String USER_ID = "id";

@@ -1,14 +1,13 @@
 package com.ssung.travelDiary.web.share;
 
 import com.ssung.travelDiary.domain.board.Board;
-import com.ssung.travelDiary.domain.share.ShareBoard;
 import com.ssung.travelDiary.dto.share.ShareBoardResponseDto;
 import com.ssung.travelDiary.dto.share.ShareResponseDto;
 import com.ssung.travelDiary.dto.share.ShareSaveRequestDto;
 import com.ssung.travelDiary.service.board.BoardService;
 import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.service.share.ShareService;
-import com.ssung.travelDiary.web.SessionConst;
+import com.ssung.travelDiary.constancy.SessionConst;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,11 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;

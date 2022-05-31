@@ -1,5 +1,6 @@
 package com.ssung.travelDiary.service.members;
 
+import com.ssung.travelDiary.constancy.ErrorMessageConst;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.ErrorManager;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -50,7 +52,7 @@ public class MemberService {
      * 유저 검색
      */
     public MemberResponseDto findOne(Long memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException));
         return new MemberResponseDto(member);
     }
 
@@ -59,7 +61,7 @@ public class MemberService {
      */
     public MemberResponseDto findByUsername(String username) {
         Member member = memberRepository.findByUsername(username)
-                .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+                .orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException));
 
         return new MemberResponseDto(member);
     }
@@ -70,7 +72,7 @@ public class MemberService {
     @Transactional
     public MemberResponseDto update(MemberUpdateRequestDto requestDto, Long memberId) throws IOException {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+                .orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException));
 
         if(!requestDto.getUsername().equals(member.getUsername())) MemberUsernameValidation(requestDto.getUsername());
         if(!requestDto.getEmail().equals(member.getEmail())) MemberEmailValidation(requestDto.getEmail());
@@ -106,11 +108,11 @@ public class MemberService {
     }
 
     private void MemberUsernameValidation(String username) {
-        if(memberRepository.existsByUsername(username)) throw new MemberUsernameAlreadyExistException("이미 존재하는 별명입니다.");
+        if(memberRepository.existsByUsername(username)) throw new MemberUsernameAlreadyExistException(ErrorMessageConst.MemberUsernameAlreadyExistException);
     }
 
     private void MemberEmailValidation(String email) {
-        if(memberRepository.existsByEmail(email)) throw new MemberEmailAlreadyExistException("이미 존재하는 이메일입니다.");
+        if(memberRepository.existsByEmail(email)) throw new MemberEmailAlreadyExistException(ErrorMessageConst.MemberEmailAlreadyExistException);
     }
 
     private Member createMember(MemberSaveRequestDto dto, FileDto image) {

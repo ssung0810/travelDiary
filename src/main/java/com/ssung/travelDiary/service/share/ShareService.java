@@ -1,5 +1,6 @@
 package com.ssung.travelDiary.service.share;
 
+import com.ssung.travelDiary.constancy.ErrorMessageConst;
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.board.BoardRepository;
 import com.ssung.travelDiary.domain.members.Member;
@@ -12,6 +13,8 @@ import com.ssung.travelDiary.dto.share.ShareBoardResponseDto;
 import com.ssung.travelDiary.dto.share.ShareListResponseDto;
 import com.ssung.travelDiary.dto.share.ShareResponseDto;
 import com.ssung.travelDiary.dto.share.ShareSaveRequestDto;
+import com.ssung.travelDiary.exception.board.BoardNotFountException;
+import com.ssung.travelDiary.exception.member.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,13 +44,13 @@ public class ShareService {
 
         List<Long> members = dto.getMembers();
         for (Long m : members) {
-            Member member = memberRepository.findById(m).orElse(null);
+            Member member = memberRepository.findById(m).orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException));
             share.getShareMember().add(ShareMember.createShareMember(member, share));
         }
 
         List<Long> boards = dto.getBoards();
         for (Long b : boards) {
-            Board board = boardRepository.findById(b).orElse(null);
+            Board board = boardRepository.findById(b).orElseThrow(() -> new BoardNotFountException(ErrorMessageConst.BoardNotFoundException));
             share.getShareBoard().add(ShareBoard.createShareBoard(board, share));
         }
 

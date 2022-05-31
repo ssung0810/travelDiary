@@ -2,7 +2,7 @@ package com.ssung.travelDiary.web.share;
 
 import com.ssung.travelDiary.dto.share.ShareListResponseDto;
 import com.ssung.travelDiary.service.share.ShareService;
-import com.ssung.travelDiary.web.SessionConst;
+import com.ssung.travelDiary.constancy.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -131,10 +131,9 @@ class MemberRepositoryTest {
         memberRepository.save(member);
         clear();
 
-
         // when
-        List<Member> EmptyMembers = memberRepository.findByMemberIdAndMoreType(1L, "");
-        List<Member> members = memberRepository.findByMemberIdAndMoreType(2L, "");
+        List<Member> EmptyMembers = memberRepository.findByMemberIdAndMoreType(member.getId(), "");
+        List<Member> members = memberRepository.findByMemberIdAndMoreType(member.getId()+1, "");
 
         // then
         assertThat(EmptyMembers.size()).isEqualTo(0);

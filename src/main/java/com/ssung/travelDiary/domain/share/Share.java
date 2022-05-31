@@ -31,26 +31,9 @@ public class Share extends BaseTimeEntity {
             , fetch = FetchType.LAZY)
     private List<ShareBoard> shareBoard = new ArrayList<>();
 
-//    @Builder
-//    public Share(Long id, String title, String creator, List<ShareMember> shareMember, List<ShareBoard> shareBoard) {
-//        this.id = id;
-//        this.title = title;
-//        this.creator = creator;
-//        this.shareMember = shareMember;
-//        this.shareBoard = shareBoard;
-//    }
-
     @Builder
     public Share(String title, String creator) {
         this.title = title;
         this.creator = creator;
     }
-
-//    public static Share saveShare(String title, String creator) {
-//        Share share = new Share();
-//        share.title = title;
-//        share.creator = creator;
-//
-//        return share;
-//    }
 }

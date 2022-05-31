@@ -1,6 +1,5 @@
-package com.ssung.travelDiary.learning;
+package com.ssung.travelDiary.password;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -38,7 +38,6 @@ public class ShareService {
     public ShareResponseDto save(ShareSaveRequestDto dto,
                                  Long memberId) {
 
-//        Share share = Share.saveShare(dto.getTitle(), dto.getCreator());
         Share share = Share.builder().title(dto.getTitle()).creator(dto.getCreator()).build();
 
         share.getShareMember().add(

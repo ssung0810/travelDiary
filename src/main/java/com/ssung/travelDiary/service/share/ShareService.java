@@ -38,9 +38,14 @@ public class ShareService {
     public ShareResponseDto save(ShareSaveRequestDto dto,
                                  Long memberId) {
 
-        Share share = Share.saveShare(dto.getTitle(), dto.getCreator());
+//        Share share = Share.saveShare(dto.getTitle(), dto.getCreator());
+        Share share = Share.builder().title(dto.getTitle()).creator(dto.getCreator()).build();
 
-        share.getShareMember().add(ShareMember.createShareMember(memberRepository.findById(memberId).orElse(null), share));
+        share.getShareMember().add(
+                ShareMember.createShareMember(
+                        memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException)), share
+                )
+        );
 
         List<Long> members = dto.getMembers();
         for (Long m : members) {
@@ -63,10 +68,10 @@ public class ShareService {
      * 공유폴더 리스트 출력
      */
     public List<ShareListResponseDto> findList(Long memberId) {
-        Member member = memberRepository.findById(memberId).orElse(null);
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException));
 
-            return shareRepository.findList(member).stream()
-                .map(s -> new ShareListResponseDto(s.getId(), s.getTitle())).collect(Collectors.toList());
+        return shareRepository.findList(member).stream()
+            .map(s -> new ShareListResponseDto(s.getId(), s.getTitle())).collect(Collectors.toList());
     }
 
     /**

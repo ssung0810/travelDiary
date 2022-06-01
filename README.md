@@ -27,3 +27,9 @@
   - Gradle
   - Junit5, Mockito
   - MySQL
+
+<br>
+
+## API 명세서
+
+https://believed-park-6fb.notion.site/API-3321f2d3184841f6afd1bac7842f50d4

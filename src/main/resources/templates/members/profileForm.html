@@ -9,8 +9,8 @@
 
 <div class="loginBox" th:object="${member}">
     <div class="form-group">
-        <img th:unless="${session.imageName == null}" id="profileUpload" src="/images/ico_user.jpg" th:src="|/image/${session.imageName}|">
-        <img th:if="${session.imageName == null}" id="profileUpload" src="/images/ico_user.jpg">
+        <img th:unless="${session.image == null}" id="profileUpload" src="/images/ico_user.jpg" th:src="|/image/${session.image}|">
+        <img th:if="${session.image == null}" id="profileUpload" src="/images/ico_user.jpg">
     </div>
 
     <div class="form-group">

@@ -43,7 +43,7 @@
                     <div class="imgBox">
                         <th:block th:each="imageList : ${board.images}">
                             <img th:each="image : ${imageList}"
-                                 th:src="|/image/${image.images.storedFileName}|">
+                                 th:src="|/image/${image.image.storedFileName}|">
                         </th:block>
                     </div>
                     <p class="boardListContent" th:text="${board.content}">내용</p>

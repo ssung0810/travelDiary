@@ -13,8 +13,8 @@
 
         <div class="form-group">
             <a href="javascript:void(0);" onclick="$('#image').trigger('click')">
-                <img th:unless="${session.imageName == null}" id="profileUpload" src="/images/ico_user.jpg" th:src="|/image/${session.imageName}|">
-                <img th:if="${session.imageName == null}" id="profileUpload" src="/images/ico_user.jpg">
+                <img th:unless="${session.image == null}" id="profileUpload" src="/images/ico_user.jpg" th:src="|/image/${session.image}|">
+                <img th:if="${session.image == null}" id="profileUpload" src="/images/ico_user.jpg">
             </a>
             <input type="file" id="image" th:field="*{image}" class="form-control profile" style="display: none">
         </div>

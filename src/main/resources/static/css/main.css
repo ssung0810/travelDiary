@@ -16,6 +16,7 @@
 .hp200 {height:200px}
 .hp250 {height:250px}
 
+.fl-bt {display: flex; justify-content: space-between;}
 
 
 /* 부트스트랩 */
@@ -42,6 +43,9 @@
 .error-page {max-width: 600px; margin: 0 auto; text-align: center;}
 
 /** member **/
+.signBox {width:300px; margin: 100px auto;}
+.signBox .loginImage {text-align: center;}
+.signBox #username.sign {width:200px;}
 .passwordCk {display: hidden;}
 
 #profileUpload {margin: 0 25px; width:150px; height:150px; padding: 5px; border-radius: 115px;}

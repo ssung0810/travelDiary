@@ -95,6 +95,7 @@ class MemberControllerTest {
                         .param("password", "password123!")
                         .param("password_check", "password123!")
                         .param("email", "email@naver.com"))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("members/sign"));
 

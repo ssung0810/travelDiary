@@ -28,10 +28,6 @@ spring:
 #        show_sql: true
         format_sql: true
 
-  server:
-    session:
-      tracking-modes: cookie
-
 #  session:
 #    store-type: jdbc
 
@@ -46,3 +42,8 @@ decorator:
 
 file:
   dir: C:\Users\ogd00\Desktop\공부\프로젝트\travelDiaryBox\images/
+
+server:
+  servlet:
+    session:
+      tracking-modes: cookie

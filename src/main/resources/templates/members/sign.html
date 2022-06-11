@@ -7,11 +7,11 @@
 </head>
 <body>
 
-<div class="loginBox">
+<div class="signBox">
     <form action="/member" th:object="${member}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="username_validation" th:field="*{username_validation}" value="0">
 
-        <div class="form-group">
+        <div class="form-group loginImage">
             <a href="javascript:void(0);" onclick="$('#image').trigger('click')">
                 <img id="profileUpload" src="/images/ico_user.jpg">
             </a>
@@ -20,8 +20,10 @@
 
         <div class="form-group">
             <label for="username">별명</label>
-            <input type="text" id="username" th:field="*{username}" th:errorclass="field-error" class="form-control">
-            <button type="button" class="btn btn-default" id="usernameBtn">중복체크</button>
+            <div class="fl-bt">
+                <input type="text" id="username" th:field="*{username}" th:errorclass="field-error" class="form-control sign">
+                <button type="button" class="btn btn-default" id="usernameBtn">중복체크</button>
+            </div>
 
             <div th:errors="*{username}" class="field-error">별명 입력 에러</div>
         </div>

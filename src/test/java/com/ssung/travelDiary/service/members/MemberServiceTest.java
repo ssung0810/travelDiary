@@ -1,13 +1,11 @@
 package com.ssung.travelDiary.service.members;
 
-import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
 import com.ssung.travelDiary.dto.member.MemberResponseDto;
 import com.ssung.travelDiary.dto.member.MemberSaveRequestDto;
 import com.ssung.travelDiary.dto.member.MemberUpdateRequestDto;
 import com.ssung.travelDiary.exception.member.MemberNotFoundException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,10 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Transactional
 class MemberServiceTest {
 
-    @Autowired private MemberService memberService;
-
-    @Autowired
-    MemberRepository memberRepository;
+    @Autowired MemberService memberService;
 
     @Test
     void 프로필_이미지없는_회원가입() throws Exception {

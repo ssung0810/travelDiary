@@ -1,3 +1,5 @@
+src/main/resources/application-prod.yml
+
 HELP.md
 .gradle
 build/
@@ -37,4 +39,4 @@ out/
 .vscode/
 
 
-application-oauth.yml
+

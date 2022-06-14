@@ -1,5 +1,3 @@
-src/main/resources/application-prod.yml
-
 HELP.md
 .gradle
 build/
@@ -39,4 +37,5 @@ out/
 .vscode/
 
 
-
+### 개별추가 ###
+src/main/resources/application-prod.yml

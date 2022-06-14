@@ -8,7 +8,9 @@ spring:
       max-request-size: 10MB
 
   profiles:
-    include: oauth
+    active: prod
+#    default: prod
+#    include: oauth
 
 logging:
   level:
@@ -23,15 +25,3 @@ server:
   servlet:
     session:
       tracking-modes: cookie
-
----
-
-spring:
-  profiles:
-    active: local
-
----
-
-spring:
-  profiles:
-    active: prod

@@ -5,13 +5,17 @@ spring:
     password: travel1!
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-jpa:
-  hibernate:
-    ddl-auto: none
-  properties:
+  config:
+    activate:
+      on-profile: local
+
+  jpa:
     hibernate:
-      #        show_sql: true
-      format_sql: true
+      ddl-auto: none
+    properties:
+      hibernate:
+        #        show_sql: true
+        format_sql: true
 
 file:
   dir: C:\Users\ogd00\Desktop\공부\프로젝트\travelDiaryBox\images/

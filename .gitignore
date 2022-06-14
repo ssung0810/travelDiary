@@ -37,4 +37,5 @@ out/
 .vscode/
 
 
-application-oauth.yml
+### 개별추가 ###
+src/main/resources/application-prod.yml

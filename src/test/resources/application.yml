@@ -6,4 +6,4 @@ spring:
     driver-class-name: org.h2.Driver
 
 file:
-  dir: C:\Users\ogd00\Desktop\공부\프로젝트\travelDiaryBox\images/
+  dir: ./src/test/resources/static/image/

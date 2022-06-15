@@ -23,7 +23,7 @@ public class FileHandlerUnitTest {
     FileHandler fileHandler;
 
 //    @Value("${file.dir}")
-    private String fileDir = "travelDairy/src/test/resources/static/image/";
+    private String fileDir;
 
     @Test
     void 파일_전체경로_가져오기() throws Exception {

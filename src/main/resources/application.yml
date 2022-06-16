@@ -9,7 +9,6 @@ spring:
 
   profiles:
     active: prod
-#    default: prod
 #    include: oauth
 
 logging:

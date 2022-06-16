@@ -5,9 +5,14 @@ spring:
     password: travel1!
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-  config:
-    activate:
-      on-profile: local
+#  config:
+#    activate:
+#      on-profile: local
+
+  profiles:
+    group:
+      local:
+        local
 
   jpa:
     hibernate:

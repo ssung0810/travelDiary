@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    group:
+      prod1:
+        prod
+        prod1
+
+server:
+  port: 8081

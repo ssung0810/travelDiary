@@ -8,8 +8,7 @@ spring:
       max-request-size: 10MB
 
   profiles:
-    active: prod
-#    include: oauth
+    active: local
 
 logging:
   level:

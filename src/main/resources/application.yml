@@ -19,6 +19,7 @@ logging:
 #    p6spy:
 #      enable-logging: true
 
+
 server:
   servlet:
     session:

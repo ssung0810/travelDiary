@@ -8,10 +8,7 @@ spring:
       max-request-size: 10MB
 
   profiles:
-    active: prod
-  group:
-    local: local
-    prod: prod, prod-db
+    active: local
 
 logging:
   level:

@@ -14,6 +14,9 @@ cache:
 
 script: "./gradlew clean build"
 
+before_install:
+  - chmod +x gradlew
+
 before_deploy:
 #  - zip -r travelDiary *
 #  - mkdir -p deploy
@@ -47,9 +50,6 @@ deploy:
     deployment_group: travelDiary-group # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
     region: ap-northeast-2
     wait-until-deployed: true
-
-before_install:
-  - chmod +x gradlew
 
 # CI 실행 완료 시 메일로 알람
 notifications:

@@ -38,4 +38,4 @@ out/
 
 
 ### 개별추가 ###
-src/main/resources/application-prod.yml
+src/main/resources/application-prod-db.yml

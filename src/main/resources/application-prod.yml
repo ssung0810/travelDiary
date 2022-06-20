@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    group:
+      prod:
+        prod
+        prod-db
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+file:
+  dir:

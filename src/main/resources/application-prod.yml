@@ -1,9 +1,8 @@
 spring:
-#  profiles:
-#    group:
-#      prod:
-#        prod
-#        prod-db
+  profiles:
+    group:
+      prod:
+        prod-db
 
   jpa:
     hibernate:

@@ -64,7 +64,7 @@ public class ShareService {
     }
 
     /**
-     * 공유폴더 리스트 출력
+     * 공유폴더 리스트 출력(메인화면 - 셀렉트 박스)
      */
     public List<ShareListResponseDto> findList(Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException));
@@ -74,7 +74,7 @@ public class ShareService {
     }
 
     /**
-     * 특정 공유폴더 내부 게시글 조회
+     * 공유폴더 선택 시 게시글 리스트 조회
      */
     public List<ShareBoardResponseDto> findShareBoard(Long shareId) {
         return shareRepository.findShareBoard(shareId).stream()

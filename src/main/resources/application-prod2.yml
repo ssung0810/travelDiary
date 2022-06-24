@@ -1,8 +1,8 @@
 spring:
   profiles:
     group:
-      prod1:
-        prod
+      prod2:
+        prod,
         prod-db
 
 server:

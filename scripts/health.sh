@@ -18,7 +18,7 @@ do
   UP_COUNT=$(echo ${RESPONSE} | grep 'prod' | wc -l)
 
   if [ ${UP_COUNT} -ge 1 ]
-  then
+  then # $up_count >= 1 ("prod" 문자열이 있는지 검증)
     echo "> Health check 성공"
     switch_proxy
     break

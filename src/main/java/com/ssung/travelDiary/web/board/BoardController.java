@@ -65,7 +65,6 @@ public class BoardController {
                             @SessionAttribute(name = SessionConst.USER_ID) Long memberId) throws IOException {
 
         if (bindingResult.hasErrors()) {
-            log.info("bindingResult = {}", bindingResult);
             return "board/boardSaveForm";
         }
 
@@ -90,7 +89,6 @@ public class BoardController {
                               BindingResult bindingResult) throws IOException {
 
         if (bindingResult.hasErrors()) {
-            log.info("bindingResult(update) = {}", bindingResult);
             return "board/boardUpdateForm";
         }
 

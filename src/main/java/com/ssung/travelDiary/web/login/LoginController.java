@@ -1,9 +1,9 @@
 package com.ssung.travelDiary.web.login;
 
-import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.constancy.SessionConst;
 import com.ssung.travelDiary.dto.login.MemberLoginRequestDto;
 import com.ssung.travelDiary.dto.member.MemberResponseDto;
+import com.ssung.travelDiary.service.members.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -38,17 +38,9 @@ public class LoginController {
     public String login(@Valid @ModelAttribute("login") MemberLoginRequestDto login,
                         BindingResult bindingResult,
                         @RequestParam(name = "redirectURL", defaultValue = "/board/privateBoardList") String redirectURL,
-                        HttpSession httpSession,
-                        HttpServletRequest request) {
-
-        Enumeration<String> parameterNames = request.getParameterNames();
-        while (parameterNames.hasMoreElements()) {
-            String name = parameterNames.nextElement();
-            log.info("{} || {}", name, request.getParameter(name));
-        }
+                        HttpSession httpSession) {
 
         if(bindingResult.hasErrors()) {
-            log.info("bindingResult = {}", bindingResult);
             return "members/login";
         }
 
@@ -65,8 +57,6 @@ public class LoginController {
             httpSession.setAttribute(SessionConst.USER_IMAGE, null);
         else
             httpSession.setAttribute(SessionConst.USER_IMAGE, member.getImage().getStoredFileName());
-
-        log.info("redirectURL = {}", redirectURL);
 
         return "redirect:" + redirectURL;
     }

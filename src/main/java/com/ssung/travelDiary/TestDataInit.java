@@ -15,9 +15,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 //@Component
 @RequiredArgsConstructor
@@ -33,59 +35,36 @@ public class TestDataInit {
     /**
      * 테스트용 데이터 추가
      */
-//    @PostConstruct
+    @PostConstruct
     public void init() throws IOException {
 
         FileDto fileDto = new FileDto("01. 왕이신하나님.png", "1013784853220000.png");
 
-        Member member = Member.builder()
-                .username("test")
-                .password(passwordEncoder.encode("test!"))
-                .email("qqq@www.com")
-                .image(null)
-                .role(Role.USER)
-                .build();
+        for(int i=1; i<=2; i++) {
+            Member member = Member.builder()
+                    .username("test"+i)
+                    .password(passwordEncoder.encode("test!"))
+                    .email("qqq"+i+"@www.com")
+                    .image(null)
+                    .role(Role.USER)
+                    .build();
 
-        memberRepository.save(member);
+            memberRepository.save(member);
+        }
 
-//        Member member1 = Member.builder()
-//                .username("username")
-//                .password(passwordEncoder.encode("password"))
-//                .email("email")
-//                .image(null)
-//                .role(Role.USER)
-//                .build();
-//        Member member2 = Member.builder()
-//                .username("username2")
-//                .password(passwordEncoder.encode("password2"))
-//                .email("email2")
-//                .image(null)
-//                .role(Role.USER)
-//                .build();
-//
-//        memberRepository.save(member1);
-//        memberRepository.save(member2);
-//
-//        BoardSaveRequestDto boardSaveRequestDto = new BoardSaveRequestDto("title", "content", "location", new ArrayList<>(), LocalDate.now().toString());
-//        BoardSaveRequestDto boardSaveRequestDto2 = new BoardSaveRequestDto("title2", "content2", "location2", new ArrayList<>(), LocalDate.now().toString());
-//        BoardResponseDto board = boardService.save(boardSaveRequestDto, 1L);
-//        BoardResponseDto board2 = boardService.save(boardSaveRequestDto2, 1L);
-//
-//        String title = "shareTitle";
-//        String creator = "test";
-//
-//        ArrayList<Long> members = new ArrayList<>();
-//        members.add(2L);
-//        members.add(3L);
-//
-//        ArrayList<Long> boards = new ArrayList<>();
-//        boards.add(board.getId());
-//        boards.add(board2.getId());
-//
-//        ShareSaveRequestDto shareSaveRequestDto = new ShareSaveRequestDto(title, creator, members, boards);
-//        ShareSaveRequestDto shareSaveRequestDto2 = new ShareSaveRequestDto(title, creator, members, boards);
-//
-//        shareService.save(shareSaveRequestDto, 1L);
-//        shareService.save(shareSaveRequestDto2, 1L);
+
+        for (int i = 1; i <= 15; i++) {
+            boardService.save(new BoardSaveRequestDto("title" + i, "content" + i, "location" + i, new ArrayList<>(), LocalDate.now().toString()), 1L);
+        }
+
+        for (int i = 16; i <= 20; i++) {
+            boardService.save(new BoardSaveRequestDto("title" + i, "content" + i, "location" + i, new ArrayList<>(), "2022-06-24"), 1L);
+        }
+
+
+        ShareSaveRequestDto shareSaveRequestDto = new ShareSaveRequestDto("첫 공유폴더", "test1", List.of(2L), List.of(1L, 3L, 18L));
+        shareService.save(shareSaveRequestDto, 1L);
+        ShareSaveRequestDto shareSaveRequestDto2 = new ShareSaveRequestDto("두 번째 공유폴더", "test1", List.of(2L), List.of(1L, 3L, 18L));
+        shareService.save(shareSaveRequestDto2, 1L);
     }
 }

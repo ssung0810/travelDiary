@@ -8,9 +8,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
-//    @Query("select b, i from Board b left join Image i on b.id=i.board where member_id = :memberId and date = :date")
+    @Query("select b from Board b left join fetch b.images join b.member m where b.date = :date and m.id = :memberId")
     List<Board> findByMember_idAndDate(@Param("memberId") Long memberId, @Param("date") String date);
 
-    @Query("select b from Board b where b.title like %:title% and b.member = :member")
-    List<Board> findByMemberIdAndMoreType(@Param("member") Member member, @Param("title") String title);
+    @Query("select b from Board b join b.member m where b.title like %:title% and m.id = :memberId")
+    List<Board> findByMemberIdAndMoreType(@Param("memberId") Long memberId, @Param("title") String title);
 }

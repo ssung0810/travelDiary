@@ -106,7 +106,7 @@ public class BoardRepositoryTest {
         clear();
 
         // when
-        List<Board> boardList = boardRepository.findByMemberIdAndMoreType(board.getMember(), board.getTitle());
+        List<Board> boardList = boardRepository.findByMemberIdAndMoreType(board.getMember().getId(), board.getTitle());
 
         // then
         assertThat(boardList.size()).isEqualTo(1);

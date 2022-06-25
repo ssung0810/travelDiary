@@ -67,9 +67,9 @@ public class ShareService {
      * 공유폴더 리스트 출력(메인화면 - 셀렉트 박스)
      */
     public List<ShareListResponseDto> findList(Long memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException));
+//        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException));
 
-        return shareRepository.findList(member).stream()
+        return shareRepository.findList(memberId).stream()
             .map(s -> new ShareListResponseDto(s.getId(), s.getTitle())).collect(Collectors.toList());
     }
 

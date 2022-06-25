@@ -9,14 +9,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ShareRepository extends JpaRepository<Share, Long> {
-//    @Query("select s from Share s join shareMember sm on s.id = sm.share_id where sm.member_id = :memberId")
-    @Query("select s from Share s join s.shareMember sm on sm.member = :member")
-    List<Share> findList(@Param("member") Member member);
-//    List<Share> findList(@Param("memberId") Long memberId);
+
+    @Query("select s from Share s join s.shareMember sm join sm.member m where m.id = :memberId")
+    List<Share> findList(@Param("memberId") Long memberId);
 
     @Query("select b from Share s join s.shareBoard sb on s.id = :share_id join sb.board b")
     List<Board> findShareBoard(@Param("share_id") Long share_id);
-
-//    @Query("select b from Board b where b.title like %:value% and b.member = :member")
-//    List<Board> shareBoardList(@Param("member") Member member, @Param("value") String value);
 }

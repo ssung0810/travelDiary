@@ -71,7 +71,7 @@ class ShareRepositoryTest {
         clear();
 
         // when
-        List<Share> shareList = shareRepository.findList(shareMember1.getMember());
+        List<Share> shareList = shareRepository.findList(shareMember1.getMember().getId());
 
         // then
         assertThat(shareList.size()).isEqualTo(1);

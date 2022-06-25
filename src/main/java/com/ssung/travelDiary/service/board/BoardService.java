@@ -58,6 +58,8 @@ public class BoardService {
      * 개인 게시글 리스트 조회
      */
     public List<BoardResponseDto> findList(Long member_id, String date) {
+//        Member member = memberRepository.findById(member_id).orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException));
+
         return boardRepository.findByMember_idAndDate(member_id, date).stream()
                 .map(b -> new BoardResponseDto(b)).collect(Collectors.toList());
     }
@@ -102,9 +104,9 @@ public class BoardService {
      * 공유폴더 저장 시 게시글 등록 조회
      */
     public List<ShareBoardResponseDto> addBoardSearch(Long memberId, String value) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException));
+//        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(ErrorMessageConst.MemberNotFoundException));
 
-        return boardRepository.findByMemberIdAndMoreType(member, value).stream()
+        return boardRepository.findByMemberIdAndMoreType(memberId, value).stream()
                 .map(b -> new ShareBoardResponseDto(b)).collect(Collectors.toList());
     }
 

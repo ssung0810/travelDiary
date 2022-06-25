@@ -12,7 +12,4 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
     boolean existsByUsername(String username);
 
     boolean existsByEmail(String email);
-
-//    @Query("select m from Member m where m.id <> :member_id and m.username like %:value%")
-//    List<Member> findByMemberIdAndMoreType(@Param("member_id") Long member_id, @Param("value") String value);
 }

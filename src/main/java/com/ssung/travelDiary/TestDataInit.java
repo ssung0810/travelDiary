@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class TestDataInit {
 
@@ -64,5 +64,7 @@ public class TestDataInit {
 
         ShareSaveRequestDto shareSaveRequestDto = new ShareSaveRequestDto("첫 공유폴더", "test1", List.of(2L), List.of(1L, 3L, 18L));
         shareService.save(shareSaveRequestDto, 1L);
+        ShareSaveRequestDto shareSaveRequestDto2 = new ShareSaveRequestDto("두 번째 공유폴더", "test1", List.of(2L), List.of(1L, 3L, 18L));
+        shareService.save(shareSaveRequestDto2, 1L);
     }
 }

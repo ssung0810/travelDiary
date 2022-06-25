@@ -38,13 +38,7 @@ public class LoginController {
     public String login(@Valid @ModelAttribute("login") MemberLoginRequestDto login,
                         BindingResult bindingResult,
                         @RequestParam(name = "redirectURL", defaultValue = "/board/privateBoardList") String redirectURL,
-                        HttpSession httpSession,
-                        HttpServletRequest request) {
-
-        Enumeration<String> parameterNames = request.getParameterNames();
-        while (parameterNames.hasMoreElements()) {
-            String name = parameterNames.nextElement();
-        }
+                        HttpSession httpSession) {
 
         if(bindingResult.hasErrors()) {
             return "members/login";

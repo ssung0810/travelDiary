@@ -3,6 +3,7 @@ package com.ssung.travelDiary.domain.board;
 import com.ssung.travelDiary.domain.BaseTimeEntity;
 import com.ssung.travelDiary.domain.image.Image;
 import com.ssung.travelDiary.domain.members.Member;
+import com.ssung.travelDiary.domain.share.ShareBoard;
 import com.ssung.travelDiary.dto.file.FileDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,6 +36,9 @@ public class Board extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+    private List<ShareBoard> shareBoard = new ArrayList<>();
 
     @OneToMany(
             mappedBy = "board",

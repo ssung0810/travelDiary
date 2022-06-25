@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
+//    @Query("select b, i from Board b left join Image i on b.id=i.board where member_id = :memberId and date = :date")
     List<Board> findByMember_idAndDate(@Param("memberId") Long memberId, @Param("date") String date);
 
     @Query("select b from Board b where b.title like %:title% and b.member = :member")

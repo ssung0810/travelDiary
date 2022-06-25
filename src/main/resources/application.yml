@@ -10,9 +10,9 @@ spring:
   profiles:
     active: local
 
-logging:
-  level:
-    org.hibernate.SQL: debug
+#logging:
+#  level:
+#    org.hibernate.SQL: debug
 
 #decorator:
 #  datasource:

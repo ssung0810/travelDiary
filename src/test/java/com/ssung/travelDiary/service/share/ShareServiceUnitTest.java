@@ -117,10 +117,8 @@ public class ShareServiceUnitTest {
     @Test
     void 공유폴더_리스트_출력() throws Exception {
         // given
-        Member member = createMember();
         List<Share> shareList = List.of(createShare(), createShare());
 
-        given(memberRepository.findById(anyLong())).willReturn(Optional.of(member));
         given(shareRepository.findList(any())).willReturn(shareList);
 
         // when
@@ -129,7 +127,6 @@ public class ShareServiceUnitTest {
         // then
         assertThat(result.size()).isEqualTo(2);
         assertThat(result.get(0).getTitle()).isEqualTo(shareList.get(0).getTitle());
-        verify(memberRepository).findById(anyLong());
         verify(shareRepository).findList(any());
     }
 

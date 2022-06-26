@@ -26,14 +26,20 @@
             <div class="form-group">
                 <label for="boards">공유 게시글</label>
                 <div>
-                    <button type="button" id="boards" class="btn btn-primary">공유 게시글 추가</button>
+                    <div class="fl-fs">
+                        <button type="button" id="boards" class="btn btn-primary">공유 게시글 추가</button>
+                        <button type="button" id="shareBoardCheck" class="addShareCheck">NO</button>
+                    </div>
                     <div class="field-error" th:errors="*{boards}">게시글 추가 오류</div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="members">공유 대상</label>
                 <div>
-                    <button type="button" id="members" class="btn btn-primary">공유 대상 추가</button>
+                    <div class="fl-fs">
+                        <button type="button" id="members" class="btn btn-primary">공유 대상 추가</button>
+                        <button type="button" id="shareMemberCheck" class="addShareCheck">NO</button>
+                    </div>
                     <div class="field-error" th:errors="*{members}">대상 추가 오류</div>
                 </div>
             </div>
@@ -49,7 +55,6 @@
                     <div class="searchBox">
                         <select id="boardSearchType" class="form-select searchType">
                             <option value="title">제목</option>
-                            <option value="date">날짜</option>
                         </select>
                         <input type="text" id="boardSearch" class="form-control" placeholder="조회 내용을 입력하세요">
                         <button type="button" id="addBoard" class="btn btn-primary addSearch">조회</button>

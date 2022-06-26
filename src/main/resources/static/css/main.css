@@ -16,6 +16,7 @@
 .hp200 {height:200px}
 .hp250 {height:250px}
 
+.fl-fs {display: flex; justify-content: flex-start}
 .fl-bt {display: flex; justify-content: space-between;}
 
 
@@ -103,3 +104,5 @@
 #resultBox {width: 500px;}
 
 .shareBtnBox {text-align: center; margin-top: 20px;}
+
+.addShareCheck {margin-left: 10px; color: white; background-color: #dc3545; border: 0; cursor: unset;}

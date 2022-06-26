@@ -3,6 +3,7 @@ package com.ssung.travelDiary.domain.share;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssung.travelDiary.domain.board.Board;
 import com.ssung.travelDiary.domain.board.QBoard;
+import com.ssung.travelDiary.domain.image.QImage;
 import com.ssung.travelDiary.domain.members.QMember;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +11,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.ssung.travelDiary.domain.board.QBoard.board;
+import static com.ssung.travelDiary.domain.image.QImage.image1;
 import static com.ssung.travelDiary.domain.members.QMember.member;
 import static com.ssung.travelDiary.domain.share.QShare.share;
 import static com.ssung.travelDiary.domain.share.QShareBoard.shareBoard;
@@ -40,8 +42,9 @@ public class ShareRepositoryImpl implements ShareRepositoryCustom {
         return queryFactory
                 .select(board)
                 .from(share)
-                .join(shareBoard).on(share.id.eq(share_id))
+                .join(share.shareBoard, shareBoard).on(share.id.eq(share_id))
                 .join(shareBoard.board, board)
+                .leftJoin(board.images, image1).fetchJoin()
                 .fetch();
     }
 }

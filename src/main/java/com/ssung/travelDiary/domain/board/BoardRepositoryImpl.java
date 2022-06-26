@@ -25,6 +25,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     public List<Board> findByMember_idAndDate(Long memberId, String date) {
         return queryFactory
                 .selectFrom(board)
+                .distinct()
                 .leftJoin(board.images, image1).fetchJoin()
                 .join(board.member, member)
                 .where(

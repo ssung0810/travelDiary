@@ -1,12 +1,14 @@
 package com.ssung.travelDiary.domain.members;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.ssung.travelDiary.domain.members.QMember.*;
 
+@Repository
 public class MemberRepositoryImpl implements MemberRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;

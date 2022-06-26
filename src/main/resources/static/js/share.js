@@ -32,6 +32,14 @@ $("#shareBoardSave").on("click", function() {
         _BOARD.push($(this).val());
     });
 
+    if(_BOARD.length > 0) {
+        $("#shareBoardCheck").css("background-color","#5ce939");
+        $("#shareBoardCheck").text("YES");
+    } else {
+        $("#shareBoardCheck").css("background-color","#dc3545");
+        $("#shareBoardCheck").text("NO");
+    }
+
     boardListSelect(_BOARD);
     $("#boardSearch").val("");
 
@@ -56,6 +64,14 @@ $("#shareMemberSave").on("click",function() {
         _MEMBER.push($(this).val());
     });
 
+    if(_MEMBER.length > 0) {
+            $("#shareMemberCheck").css("background-color","#5ce939");
+            $("#shareMemberCheck").text("YES");
+        } else {
+            $("#shareMemberCheck").css("background-color","#dc3545");
+            $("#shareMemberCheck").text("NO");
+        }
+
     memberListSelect(_MEMBER);
 
     $("#memberModal").hide();
@@ -71,7 +87,6 @@ $("#shareMemberCancel").on("click", function() {
 });
 
 function boardListSelect(obj) {
-    console.log(obj);
     $("input[name=boards]").attr("checked", false);
 
     $("input[name=boards]").each(function() {

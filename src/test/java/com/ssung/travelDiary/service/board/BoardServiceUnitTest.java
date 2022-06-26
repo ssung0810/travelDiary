@@ -187,28 +187,15 @@ public class BoardServiceUnitTest {
         // given
         Member member = createMember();
         Board board = createBoard(member);
-        given(memberRepository.findById(anyLong())).willReturn(Optional.of(member));
-        given(boardRepository.findByMemberIdAndMoreType(any(), anyString())).willReturn(List.of(board));
+        given(boardRepository.findByMemberIdAndMoreType(anyLong(), anyString())).willReturn(List.of(board));
 
         // when
-        List<ShareBoardResponseDto> resultDtoList = boardService.addBoardSearch(anyLong(), LocalDate.now().toString());
+        List<ShareBoardResponseDto> resultDtoList = boardService.addBoardSearch(anyLong(), anyString());
 
         // then
         assertThat(resultDtoList.size()).isEqualTo(1);
         assertThat(resultDtoList.get(0).getTitle()).isEqualTo(board.getTitle());
-        verify(memberRepository).findById(anyLong());
         verify(boardRepository).findByMemberIdAndMoreType(any(), anyString());
-    }
-
-    @Test
-    void 공유폴더_저장시_공유할_게시글_조회_회원없음() throws Exception {
-        // given
-        given(memberRepository.findById(anyLong())).willThrow(MemberNotFoundException.class);
-
-        // when, then
-        assertThatThrownBy(() -> boardService.addBoardSearch(anyLong(), LocalDate.now().toString())).isInstanceOf(MemberNotFoundException.class);
-        verify(memberRepository).findById(anyLong());
-        verify(boardRepository, never()).findByMemberIdAndMoreType(any(), anyString());
     }
 
     private Member createMember() {

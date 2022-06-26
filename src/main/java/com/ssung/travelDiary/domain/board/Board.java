@@ -43,7 +43,7 @@ public class Board extends BaseTimeEntity {
     @OneToMany(
             mappedBy = "board",
             fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL, CascadeType.REMOVE}
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
     )
     private List<Image> images = new ArrayList<>();
 

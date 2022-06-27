@@ -136,15 +136,15 @@ public class ShareServiceUnitTest {
         Member member = createMember();
         List<Board> boardList = List.of(createBoard(member), createBoard(member));
 
-        given(shareRepository.findShareBoard(anyLong())).willReturn(boardList);
+        given(shareRepository.findShareBoard(anyLong(), anyString())).willReturn(boardList);
 
         // when
-        List<ShareBoardResponseDto> result = shareService.findShareBoard(anyLong());
+        List<ShareBoardResponseDto> result = shareService.findShareBoard(anyLong(), anyString());
 
         // then
         assertThat(result.size()).isEqualTo(2);
         assertThat(result.get(0).getTitle()).isEqualTo(boardList.get(0).getTitle());
-        verify(shareRepository).findShareBoard(anyLong());
+        verify(shareRepository).findShareBoard(anyLong(), anyString());
     }
 
     private Share createShare() {

@@ -40,4 +40,16 @@ $(document).ready(function() {
 //            console.log(error);
 //        });
     });
+
+    $("#dateSearchBtn").on("click", function() {
+        var shareId = $("#shareId").val();
+
+        if(shareId == 0) {
+            $("#boardListForm").attr("action", "/board/privateBoardList");
+        } else {
+            $("#boardListForm").attr("action", "/share/"+shareId);
+        }
+
+        $("#boardListForm").submit();
+    });
 });

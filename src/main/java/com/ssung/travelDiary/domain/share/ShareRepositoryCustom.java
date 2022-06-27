@@ -8,5 +8,5 @@ public interface ShareRepositoryCustom {
 
     List<Share> findList(Long memberId);
 
-    List<Board> findShareBoard(Long share_id);
+    List<Board> findShareBoard(Long share_id, String date);
 }

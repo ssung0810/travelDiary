@@ -10,6 +10,7 @@ import com.ssung.travelDiary.service.members.MemberService;
 import com.ssung.travelDiary.service.share.ShareService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,12 +55,15 @@ public class ShareController {
     @GetMapping("/{shareId}")
     public String sharePostsList(Model model,
                                  @PathVariable Long shareId,
-                                 @SessionAttribute(name = SessionConst.USER_ID) Long memberId) {
+                                 @SessionAttribute(name = SessionConst.USER_ID) Long memberId,
+                                 @RequestParam(required = false) String date) {
 
-        List<ShareBoardResponseDto> shareBoard = shareService.findShareBoard(shareId);
+        if(date == null) date = LocalDate.now().toString();
+
+        List<ShareBoardResponseDto> shareBoard = shareService.findShareBoard(shareId, date);
 
         model.addAttribute("boards", shareBoard);
-        model.addAttribute("date", LocalDate.now().toString());
+        model.addAttribute("date", date);
         model.addAttribute("shareId", shareId);
 
         return "board/boardList";

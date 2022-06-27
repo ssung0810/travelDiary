@@ -12,7 +12,8 @@ spring:
   profiles:
     group:
       local:
-        local
+        local,
+        aws
 
   jpa:
     hibernate:

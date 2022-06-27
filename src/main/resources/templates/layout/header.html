@@ -41,13 +41,13 @@
                 </button>
                 <a class="navbar-brand" href="/board/privateBoardList">Travel Diary</a>
             </div>
-            <div id="navbar" class="collapse navbar-collapse">
+            <div id="navbar" class="collapse navbar-collapse" th:with="imageName=${session.image}">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/board">작성하기</a></li>
                     <li><a href="/member/profileForm" class="navbar-link">마이페이지</a></li>
                     <li><a href="/logout" class="navbar-link">로그아웃</a></li>
-                    <li th:unless="${session.image == null}"><img id="profile" src="/images/ico_user.jpg" th:src="|/image/${session.image}|"></li>
-                    <li th:if="${session.image == null}"><img id="profile" src="/images/ico_user.jpg"></li>
+                    <li th:unless="${imageName == null}"><img id="profile" src="/images/ico_user.jpg" th:src="${@fileHandlerS3.getFileUrl(imageName)}"></li>
+                    <li th:if="${imageName == null}"><img id="profile" src="/images/ico_user.jpg"></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

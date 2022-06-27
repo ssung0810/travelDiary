@@ -1,38 +1,27 @@
 package com.ssung.travelDiary.handler;
 
-import com.ssung.travelDiary.dto.file.FileDto;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
+import com.ssung.travelDiary.service.file.FileUploadService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class FileHandlerUnitTest {
 
     @InjectMocks
-    FileHandler fileHandler;
+    FileUploadService fileUploadService;
 
 //    @Value("${file.dir}")
     private String fileDir;
 
-    @Test
-    void 파일_전체경로_가져오기() throws Exception {
-        // given
-        String fullPath = fileHandler.getFullPath("file");
-
-        // when, then
-        assertThat(fullPath).isEqualTo(fileDir + "file");
-    }
+//    @Test
+//    void 파일_전체경로_가져오기() throws Exception {
+//        // given
+//        String fullPath = fileHandler.getFullPath("file");
+//
+//        // when, then
+//        assertThat(fullPath).isEqualTo(fileDir + "file");
+//    }
 
 //    @Test
 //    void 단일_파일_저장_파일O() throws Exception {

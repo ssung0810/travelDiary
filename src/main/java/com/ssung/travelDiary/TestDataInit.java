@@ -3,14 +3,10 @@ package com.ssung.travelDiary;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
-import com.ssung.travelDiary.handler.FileHandler;
-import com.ssung.travelDiary.service.board.BoardService;
-import com.ssung.travelDiary.service.members.MemberService;
-import com.ssung.travelDiary.service.share.ShareService;
-import com.ssung.travelDiary.dto.board.BoardResponseDto;
 import com.ssung.travelDiary.dto.board.BoardSaveRequestDto;
-import com.ssung.travelDiary.dto.file.FileDto;
 import com.ssung.travelDiary.dto.share.ShareSaveRequestDto;
+import com.ssung.travelDiary.service.board.BoardService;
+import com.ssung.travelDiary.service.share.ShareService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -21,24 +17,20 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class TestDataInit {
 
-    private final MemberService memberService;
     private final BoardService boardService;
     private final ShareService shareService;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private final FileHandler fileHandler;
 
     /**
      * 테스트용 데이터 추가
      */
     @PostConstruct
     public void init() throws IOException {
-
-        FileDto fileDto = new FileDto("01. 왕이신하나님.png", "1013784853220000.png");
 
         for(int i=1; i<=2; i++) {
             Member member = Member.builder()

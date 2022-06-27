@@ -13,7 +13,7 @@ import com.ssung.travelDiary.dto.board.BoardUpdateRequestDto;
 import com.ssung.travelDiary.dto.share.ShareBoardResponseDto;
 import com.ssung.travelDiary.exception.board.BoardNotFountException;
 import com.ssung.travelDiary.exception.member.MemberNotFoundException;
-import com.ssung.travelDiary.handler.FileHandler;
+import com.ssung.travelDiary.service.file.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
     private final ImageRepository imageRepository;
-    private final FileHandler fileHandler;
+    private final FileUploadService fileUploadService;
 
     /**
      * 게시글 저장
@@ -84,7 +84,7 @@ public class BoardService {
             imageRepository.delete(image);
         }
 
-        return new BoardResponseDto(board.update(dto.getTitle(), dto.getContent(), dto.getLocation(), dto.getDate(), fileHandler.storeFiles(dto.getImages())));
+        return new BoardResponseDto(board.update(dto.getTitle(), dto.getContent(), dto.getLocation(), dto.getDate(), fileUploadService.storeFiles(dto.getImages())));
     }
 
     /**
@@ -117,7 +117,7 @@ public class BoardService {
                 .location(dto.getLocation())
                 .content(dto.getContent())
                 .member(member)
-                .images(fileHandler.storeFiles(dto.getImages()))
+                .images(fileUploadService.storeFiles(dto.getImages()))
                 .build();
     }
 }

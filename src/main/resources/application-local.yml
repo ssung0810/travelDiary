@@ -25,3 +25,6 @@ spring:
 
 file:
   dir: C:\Users\ogd00\Desktop\공부\프로젝트\travelDiaryBox\images/
+
+server:
+  port: 8080

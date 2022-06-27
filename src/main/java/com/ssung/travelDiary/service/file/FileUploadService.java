@@ -26,9 +26,11 @@ public class FileUploadService {
         }
 
         String storedName = createStoreFileName(multipartFile.getOriginalFilename());
+
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(multipartFile.getSize());
         objectMetadata.setContentType(multipartFile.getContentType());
+
         try (InputStream inputStream = multipartFile.getInputStream()) {
             FileHandlerS3.uploadFile(inputStream, objectMetadata, storedName);
         } catch (IOException e) {

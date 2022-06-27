@@ -26,7 +26,6 @@ public class FileHandlerS3 implements FileHandler {
 
     @Override
     public String uploadFile(InputStream inputStream, ObjectMetadata objectMetadata, String storedName) {
-        System.out.println("filePath = " + filePath);
         amazonS3Client.putObject(new PutObjectRequest(bucket, filePath+storedName, inputStream, objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead));
         return amazonS3Client.getUrl(bucket, filePath+storedName).toString();
     }

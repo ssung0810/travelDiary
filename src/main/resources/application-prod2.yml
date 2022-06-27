@@ -3,7 +3,8 @@ spring:
     group:
       prod2:
         prod,
-        prod-db
+        prod-db,
+        aws
 
 server:
   port: 8082

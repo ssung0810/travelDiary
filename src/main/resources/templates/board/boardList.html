@@ -42,8 +42,8 @@
                     <h3><a href="board.html" th:href="@{/board/{boardId}(boardId=${board.id})}" th:text="${board.title}">제목</a></h3>
                     <div class="imgBox">
                         <th:block th:each="imageList : ${board.images}">
-                            <img th:each="image : ${imageList}"
-                                 th:src="|/image/${image.image.storedFileName}|">
+                            <img th:each="image : ${imageList}" th:with="imageName=${image.image.storedFileName}"
+                                 th:src="${@fileHandlerS3.getFileUrl(imageName)}">
                         </th:block>
                     </div>
                     <p class="boardListContent" th:text="${board.content}">내용</p>

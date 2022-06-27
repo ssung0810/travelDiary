@@ -3,16 +3,13 @@ package com.ssung.travelDiary.service.members;
 import com.ssung.travelDiary.domain.members.Member;
 import com.ssung.travelDiary.domain.members.MemberRepository;
 import com.ssung.travelDiary.domain.members.Role;
-import com.ssung.travelDiary.dto.file.FileDto;
 import com.ssung.travelDiary.dto.member.MemberResponseDto;
 import com.ssung.travelDiary.dto.member.MemberSaveRequestDto;
 import com.ssung.travelDiary.dto.member.MemberUpdateRequestDto;
 import com.ssung.travelDiary.exception.member.MemberEmailAlreadyExistException;
 import com.ssung.travelDiary.exception.member.MemberNotFoundException;
 import com.ssung.travelDiary.exception.member.MemberUsernameAlreadyExistException;
-import com.ssung.travelDiary.handler.FileHandler;
-import net.bytebuddy.dynamic.DynamicType;
-import org.assertj.core.api.Assertions;
+import com.ssung.travelDiary.service.file.FileUploadService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
@@ -41,7 +39,7 @@ public class MemberServiceUnitTest {
 
     @InjectMocks MemberService memberService;
     @Mock MemberRepository memberRepository;
-    @Mock FileHandler fileHandler;
+    @Mock FileUploadService fileUploadService;
     @Mock PasswordEncoder passwordEncoder;
 
     MockMvc mockMvc;
@@ -63,7 +61,7 @@ public class MemberServiceUnitTest {
         // then
         verify(memberRepository).existsByEmail(saveRequestDto.getEmail());
         verify(memberRepository).existsByUsername(saveRequestDto.getUsername());
-        verify(fileHandler).storeFile(any(MultipartFile.class));
+        verify(fileUploadService).storeFile(any(MultipartFile.class));
         verify(passwordEncoder).encode(saveRequestDto.getPassword());
         verify(memberRepository).save(any());
     }
@@ -155,7 +153,7 @@ public class MemberServiceUnitTest {
         // then
         assertThat(resultDto.getEmail()).isEqualTo("email2");
         verify(passwordEncoder).encode(anyString());
-        verify(fileHandler).storeFile(any());
+        verify(fileUploadService).storeFile(any());
     }
 
     @Test
@@ -171,7 +169,7 @@ public class MemberServiceUnitTest {
         // when, then
         assertThatThrownBy(() -> memberService.update(dto, anyLong())).isInstanceOf(MemberNotFoundException.class);
         verify(passwordEncoder, never()).encode(anyString());
-        verify(fileHandler, never()).storeFile(any());
+        verify(fileUploadService, never()).storeFile(any());
     }
 
     @Test
@@ -189,7 +187,7 @@ public class MemberServiceUnitTest {
         // when, then
         assertThatThrownBy(() -> memberService.update(dto, anyLong())).isInstanceOf(MemberUsernameAlreadyExistException.class);
         verify(passwordEncoder, never()).encode(anyString());
-        verify(fileHandler, never()).storeFile(any());
+        verify(fileUploadService, never()).storeFile(any());
     }
 
     @Test
@@ -207,7 +205,7 @@ public class MemberServiceUnitTest {
         // when, then
         assertThatThrownBy(() -> memberService.update(dto, anyLong())).isInstanceOf(MemberEmailAlreadyExistException.class);
         verify(passwordEncoder, never()).encode(anyString());
-        verify(fileHandler, never()).storeFile(any());
+        verify(fileUploadService, never()).storeFile(any());
     }
 
     @Test

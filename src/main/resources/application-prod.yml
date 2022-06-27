@@ -2,7 +2,8 @@ spring:
   profiles:
     group:
       prod:
-        prod-db
+        prod-db,
+        aws
 
   jpa:
     hibernate:

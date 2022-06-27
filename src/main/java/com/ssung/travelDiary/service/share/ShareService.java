@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,8 +77,8 @@ public class ShareService {
     /**
      * 공유폴더 선택 시 게시글 리스트 조회
      */
-    public List<ShareBoardResponseDto> findShareBoard(Long shareId) {
-        return shareRepository.findShareBoard(shareId).stream()
+    public List<ShareBoardResponseDto> findShareBoard(Long shareId, String date) {
+        return shareRepository.findShareBoard(shareId, date).stream()
                 .map(b -> new ShareBoardResponseDto(b)).collect(Collectors.toList());
     }
 }

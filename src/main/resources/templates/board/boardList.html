@@ -13,13 +13,13 @@
 
 <div class="container">
     <div id="searchContainer">
-        <form class="form-inline" action="/board/privateBoardList" method="get">
+        <form id="boardListForm" class="form-inline" action="/board/privateBoardList" method="get">
             <div class="searchBox form-group">
                 <label for="searchDate">날짜</label>
                 <input type="text" id="searchDate" name="date" th:value="${date}" class="form-control searchDate write" readonly>
             </div>
 
-            <button type="submit" id="dateSearchBtn" class="btn btn-primary">조회</button>
+            <button type="button" id="dateSearchBtn" class="btn btn-primary">조회</button>
         </form>
 
         <div id="shareBox">

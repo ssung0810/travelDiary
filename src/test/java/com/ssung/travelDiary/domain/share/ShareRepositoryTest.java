@@ -91,7 +91,7 @@ class ShareRepositoryTest {
         clear();
 
         // when
-        List<Board> boardList = shareRepository.findShareBoard(share.getId());
+        List<Board> boardList = shareRepository.findShareBoard(share.getId(), LocalDate.now().toString());
 
         // then
         assertThat(boardList.size()).isEqualTo(1);

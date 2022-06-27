@@ -38,13 +38,14 @@ public class ShareRepositoryImpl implements ShareRepositoryCustom {
     }
 
     @Override
-    public List<Board> findShareBoard(Long share_id) {
+    public List<Board> findShareBoard(Long share_id, String date) {
         return queryFactory
                 .select(board)
                 .from(share)
                 .join(share.shareBoard, shareBoard).on(share.id.eq(share_id))
                 .join(shareBoard.board, board)
                 .leftJoin(board.images, image1).fetchJoin()
+                .where(board.date.eq(date))
                 .fetch();
     }
 }

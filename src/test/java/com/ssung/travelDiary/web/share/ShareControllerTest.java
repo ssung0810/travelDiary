@@ -100,7 +100,7 @@ class ShareControllerTest {
     void 공유폴더_조회() throws Exception {
         // given
         Board board = Board.builder().title("boardTitle").build();
-        given(shareService.findShareBoard(anyLong())).willReturn(List.of(new ShareBoardResponseDto(board)));
+        given(shareService.findShareBoard(anyLong(), anyString())).willReturn(List.of(new ShareBoardResponseDto(board)));
 
         // when, then
         mockMvc.perform(get("/share/1")
@@ -108,7 +108,7 @@ class ShareControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("board/boardList"));
 
-        verify(shareService).findShareBoard(anyLong());
+        verify(shareService).findShareBoard(anyLong(), anyString());
     }
 
     @Test

@@ -10,10 +10,6 @@ spring:
   profiles:
     active: local, aws
 
-logging:
-  level:
-    org.hibernate.SQL: debug
-
 #decorator:
 #  datasource:
 #    p6spy:

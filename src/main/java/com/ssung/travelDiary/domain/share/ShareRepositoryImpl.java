@@ -41,6 +41,7 @@ public class ShareRepositoryImpl implements ShareRepositoryCustom {
     public List<Board> findShareBoard(Long share_id, String date) {
         return queryFactory
                 .select(board)
+                .distinct()
                 .from(share)
                 .join(share.shareBoard, shareBoard).on(share.id.eq(share_id))
                 .join(shareBoard.board, board)

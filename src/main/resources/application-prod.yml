@@ -13,5 +13,9 @@ spring:
         #        show_sql: true
         format_sql: false
 
+#logging:
+#  level:
+#    org.hibernate.SQL: debug
+
 file:
   dir:

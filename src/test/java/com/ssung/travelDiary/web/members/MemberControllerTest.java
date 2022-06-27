@@ -107,7 +107,7 @@ class MemberControllerTest {
         mockMvc.perform(get(baseUrl + "/profileForm")
                         .sessionAttr(SessionConst.USER_ID, 1L))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/members/profileForm"));
+                .andExpect(view().name("members/profileForm"));
 
         verify(memberService).findOne(1L);
     }
@@ -120,7 +120,7 @@ class MemberControllerTest {
         mockMvc.perform(get(baseUrl + "/profile")
                         .sessionAttr(SessionConst.USER_ID, 1L))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/members/profileUpdateForm"));
+                .andExpect(view().name("members/profileUpdateForm"));
 
         verify(memberService).findOne(1L);
     }
@@ -150,7 +150,7 @@ class MemberControllerTest {
                         .sessionAttr(SessionConst.USER_ID, 1L))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(view().name("/members/profileForm"));
+                .andExpect(view().name("members/profileForm"));
 
         verify(memberService).update(any(MemberUpdateRequestDto.class), anyLong());
     }
@@ -165,7 +165,7 @@ class MemberControllerTest {
                         .param("password_check", "password1")
                         .param("email", "email"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/members/profileUpdateForm"));
+                .andExpect(view().name("members/profileUpdateForm"));
 
         verify(memberService, never()).update(any(MemberUpdateRequestDto.class), anyLong());
     }
@@ -184,7 +184,7 @@ class MemberControllerTest {
                         .param("email", "email@naver.com")
                         .sessionAttr(SessionConst.USER_ID, 1L))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/members/profileUpdateForm"));
+                .andExpect(view().name("members/profileUpdateForm"));
 
         verify(memberService).update(any(MemberUpdateRequestDto.class), anyLong());
     }
@@ -203,7 +203,7 @@ class MemberControllerTest {
                         .param("email", "email@naver.com")
                         .sessionAttr(SessionConst.USER_ID, 1L))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/members/profileUpdateForm"));
+                .andExpect(view().name("members/profileUpdateForm"));
 
         verify(memberService).update(any(MemberUpdateRequestDto.class), anyLong());
     }

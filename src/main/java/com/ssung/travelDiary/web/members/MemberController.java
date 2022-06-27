@@ -67,7 +67,7 @@ public class MemberController {
 
         model.addAttribute("member", member);
 
-        return "/members/profileForm";
+        return "members/profileForm";
     }
 
     @GetMapping("/profile")
@@ -77,7 +77,7 @@ public class MemberController {
         MemberUpdateRequestDto member = new MemberUpdateRequestDto(memberService.findOne(userId));
         model.addAttribute("member", member);
 
-        return "/members/profileUpdateForm";
+        return "members/profileUpdateForm";
     }
 
     @PutMapping("/profile")
@@ -90,7 +90,7 @@ public class MemberController {
         }
 
         if (bindingResult.hasErrors()) {
-            return "/members/profileUpdateForm";
+            return "members/profileUpdateForm";
         }
 
         MemberResponseDto member = null;
@@ -99,16 +99,16 @@ public class MemberController {
             member = memberService.update(dto, memberId);
         } catch (MemberEmailAlreadyExistException e) {
             bindingResult.rejectValue("email", "emailValidation", null);
-            return "/members/profileUpdateForm";
+            return "members/profileUpdateForm";
         } catch (MemberUsernameAlreadyExistException e) {
             bindingResult.rejectValue("username", "usernameValidation.profile", null);
-            return "/members/profileUpdateForm";
+            return "members/profileUpdateForm";
         }
 
         if(!dto.getImage().isEmpty())
             httpSession.setAttribute(SessionConst.USER_IMAGE, member.getImage().getStoredFileName());
 
-        return "/members/profileForm";
+        return "members/profileForm";
     }
 
     private boolean passwordValidation(String password, String password_check) {

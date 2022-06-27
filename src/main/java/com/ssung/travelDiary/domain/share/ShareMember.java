@@ -2,15 +2,16 @@ package com.ssung.travelDiary.domain.share;
 
 import com.ssung.travelDiary.domain.members.Member;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
+@NoArgsConstructor
 @Entity
 public class ShareMember {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

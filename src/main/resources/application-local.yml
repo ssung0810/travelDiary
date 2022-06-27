@@ -23,6 +23,10 @@ spring:
         #        show_sql: true
         format_sql: true
 
+logging:
+  level:
+    org.hibernate.SQL: debug
+
 file:
   dir: C:\Users\ogd00\Desktop\공부\프로젝트\travelDiaryBox\images/
 

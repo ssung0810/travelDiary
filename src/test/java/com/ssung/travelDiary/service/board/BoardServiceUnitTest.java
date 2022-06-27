@@ -10,27 +10,23 @@ import com.ssung.travelDiary.dto.board.BoardResponseDto;
 import com.ssung.travelDiary.dto.board.BoardSaveRequestDto;
 import com.ssung.travelDiary.dto.board.BoardUpdateRequestDto;
 import com.ssung.travelDiary.dto.file.FileDto;
-import com.ssung.travelDiary.dto.member.MemberSaveRequestDto;
 import com.ssung.travelDiary.dto.share.ShareBoardResponseDto;
 import com.ssung.travelDiary.exception.board.BoardNotFountException;
 import com.ssung.travelDiary.exception.member.MemberNotFoundException;
-import com.ssung.travelDiary.handler.FileHandler;
-import org.assertj.core.api.Assertions;
+import com.ssung.travelDiary.service.file.FileUploadService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
@@ -43,7 +39,7 @@ public class BoardServiceUnitTest {
     @Mock BoardRepository boardRepository;
     @Mock MemberRepository memberRepository;
     @Mock ImageRepository imageRepository;
-    @Mock FileHandler fileHandler;
+    @Mock FileUploadService fileUploadService;
 
     @Test
     void 게시글_저장_성공() throws Exception {
@@ -144,7 +140,7 @@ public class BoardServiceUnitTest {
         // then
         assertThat(board.getTitle()).isEqualTo("title2");
         verify(imageRepository).delete(any());
-        verify(fileHandler).storeFiles(any());
+        verify(fileUploadService).storeFiles(any());
     }
 
     @Test
@@ -156,7 +152,7 @@ public class BoardServiceUnitTest {
         // when, then
         assertThatThrownBy(() -> boardService.update(dto, anyLong())).isInstanceOf(BoardNotFountException.class);
         verify(imageRepository, never()).delete(any());
-        verify(fileHandler, never()).storeFiles(any());
+        verify(fileUploadService, never()).storeFiles(any());
     }
 
     @Test

@@ -34,8 +34,8 @@
         <br>
 
         <div class="boardImg">
-            <img th:each="image : ${images}"
-                 th:src="|/image/${image.image.storedFileName}|">
+            <img th:each="image : ${images}" th:with="imageName=${image.image.storedFileName}"
+                 th:src="${@fileHandlerS3.getFileUrl(imageName)}">
         </div>
 
         <br>

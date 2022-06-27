@@ -54,7 +54,7 @@ https://believed-park-6fb.notion.site/API-3321f2d3184841f6afd1bac7842f50d4
 <br>
 
 ## ERD
-
+![01  ERD](https://user-images.githubusercontent.com/63215089/176001251-6a384cd2-bb78-411d-86ba-faa13c0538b4.png)
 
 
 <br>

@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 @Getter @Setter
 public class MemberSaveRequestDto {
 
-    @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]{2,10}$")
+    @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]{4,10}$")
     private String username;
 
     private int username_validation;

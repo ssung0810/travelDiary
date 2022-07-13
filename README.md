@@ -65,6 +65,8 @@ JPQL에서 QueryDSL로 [전환하기](https://solidbasics.tistory.com/44?categor
 
 통합테스트로 작성된 테스트코드를 [단위테스트로 변경](https://solidbasics.tistory.com/34?category=1077150)
 
+로컬 [파일업로드 S3로 전환](https://solidbasics.tistory.com/51?category=1064030)
+
 <br>
 
 <br>
@@ -77,5 +79,6 @@ https://solidbasics.tistory.com/category/%EC%97%90%EB%9F%AC%EB%AA%A8%EC%9D%8C
 
 <br>
 
-## 프로젝트 정리
+## 프로젝트 회고
+https://solidbasics.tistory.com/52?category=1064030
 

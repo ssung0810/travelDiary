@@ -1,10 +1,10 @@
 package com.ssung.travelDiary.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 
-@Component
+@Configuration
 public class SpringConfig {
 
     @Bean

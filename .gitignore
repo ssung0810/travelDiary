@@ -40,3 +40,4 @@ out/
 ### 개별추가 ###
 src/main/resources/application-prod-db.yml
 src/main/resources/application-aws.yml
+src/main/java/com/ssung/travelDiary/web/image/ImageController.java
